@@ -1,28 +1,25 @@
-'use client'
-import FlashCard from "../components/FlashCard";
-import data from "@/services/mockData/cardsData.json"
-import { Card } from "./types";
-import { useState } from "react";
+"use client";
+import data from "@/services/mockData/cardsData.json";
 import Link from "next/link";
-import { get } from "http";
 import { getRandomCard } from "@/utils/utils";
+import Category from "@/components/UI/category";
 
 export default function Home() {
-  
-  const card = getRandomCard(data)
+  const card = getRandomCard(data);
+  const categories = [{ name: "JavaScript", icon: "public/javascript.svg" }];
 
   return (
-    <main className="flex bg-black min-h-screen flex-col items-center justify-between p-24">
-     <h1>Hello word</h1>
-     
-     
-     
+    <main>
+      <h1>Hello word</h1>
 
-     <footer className="text-white ">
-      <Link href={`/${card.id}`}>init</Link>
-     </footer>
-      {/* <FlashCard question="1+1" answer="2" /> */}
-
+      <ul>
+        {categories.map((category: any) => (
+          <li key={category.name}>
+            <Category name={category.name} icon={category.icon} />
+            {/* <Link href={`/${category}`}>{category}</Link> */}
+          </li>
+        ))}
+      </ul>
     </main>
   );
 }

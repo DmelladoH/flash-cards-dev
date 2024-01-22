@@ -6,9 +6,10 @@ interface FlashCardProps {
   id: string;
   question: string;
   answer: string;
+  hasExtendedContent: boolean;
 }
 
-function FlashCard({ id, question, answer }: FlashCardProps) {
+function FlashCard({ id, question, answer, hasExtendedContent }: FlashCardProps) {
   const [showAnswer, setShowAnswer] = useState(false);
 
   const handleClick = () => {
@@ -24,13 +25,12 @@ function FlashCard({ id, question, answer }: FlashCardProps) {
           </div>
         ) : (
           <div>
-            <section dangerouslySetInnerHTML={{ __html: answer }}></section>
-            
+            <section dangerouslySetInnerHTML={{ __html: answer }} className="text-pretty"></section> 
           </div>
         )}
       </button>
       {
-        showAnswer && (
+        showAnswer && hasExtendedContent && (
           <footer className="text text-end ">
               <Link href={`/${id}`}>
                 Learn more

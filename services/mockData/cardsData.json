@@ -12,4 +12,5 @@
     "sort-answer": "<p><strong>undeclared</strong> means it’s never been created in any scope that we have access to.</p><p><strong>undefined</strong> means there’s a variable and at the moment has no value.</p>",
     "category": "JavaScript",
     "tags": ["JavaScript", "Types"]
-}]
+}
+]
