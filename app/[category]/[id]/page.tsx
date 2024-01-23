@@ -11,7 +11,7 @@ function Page({ params }: { params: { id: string } }) {
   }
 
   return (
-    <section className="bg-white">
+    <section className="bg-white text-black p-10 rounded-lg ">
       <h1>{card.question}</h1>
       <div dangerouslySetInnerHTML={{ __html: card["extended-content"] }}></div>
       <section>

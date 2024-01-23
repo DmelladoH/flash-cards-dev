@@ -1,17 +1,14 @@
 import Image from "next/image";
 
 interface Props {
-  icon: string;
+  children?: React.ReactNode;
   name: string;
 }
 
-function Category({ icon, name }: Props) {
-  console.log({ icon, name });
+function Category({ name, children }: Props) {
   return (
     <article>
-      <div>
-        <Image src={icon} alt={name} width={100} height={100} />
-      </div>
+      <div>{children}</div>
       <div>
         <h3>{name}</h3>
       </div>
