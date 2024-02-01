@@ -22,8 +22,8 @@ function FlashCard({
   };
 
   return (
-    <article className="h-[453px] w-[604px] p-10 bg-white rounded-xl text-black grid items-center justify-center">
-      <button className="h-full w-full" onClick={handleClick}>
+    <article className="absolute border-2 h-full w-full p-10 bg-white rounded-xl text-black grid items-center justify-center object-center">
+      <button className="h-full w-full transition-all duration-500 group-focus:[transform:rotateY(180deg)]">
         {!showAnswer ? (
           <div>
             <h3>{question}</h3>

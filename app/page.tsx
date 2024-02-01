@@ -11,8 +11,6 @@ export default function Home() {
 
   return (
     <main>
-      <h1>Hello word</h1>
-
       <ul>
         {categories.map((category) => (
           <li key={category.name}>

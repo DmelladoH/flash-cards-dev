@@ -1,28 +1,65 @@
-import data from "@/services/mockData/cardsData.json";
-import { Card } from "../../types";
+"use client";
 
-function Page({ params }: { params: { id: string } }) {
-  const card: Card | undefined = data.find((card) => card.id === params.id);
+import useFlashCards from "@/app/hooks/useFlashCards";
+import FlashCard from "@/components/UI/flashCard";
+import Link from "next/link";
 
-  console.log({ card });
+function Page({ params }: { params: { category: string; id: string } }) {
+  const { category, id } = params;
+  const { currentCard, deck, pickNextCard, setNextCard } = useFlashCards({
+    category: "JavaScript",
+    currentCardId: id,
+  });
 
-  if (card == undefined || card?.["extended-content"] == undefined) {
-    return <div>404</div>;
-  }
+  const nextCard = pickNextCard();
+  console.log({ nextCard });
+  // const cards = getCardsByCategory(category);
 
+  // if (cards == undefined) {
+  //   return <div>404</div>;
+  // }
+
+  // return <FlashCardSlider />;
   return (
-    <section className="bg-white text-black p-10 rounded-lg ">
-      <h1>{card.question}</h1>
-      <div dangerouslySetInnerHTML={{ __html: card["extended-content"] }}></div>
-      <section>
-        <h2>learn more about this subject</h2>
-        <ul>
-          <li>link 1</li>
-          <li>link 2</li>
-          <li>link 3</li>
-        </ul>
-      </section>
-    </section>
+    <>
+      <div className="relative h-[50vh] w-[60vh] aspect-video">
+        {currentCard && (
+          <div className="h-full w-full absolute z-20">
+            <FlashCard
+              id={currentCard.id}
+              key={currentCard.id}
+              question={currentCard.question}
+              answer={currentCard["sort-answer"]}
+              hasExtendedContent={currentCard["extended-content"] != null}
+            />
+          </div>
+        )}
+        {pickNextCard() && (
+          <div className="h-full w-full relative transform1">
+            <FlashCard
+              id={pickNextCard().id}
+              key={pickNextCard().id}
+              question={pickNextCard().question}
+              answer={pickNextCard()["sort-answer"]}
+              hasExtendedContent={pickNextCard()["extended-content"] != null}
+            />
+          </div>
+        )}
+      </div>
+
+      {nextCard && (
+        <footer className="text-white ">
+          <Link
+            href={`/${category}/${nextCard.id}`}
+            onClick={() => {
+              setNextCard();
+            }}
+          >
+            Next
+          </Link>
+        </footer>
+      )}
+    </>
   );
 }
 
