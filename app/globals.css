@@ -14,3 +14,8 @@
   transform: translateZ(calc(-90px)) translateY(calc(-60px))
     rotate(calc(-12deg));
 }
+
+.card {
+  transform-style: preserve-3d;
+  transition: all 0.8s ease;
+}

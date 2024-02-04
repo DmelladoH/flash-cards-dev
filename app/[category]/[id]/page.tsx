@@ -12,17 +12,10 @@ function Page({ params }: { params: { category: string; id: string } }) {
   });
 
   const nextCard = pickNextCard();
-  console.log({ nextCard });
-  // const cards = getCardsByCategory(category);
 
-  // if (cards == undefined) {
-  //   return <div>404</div>;
-  // }
-
-  // return <FlashCardSlider />;
   return (
     <>
-      <div className="relative h-[50vh] w-[60vh] aspect-video">
+      <div className="relative w-[40vh] h-[70vh] md:h-[50vh] md:w-[60vh] aspect-video">
         {currentCard && (
           <div className="h-full w-full absolute z-20">
             <FlashCard
@@ -48,7 +41,7 @@ function Page({ params }: { params: { category: string; id: string } }) {
       </div>
 
       {nextCard && (
-        <footer className="text-white ">
+        <footer className="text-white">
           <Link
             href={`/${category}/${nextCard.id}`}
             onClick={() => {

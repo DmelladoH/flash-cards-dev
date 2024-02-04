@@ -1,16 +1,49 @@
-[{
+[
+  {
     "id": "what-are-abstract-operations",
     "question": "What are abstract operations?",
-    "sort-answer": "<p>In JavaScript, <strong>abstract operations</strong> are like behind-the-scenes instructions that help the computer understand and handle different kinds of data. They're like special functions that programmers don't need to write themselves, but they're crucial for making sure JavaScript works consistently.</p><p>There are not functions that the dev can call</p>",
+    "sort-answer": "<p>In JavaScript, <strong>abstract operations</strong> are like behind-the-scenes instructions that help the computer understand and handle different kinds of data. They're like special functions that programmers don't need to write themselves, but they're crucial for making sure JavaScript works consistently.</p>",
     "category": "JavaScript",
     "tags": ["JavaScript", "Coersion"],
-    "extended-content":"<h2>abstract operations</h2> <p>In JavaScript, <strong>abstract operations</strong> are like behind-the-scenes instructions that help the computer understand and handle different kinds of data. They're like special functions that programmers don't need to write themselves, but they're crucial for making sure JavaScript works consistently.</p><p>There are not functions that the dev can call</p>"
-},
-{
+    "extended-content": "<p>In JavaScript, <strong>abstract operations</strong> are like behind-the-scenes instructions that help the computer understand and handle different kinds of data. They're like special functions that programmers don't need to write themselves, but they're crucial for making sure JavaScript works consistently.</p><p>Here are some examples of abstract operations in JavaScript:</p><ul><li><strong>ToPrimitive(input, PreferredType)</strong>: This abstract operation converts a JavaScript value to a primitive value. The input is the value to be converted, and PreferredType is an optional argument indicating the preferred type of the result (either number or string).</li><li><strong>ToBoolean(argument):</strong>: This abstract operation converts a value to a Boolean. It is used in contexts where a Boolean value is expected, such as in conditional statements.</li><li><strong>ToNumber(argument): </strong>:This abstract operation converts a value to a Number. It is used in contexts where a numeric value is expected. </li><li><strong>ToString(argument):</strong>:This abstract operation converts a value to a String. It is used in contexts where a string representation of a value is required. </li><li><strong>ToObject(value):</strong>: This abstract operation converts a value to an object. It is used when a primitive value needs to be treated as an object.</li></ul><p>These abstract operations help ensure consistency and clarity in the behavior of JavaScript across different implementations and environments. They provide a common specification that developers can refer to when working with the language.</p>"
+  },
+  {
     "id": "difference-between-undeclared-vs-undefined",
     "question": "Difference between undeclared vs undefined",
     "sort-answer": "<p><strong>undeclared</strong> means it’s never been created in any scope that we have access to.</p><p><strong>undefined</strong> means there’s a variable and at the moment has no value.</p>",
     "category": "JavaScript",
     "tags": ["JavaScript", "Types"]
-}
+  },
+  {
+    "id": "what-is-coercion",
+    "question": "What is coercion?",
+    "sort-answer": "<p><strong>Coercion</strong> is the process of converting a value from one type to another.</p>",
+    "category": "JavaScript",
+    "tags": ["JavaScript", "Coersion"],
+    "extended-content": "<h2>Coercion</h2> <p><strong>Coercion</strong> is the process of converting a value from one type to another.</p>"
+  },
+  {
+    "id": "what-is-hoisting",
+    "question": "What is hoisting?",
+    "sort-answer": "<p><strong>Hoisting</strong> is a JavaScript mechanism where variables and function declarations are moved to the top of their containing scope during the compile phase.</p>",
+    "category": "JavaScript",
+    "tags": ["JavaScript", "Hoisting"],
+    "extended-content": "<h2>Hoisting</h2> <p><strong>Hoisting</strong> is a JavaScript mechanism where variables and function declarations are moved to the top of their containing scope during the compile phase.</p>"
+  },
+  {
+    "id": "what-is-scope",
+    "question": "What is scope?",
+    "sort-answer": "<p><strong>Scope</strong> is the context in which a variable is declared. JavaScript has function scope: Each function creates a new scope.</p>",
+    "category": "JavaScript",
+    "tags": ["JavaScript", "Scope"],
+    "extended-content": "<h2>Scope</h2> <p><strong>Scope</strong> is the context in which a variable is declared. JavaScript has function scope: Each function creates a new scope.</p>"
+  },
+  {
+    "id": "what-is-the-difference-between-let-and-var",
+    "question": "What is the difference between let and var?",
+    "sort-answer": "<p><strong>var</strong> is function scoped when <strong>let</strong> is block scoped.</p>",
+    "category": "JavaScript",
+    "tags": ["JavaScript", "Scope"],
+    "extended-content": "<h2>let vs var</h2> <p><strong>var</strong> is function scoped when <strong>let</strong> is block scoped.</p>"
+  }
 ]

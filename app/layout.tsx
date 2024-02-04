@@ -18,14 +18,17 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en">
-      <body className={GeistSans.className}>
+      <body
+        className={`${GeistSans.className} text-white bg-green-600 flex flex-col items-center mt-10`}
+      >
         <Providers>
-          <main className="flex text-white bg-green-600 min-h-screen flex-col items-center justify-between p-24">
-            <header>
-              <h1 className="text-4xl font-bold">Flash cards</h1>
-            </header>
-            {children}
-          </main>
+          <header>
+            <h1 className="text-4xl font-bold">Flash cards</h1>
+          </header>
+          <main className=" min-h-screen px-2 pt-24 md:px-24">{children}</main>
+          <footer className="text-white text-center bg-zinc-800 w-full p-20">
+            <p>Refresh your understanding</p>
+          </footer>
         </Providers>
       </body>
     </html>

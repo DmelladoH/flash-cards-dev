@@ -10,18 +10,21 @@ export default function Home() {
   const categories = [{ name: "JavaScript", icon: "/public/javascript.svg" }];
 
   return (
-    <main>
-      <ul>
-        {categories.map((category) => (
-          <li key={category.name}>
-            <Link href={`/${category.name}`}>
-              <Category name={category.name}>
-                <JavaScriptSVG />
-              </Category>
-            </Link>
-          </li>
-        ))}
-      </ul>
-    </main>
+    <>
+      <div>
+        <h3>Choose a category</h3>
+        <ul>
+          {categories.map((category) => (
+            <li key={category.name}>
+              <Link href={`/${category.name}`}>
+                <Category name={category.name}>
+                  <JavaScriptSVG />
+                </Category>
+              </Link>
+            </li>
+          ))}
+        </ul>
+      </div>
+    </>
   );
 }

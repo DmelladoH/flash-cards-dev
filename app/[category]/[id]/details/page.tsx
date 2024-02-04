@@ -12,10 +12,10 @@ function Page({ params }: { params: { id: string } }) {
 
   return (
     <section className="bg-white text-black p-10 rounded-lg ">
-      <h1>{card.question}</h1>
+      <h2 className="text-xl py-4">{card.question}</h2>
       <div dangerouslySetInnerHTML={{ __html: card["extended-content"] }}></div>
-      <section>
-        <h2>learn more about this subject</h2>
+      <section className="mt-4">
+        <h3>learn more about this subject</h3>
         <ul>
           <li>link 1</li>
           <li>link 2</li>
