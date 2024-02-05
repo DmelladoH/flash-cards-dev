@@ -5,6 +5,7 @@ import "./globals.css";
 import { GeistSans } from "geist/font/sans";
 import { GeistMono } from "geist/font/mono";
 import Providers from "./providers";
+import Link from "next/link";
 
 export const metadata: Metadata = {
   title: "Flash cards dev",
@@ -23,7 +24,9 @@ export default function RootLayout({
       >
         <Providers>
           <header>
-            <h1 className="text-4xl font-bold">Flash cards</h1>
+            <Link href="/">
+              <h1 className="text-4xl font-bold">Flash cards</h1>
+            </Link>
           </header>
           <main className=" min-h-screen px-2 pt-24 md:px-24">{children}</main>
           <footer className="text-white text-center bg-zinc-800 w-full p-20">
