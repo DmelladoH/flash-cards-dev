@@ -2,6 +2,8 @@
 
 import useFlashCards from "@/app/hooks/useFlashCards";
 import FlashCard from "@/components/UI/flashCard";
+import { FlipSvg } from "@/components/svgs/flipSvg";
+import { NextSvg } from "@/components/svgs/nextSvg";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
@@ -143,16 +145,26 @@ function Page({ params }: { params: { category: string; id: string } }) {
       </section>
 
       {nextCard && (
-        <footer className="text-white mt-10 flex gap-2">
+        <footer className="text-white mt-10 flex gap-9 justify-center">
           <Link
+            className="transition hover:scale-110 duration-300 ease-in-out"
             href={`/${category}/${nextCard.id}`}
             onClick={() => {
               setNextCard();
             }}
           >
-            Next
+            <div className="bg-white rounded-full block p-4">
+              <NextSvg />
+            </div>
           </Link>
-          <button onClick={handleFlip}>Flip Card</button>
+          <button
+            onClick={handleFlip}
+            className="transition hover:scale-110 duration-300 ease-in-out"
+          >
+            <div className="bg-white rounded-full block p-4">
+              <FlipSvg />
+            </div>
+          </button>
         </footer>
       )}
     </>
