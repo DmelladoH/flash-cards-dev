@@ -4,8 +4,6 @@ import { Card } from "../../../types";
 function Page({ params }: { params: { id: string } }) {
   const card: Card | undefined = data.find((card) => card.id === params.id);
 
-  console.log({ card });
-
   if (card == undefined || card?.["extended-content"] == undefined) {
     return <div>404</div>;
   }

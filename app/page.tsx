@@ -1,12 +1,8 @@
-"use client";
-import data from "@/services/mockData/cardsData.json";
 import Link from "next/link";
-import { getRandomCard } from "@/utils/utils";
 import Category from "@/components/UI/category";
 import JavaScriptSVG from "@/components/svgs/javaScript";
 
 export default function Home() {
-  const card = getRandomCard(data);
   const categories = [{ name: "JavaScript", icon: "/public/javascript.svg" }];
 
   return (

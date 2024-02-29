@@ -20,13 +20,12 @@ function useFlashCards({ category, currentCardId }: Props) {
     const shuffledCards = cards.sort(() => Math.random() - 0.5);
 
     setDeck(shuffledCards);
-    console.log({ shuffledCards });
     // setCurrentCard(shuffledCards[0]);
     // setIndex(0);
   }, [category, setDeck]);
 
   useEffect(() => {
-    console.log(currentCardId);
+    console.log({ currentCardId });
     if (currentCardId) {
       const cardIndex = deck.findIndex(
         (card: Card) => card.id === currentCardId

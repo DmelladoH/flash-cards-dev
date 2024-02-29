@@ -8,11 +8,9 @@ import useFlashCards from "@/app/hooks/useFlashCards";
 interface Props {}
 
 function FlashCardSlider({}: Props) {
-  const { currentCard, deck, nextCard, pickNextCard } = useFlashCards({
+  const { currentCard, deck, pickNextCard } = useFlashCards({
     category: "JavaScript",
   });
-
-  console.log(deck);
 
   const handleNext = () => {
     nextCard();
