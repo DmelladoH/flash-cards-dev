@@ -4,9 +4,11 @@ import useFlashCards from "@/app/hooks/useFlashCards";
 import FlashCard from "@/components/UI/flashCard";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
+import { useState } from "react";
 
 function Page({ params }: { params: { category: string; id: string } }) {
   const router = useRouter();
+  const [showAnswer, setShowAnswer] = useState(false);
 
   let isAnimating = false;
   let pullDeltaX: number;
@@ -101,6 +103,10 @@ function Page({ params }: { params: { category: string; id: string } }) {
   document.addEventListener("mousedown", startDrag);
   document.addEventListener("touchstart", startDrag, { passive: true });
 
+  const handleFlip = () => {
+    setShowAnswer(!showAnswer);
+  };
+
   return (
     <>
       <section className="relative w-[40vh] h-[70vh] md:h-[50vh] md:w-[60vh] aspect-video">
@@ -112,6 +118,8 @@ function Page({ params }: { params: { category: string; id: string } }) {
               question={currentCard.question}
               answer={currentCard["sort-answer"]}
               hasExtendedContent={currentCard["extended-content"] != null}
+              showAnswer={showAnswer}
+              handleFlip={handleFlip}
             />
           </div>
         )}
@@ -135,7 +143,7 @@ function Page({ params }: { params: { category: string; id: string } }) {
       </section>
 
       {nextCard && (
-        <footer className="text-white mt-10">
+        <footer className="text-white mt-10 flex gap-2">
           <Link
             href={`/${category}/${nextCard.id}`}
             onClick={() => {
@@ -144,6 +152,7 @@ function Page({ params }: { params: { category: string; id: string } }) {
           >
             Next
           </Link>
+          <button onClick={handleFlip}>Flip Card</button>
         </footer>
       )}
     </>
