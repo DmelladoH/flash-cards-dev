@@ -29,7 +29,7 @@ function FlashCard({
       >
         {!showAnswer ? (
           <div>
-            <h3>{question}</h3>
+            <h3 className="text-xl">{question}</h3>
           </div>
         ) : (
           <div>
