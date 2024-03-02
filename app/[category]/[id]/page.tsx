@@ -36,10 +36,12 @@ function Page({ params }: { params: { category: string; id: string } }) {
 
     const card = (e.target as HTMLElement)?.closest("article");
 
-    const backgroundCard = (e.target as HTMLElement)?.closest("article")
-      ?.parentNode?.parentNode?.children[1].firstElementChild as HTMLElement;
-
     if (!card) return;
+    if (!card.closest("div")?.classList.contains("draggable")) return;
+
+    const backgroundCard = document
+      .getElementsByClassName("first")
+      .item(0) as HTMLElement;
 
     const startX =
       e instanceof MouseEvent
@@ -59,7 +61,7 @@ function Page({ params }: { params: { category: string; id: string } }) {
       card.style.transform = `translateX(${pullDeltaX}px) rotate(${deg}deg)`;
 
       if (backgroundCard) {
-        backgroundCard.closest("div")?.classList.add("detransform1");
+        backgroundCard?.classList.add("detransform1");
       }
     };
 
@@ -92,7 +94,7 @@ function Page({ params }: { params: { category: string; id: string } }) {
         card.style.transform = "translateX(0) rotate(0deg)";
 
         backgroundCard.closest("div")?.classList.remove("detransform1");
-        backgroundCard.style.transition = "transform 0.5s";
+        backgroundCard.style.transition = "transform 0.9s";
       }
 
       card.addEventListener(
@@ -123,7 +125,7 @@ function Page({ params }: { params: { category: string; id: string } }) {
     <>
       <section className="relative w-[40vh] h-[70vh] md:h-[50vh] md:w-[60vh] aspect-video">
         {currentCard && (
-          <div className="h-full w-full absolute z-20">
+          <div className="draggable h-full w-full absolute z-20">
             <FlashCard
               id={currentCard.id}
               key={currentCard.id}
@@ -136,14 +138,25 @@ function Page({ params }: { params: { category: string; id: string } }) {
           </div>
         )}
         {nextCard != null && (
-          <div className="h-full w-full relative transform1">
-            <FlashCard
-              id={nextCard.id}
-              key={nextCard.id}
-              question={nextCard.question}
-              answer={nextCard["sort-answer"]}
-              hasExtendedContent={nextCard["extended-content"] != null}
-            />
+          <div className="h-full w-full relative">
+            <div className="h-full w-full absolute transform1">
+              <FlashCard
+                id={nextCard.id}
+                key={nextCard.id}
+                question={nextCard.question}
+                answer={nextCard["sort-answer"]}
+                hasExtendedContent={nextCard["extended-content"] != null}
+              />
+            </div>
+            <div className="first h-full w-full absolute transform1">
+              <FlashCard
+                id={nextCard.id}
+                key={nextCard.id}
+                question={nextCard.question}
+                answer={nextCard["sort-answer"]}
+                hasExtendedContent={nextCard["extended-content"] != null}
+              />
+            </div>
           </div>
         )}
 
