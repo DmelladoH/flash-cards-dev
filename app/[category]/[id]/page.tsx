@@ -4,6 +4,7 @@ import useFlashCards from "@/app/hooks/useFlashCards";
 import FlashCard from "@/components/UI/flashCard";
 import { FlipSvg } from "@/components/svgs/flipSvg";
 import { NextSvg } from "@/components/svgs/nextSvg";
+import { startDrag } from "@/helpers/dragHelper";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
@@ -13,9 +14,6 @@ function Page({ params }: { params: { category: string; id: string } }) {
   const [showAnswer, setShowAnswer] = useState(false);
 
   let isAnimating = false;
-  let pullDeltaX: number;
-
-  const CARD_DECISION_THRESHOLD = 120;
 
   const { category, id } = params;
 
@@ -31,91 +29,16 @@ function Page({ params }: { params: { category: string; id: string } }) {
     setNextCard(), router.push(`/${category}/${nextCard.id}`);
   };
 
-  function startDrag(e: MouseEvent | TouchEvent) {
-    if (isAnimating || e == null) return;
+  const dragEvent = (e: MouseEvent | TouchEvent) => {
+    startDrag({
+      isAnimating,
+      e,
+      next,
+    });
+  };
 
-    const card = (e.target as HTMLElement)?.closest("article");
-
-    if (!card) return;
-    if (!card.closest("div")?.classList.contains("draggable")) return;
-
-    const backgroundCard = document
-      .getElementsByClassName("first")
-      .item(0) as HTMLElement;
-
-    const startX =
-      e instanceof MouseEvent
-        ? (e as MouseEvent).pageX
-        : (e as TouchEvent).touches[0].pageX;
-
-    const onMove = (e: MouseEvent | TouchEvent) => {
-      const currentPosition =
-        e instanceof MouseEvent ? e.pageX : e.touches[0].pageX;
-
-      pullDeltaX = currentPosition - startX;
-
-      if (pullDeltaX === 0) return;
-
-      const deg = pullDeltaX / 10;
-
-      card.style.transform = `translateX(${pullDeltaX}px) rotate(${deg}deg)`;
-
-      if (backgroundCard) {
-        backgroundCard?.classList.add("detransform1");
-      }
-    };
-
-    const onEnd = (e: any) => {
-      document.removeEventListener("mousemove", onMove);
-      document.removeEventListener("touchmove", onMove);
-
-      document.removeEventListener("mouseup", onEnd);
-      document.removeEventListener("touchend", onEnd);
-
-      const isCardDecision = Math.abs(pullDeltaX) > CARD_DECISION_THRESHOLD;
-
-      if (isCardDecision) {
-        card.style.transition = "transform 0.5s";
-        card.style.transform = `translateX(${
-          pullDeltaX > 0 ? 1000 : -1000
-        }px) rotate(${pullDeltaX > 0 ? 90 : -90}deg)`;
-
-        card.addEventListener(
-          "transitionend",
-          () => {
-            isAnimating = false;
-            pullDeltaX = 0;
-            next();
-          },
-          { once: true }
-        );
-      } else {
-        card.style.transition = "transform 0.5s";
-        card.style.transform = "translateX(0) rotate(0deg)";
-
-        backgroundCard.closest("div")?.classList.remove("detransform1");
-        backgroundCard.style.transition = "transform 0.9s";
-      }
-
-      card.addEventListener(
-        "transitionend",
-        () => {
-          isAnimating = false;
-          pullDeltaX = 0;
-        },
-        { once: true }
-      );
-    };
-
-    document.addEventListener("mousemove", onMove);
-    document.addEventListener("touchmove", onMove, { passive: true });
-
-    document.addEventListener("mouseup", onEnd);
-    document.addEventListener("touchend", onEnd);
-  }
-
-  document.addEventListener("mousedown", startDrag);
-  document.addEventListener("touchstart", startDrag, { passive: true });
+  document.addEventListener("mousedown", dragEvent);
+  document.addEventListener("touchstart", dragEvent, { passive: true });
 
   const handleFlip = () => {
     setShowAnswer(!showAnswer);
@@ -123,7 +46,7 @@ function Page({ params }: { params: { category: string; id: string } }) {
 
   return (
     <>
-      <section className="relative w-[40vh] h-[70vh] md:h-[50vh] md:w-[60vh] aspect-video">
+      <section className="relative w-[38vh] h-[60vh] md:h-[50vh] md:w-[60vh] aspect-video">
         {currentCard && (
           <div className="draggable h-full w-full absolute z-20">
             <FlashCard
