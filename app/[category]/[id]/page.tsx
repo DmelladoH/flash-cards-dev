@@ -36,6 +36,9 @@ function Page({ params }: { params: { category: string; id: string } }) {
 
     const card = (e.target as HTMLElement)?.closest("article");
 
+    const backgroundCard = (e.target as HTMLElement)?.closest("article")
+      ?.parentNode?.parentNode?.children[1].firstElementChild as HTMLElement;
+
     if (!card) return;
 
     const startX =
@@ -54,6 +57,10 @@ function Page({ params }: { params: { category: string; id: string } }) {
       const deg = pullDeltaX / 10;
 
       card.style.transform = `translateX(${pullDeltaX}px) rotate(${deg}deg)`;
+
+      if (backgroundCard) {
+        backgroundCard.closest("div")?.classList.add("detransform1");
+      }
     };
 
     const onEnd = (e: any) => {
@@ -83,6 +90,9 @@ function Page({ params }: { params: { category: string; id: string } }) {
       } else {
         card.style.transition = "transform 0.5s";
         card.style.transform = "translateX(0) rotate(0deg)";
+
+        backgroundCard.closest("div")?.classList.remove("detransform1");
+        backgroundCard.style.transition = "transform 0.5s";
       }
 
       card.addEventListener(
