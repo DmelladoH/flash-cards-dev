@@ -69,6 +69,8 @@ export function startDrag({ isAnimating, e, next }: startDragElements) {
       card.style.transition = "transform 0.5s";
       card.style.transform = "translateX(0) rotate(0deg)";
 
+      if (backgroundCard == null) return;
+
       backgroundCard.closest("div")?.classList.remove("detransform1");
       backgroundCard.style.transition = "transform 0.9s";
     }
