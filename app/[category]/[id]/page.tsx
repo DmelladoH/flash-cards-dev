@@ -2,11 +2,10 @@
 
 import useFlashCards from "@/hooks/useFlashCards";
 import FlashCard from "@/components/UI/flashCard";
-import { FlipSvg } from "@/components/svgs/flipSvg";
-import { NextSvg } from "@/components/svgs/nextSvg";
 import { startDrag } from "@/helpers/dragHelper";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
+import { ControlFooter } from "@/components/control-footer";
 
 function Page({ params }: { params: { category: string; id: string } }) {
   const router = useRouter();
@@ -122,24 +121,10 @@ function Page({ params }: { params: { category: string; id: string } }) {
       </section>
 
       {currentCard != null && (
-        <footer className="text-white mt-10 flex gap-9 justify-center">
-          <button
-            className="transition hover:scale-110 duration-300 ease-in-out"
-            onClick={handleNextCard}
-          >
-            <div className="bg-white rounded-full block p-4">
-              <NextSvg />
-            </div>
-          </button>
-          <button
-            onClick={handleFlip}
-            className="transition hover:scale-110 duration-300 ease-in-out"
-          >
-            <div className="bg-white rounded-full block p-4">
-              <FlipSvg />
-            </div>
-          </button>
-        </footer>
+        <ControlFooter
+          handleNextCard={handleNextCard}
+          handleFlip={handleFlip}
+        />
       )}
     </>
   );
