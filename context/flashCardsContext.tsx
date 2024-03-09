@@ -1,5 +1,5 @@
 import { createContext, useState } from "react";
-import { Card } from "../types";
+import { Card } from "../app/types";
 
 interface FlashCardsContextProps {
   deck: Card[];

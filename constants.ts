@@ -1,1 +1,1 @@
-export const CARD_DECISION_THRESHOLD = 120;
+export const CARD_DECISION_THRESHOLD = 160;

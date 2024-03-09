@@ -1,11 +1,10 @@
 "use client";
 
-import useFlashCards from "@/app/hooks/useFlashCards";
+import useFlashCards from "@/hooks/useFlashCards";
 import FlashCard from "@/components/UI/flashCard";
 import { FlipSvg } from "@/components/svgs/flipSvg";
 import { NextSvg } from "@/components/svgs/nextSvg";
 import { startDrag } from "@/helpers/dragHelper";
-import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
 
@@ -17,16 +16,19 @@ function Page({ params }: { params: { category: string; id: string } }) {
 
   const { category, id } = params;
 
-  const { currentCard, pickNextCard, setNextCard } = useFlashCards({
-    category: "JavaScript",
+  const draggableCard = document.querySelector(".draggable") as HTMLElement;
+
+  const { deck, currentCard, nextCard, setNextCard } = useFlashCards({
+    category: category,
     currentCardId: id,
   });
 
-  const nextCard = pickNextCard();
+  console.log({ currentCard, nextCard, deck });
 
   const next = () => {
     if (nextCard == null) return;
-    setNextCard(), router.push(`/${category}/${nextCard.id}`);
+    setNextCard();
+    router.push(`/${category}/${nextCard.id}`);
   };
 
   const dragEvent = (e: MouseEvent | TouchEvent) => {
@@ -92,17 +94,32 @@ function Page({ params }: { params: { category: string; id: string } }) {
 
       {nextCard && (
         <footer className="text-white mt-10 flex gap-9 justify-center">
-          <Link
+          <button
             className="transition hover:scale-110 duration-300 ease-in-out"
-            href={`/${category}/${nextCard.id}`}
+            // href={`/${category}/${nextCard.id}`}
             onClick={() => {
-              setNextCard();
+              if (!draggableCard) return;
+              // draggableCard.classList.add("animation-go-right");
+              draggableCard.style.transition = "transform 1s";
+              draggableCard.style.transform = `translateX(${2000}px) rotate(${90}deg)`;
+              // draggableCard.style.transform = `translateX(90px) rotate(20deg)`;
+
+              draggableCard.addEventListener(
+                "transitionend",
+                () => {
+                  isAnimating = false;
+                  // next();
+                },
+                { once: true }
+              );
+              console.log({ draggableCard });
+              // setNextCard();
             }}
           >
             <div className="bg-white rounded-full block p-4">
               <NextSvg />
             </div>
-          </Link>
+          </button>
           <button
             onClick={handleFlip}
             className="transition hover:scale-110 duration-300 ease-in-out"
