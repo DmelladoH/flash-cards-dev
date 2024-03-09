@@ -84,6 +84,7 @@ export function startDrag({ isAnimating, e, next }: startDragElements) {
       { once: true }
     );
   };
+
   document.addEventListener("mousemove", onMove);
   document.addEventListener("touchmove", onMove, { passive: true });
 

@@ -1,4 +1,4 @@
-import { useContext, useEffect, useState } from "react";
+import { use, useContext, useEffect } from "react";
 import { Card } from "../app/types";
 import { getCardsByCategory } from "@/services/getCards";
 import { FlashCardsContext } from "@/context/flashCardsContext";
@@ -9,24 +9,24 @@ interface Props {
 }
 
 function useFlashCards({ category, currentCardId }: Props) {
-  // const [deck, setDeck] = useState<Card[]>([]);
   const { deck, setDeck } = useContext<any>(FlashCardsContext);
 
-  // const [currentCard, setCurrentCard] = useState<Card | null>(null);
-  // const [index, setIndex] = useState<number>(0);
-
   useEffect(() => {
+    const cards = getCardsByCategory(category);
+
     if (currentCardId) {
-      const currentCard = deck.find((card: Card) => card.id === currentCardId);
-      const restOfDeck = deck.filter((card: Card) => card.id !== currentCardId);
+      const currentCard = cards.find((card: Card) => card.id === currentCardId);
+      const restOfDeck = cards.filter(
+        (card: Card) => card.id !== currentCardId
+      );
       shuffle(restOfDeck);
+
+      if (!currentCard) return;
+
       restOfDeck.push(currentCard);
       setDeck(restOfDeck);
-
       return;
     }
-
-    const cards = getCardsByCategory(category);
     const shuffledCards = shuffle(cards);
     setDeck(shuffledCards);
   }, [category, currentCardId]);
@@ -56,32 +56,7 @@ function useFlashCards({ category, currentCardId }: Props) {
     return deck[deck.length - 2];
   };
 
-  // useEffect(() => {
-
-  //   if (currentCardId) {
-  //     const cardIndex = deck.findIndex(
-  //       (card: Card) => card.id === currentCardId
-  //     );
-  //     setCurrentCard(deck[cardIndex]);
-  //     setIndex(cardIndex);
-  //   } else {
-  //     setCurrentCard(deck[0]);
-  //     setIndex(0);
-  //   }
-  // }, [currentCardId, deck]);
-
-  // const setNextCard = () => {
-  //   const newIndex = index + 1;
-  //   setIndex(newIndex);
-  //   setCurrentCard(deck[newIndex]);
-  // };
-
-  // const pickNextCard = () => {
-  //   return deck[index + 1];
-  // };
-
   return {
-    deck,
     currentCard: peek(),
     setNextCard: pop,
     nextCard: peekSecondCard(),

@@ -17,18 +17,18 @@ function Page({ params }: { params: { category: string; id: string } }) {
   const { category, id } = params;
 
   const draggableCard = document.querySelector(".draggable") as HTMLElement;
+  const backgroundCard = document
+    .getElementsByClassName("first")
+    .item(0) as HTMLElement;
 
-  const { deck, currentCard, nextCard, setNextCard } = useFlashCards({
+  const { currentCard, nextCard, setNextCard } = useFlashCards({
     category: category,
     currentCardId: id,
   });
 
-  console.log({ currentCard, nextCard, deck });
-
   const next = () => {
-    if (nextCard == null) return;
     setNextCard();
-    router.push(`/${category}/${nextCard.id}`);
+    router.push(`/${category}/${nextCard?.id}`);
   };
 
   const dragEvent = (e: MouseEvent | TouchEvent) => {
@@ -44,6 +44,25 @@ function Page({ params }: { params: { category: string; id: string } }) {
 
   const handleFlip = () => {
     setShowAnswer(!showAnswer);
+  };
+
+  const handleNextCard = () => {
+    if (!draggableCard) return;
+    draggableCard.style.transition = "transform 1s";
+    draggableCard.style.transform = `translateX(${2000}px) rotate(${90}deg)`;
+
+    if (backgroundCard) {
+      backgroundCard?.classList.add("detransform1");
+    }
+
+    draggableCard.addEventListener(
+      "transitionend",
+      () => {
+        isAnimating = false;
+        next();
+      },
+      { once: true }
+    );
   };
 
   return (
@@ -86,35 +105,27 @@ function Page({ params }: { params: { category: string; id: string } }) {
         )}
 
         {currentCard == null && (
-          <div className="h-full w-full absolute z-20 flex items-center justify-center">
+          <div className="mt-10 grid items-center justify-center gap-4 align-middle">
             <div className="text-white text-3xl">No more cards</div>
+            <div className="">
+              <button
+                onClick={() => {
+                  router.push(`/${category}`);
+                }}
+                className="text-white text-3xl bg-orange-400 p-5 rounded-full transition hover:scale-110 duration-300 ease-in-out"
+              >
+                refresh
+              </button>
+            </div>
           </div>
         )}
       </section>
 
-      {nextCard && (
+      {currentCard != null && (
         <footer className="text-white mt-10 flex gap-9 justify-center">
           <button
             className="transition hover:scale-110 duration-300 ease-in-out"
-            // href={`/${category}/${nextCard.id}`}
-            onClick={() => {
-              if (!draggableCard) return;
-              // draggableCard.classList.add("animation-go-right");
-              draggableCard.style.transition = "transform 1s";
-              draggableCard.style.transform = `translateX(${2000}px) rotate(${90}deg)`;
-              // draggableCard.style.transform = `translateX(90px) rotate(20deg)`;
-
-              draggableCard.addEventListener(
-                "transitionend",
-                () => {
-                  isAnimating = false;
-                  // next();
-                },
-                { once: true }
-              );
-              console.log({ draggableCard });
-              // setNextCard();
-            }}
+            onClick={handleNextCard}
           >
             <div className="bg-white rounded-full block p-4">
               <NextSvg />
