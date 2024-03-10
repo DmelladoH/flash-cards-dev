@@ -41,7 +41,7 @@ export function ControlFooter({
 
       {hover && (
         <div>
-          <p className="uppercase font-bold underline text-center text-2xl">
+          <p className="uppercase opacity-75 font-bold text-center text-2xl">
             {hover}
           </p>
         </div>
