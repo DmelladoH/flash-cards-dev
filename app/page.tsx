@@ -1,21 +1,18 @@
 import Link from "next/link";
 import Category from "@/components/UI/category";
-import JavaScriptSVG from "@/components/svgs/javaScript";
 
 export default function Home() {
-  const categories = [{ name: "JavaScript", icon: "/public/javascript.svg" }];
+  const categories = [{ name: "JavaScript", icon: "/javaScript.svg" }];
 
   return (
     <>
       <div>
-        <h3>Choose a category</h3>
+        <h3 className="text-3xl">Choose a category</h3>
         <ul>
           {categories.map((category) => (
             <li key={category.name}>
               <Link href={`/${category.name}`}>
-                <Category name={category.name}>
-                  <JavaScriptSVG />
-                </Category>
+                <Category name={category.name} img={category.icon} />
               </Link>
             </li>
           ))}
