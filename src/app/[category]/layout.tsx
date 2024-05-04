@@ -1,20 +1,22 @@
-import Link from "next/link";
-import { getCartsByCategory } from "~/server/queries";
+"use client";
 
-export default async function CategoryLayout({
+import Link from "next/link";
+import { DeckProvider } from "~/context/deck-context";
+
+export default function CategoryLayout({
   children,
   params: { category },
 }: {
   params: { category: string };
   children: React.ReactNode;
 }) {
-  const cards = await getCartsByCategory(category);
-
   return (
-    <div>
-      <p>Layout --- {category} ----</p>
-      {children}
-      <Link href={`${cards[0].id}`}> Next Card </Link>
-    </div>
+    <DeckProvider>
+      <div>
+        <p>Layout --- {category} ----</p>
+        {children}
+        {/* <Link href={`${cards[0].id}`}> Next Card </Link> */}
+      </div>
+    </DeckProvider>
   );
 }
