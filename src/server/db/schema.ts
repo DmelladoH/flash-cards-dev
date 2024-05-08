@@ -18,11 +18,14 @@ import {
  */
 export const createTable = pgTableCreator((name) => `flash-cards-dev_${name}`);
 
-export const categories = createTable(
-  "categories",
+export const cards = createTable(
+  "Cards",
   {
     id: serial("id").primaryKey(),
-    name: varchar("name", { length: 256 }),
+    name: varchar("name", { length: 256 }).notNull(),
+    question: varchar("question", { length: 256 }).notNull(),
+    answer: varchar("answer", { length: 756 }).notNull(),
+    category: varchar("category", { length: 256 }).notNull(),
     createdAt: timestamp("created_at")
       .default(sql`CURRENT_TIMESTAMP`)
       .notNull(),
@@ -32,3 +35,18 @@ export const categories = createTable(
     nameIndex: index("name_idx").on(example.name),
   }),
 );
+
+// export const categories = createTable(
+//   "categories",
+//   {
+//     id: serial("id").primaryKey(),
+//     name: varchar("name", { length: 256 }),
+//     createdAt: timestamp("created_at")
+//       .default(sql`CURRENT_TIMESTAMP`)
+//       .notNull(),
+//     updatedAt: timestamp("updatedAt"),
+//   },
+//   (example) => ({
+//     nameIndex: index("name_idx").on(example.name),
+//   }),
+// );

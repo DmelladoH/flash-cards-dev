@@ -1,9 +1,11 @@
 import Link from "next/link";
 import JavaScriptSVG from "~/resources/javaScriptSvg";
-import { getCategories } from "~/server/queries";
+import { getCartsByCategory, getCategories } from "~/server/queries";
 
 export default async function HomePage() {
   const categories = await getCategories();
+  const res = await getCartsByCategory("JavaScript");
+  console.log({ res });
   console.log({ categories });
   return (
     <main className="grid items-center justify-center">
@@ -12,7 +14,7 @@ export default async function HomePage() {
         <h2>Choose the category</h2>
         <ul>
           <li>
-            <Link href="/JavaScript">
+            <Link href="/cards/JavaScript">
               <article className="rounded-md">
                 <JavaScriptSVG />
               </article>
