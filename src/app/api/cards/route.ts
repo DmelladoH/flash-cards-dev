@@ -1,5 +1,6 @@
 import { NextRequest, NextResponse } from "next/server";
 import { getCartsByCategory } from "~/server/queries";
+import { shuffle } from "~/util/randomizer";
 
 export async function GET(req: NextRequest) {
   const url = new URL(req.url);
@@ -8,6 +9,9 @@ export async function GET(req: NextRequest) {
   if (category == null) return;
 
   const cards = await getCartsByCategory(category);
+  console.log({ cards });
+  const randomCards = shuffle(cards);
+  console.log({ randomCards });
 
-  return NextResponse.json({ cards });
+  return NextResponse.json({ randomCards });
 }

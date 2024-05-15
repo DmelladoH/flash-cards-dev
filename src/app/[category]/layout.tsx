@@ -5,8 +5,8 @@ export default function CategoryLayout({
   children,
   params: { category },
 }: {
-  params: { category: string };
   children: React.ReactNode;
+  params: { category: string };
 }) {
   return (
     <DeckProvider>
