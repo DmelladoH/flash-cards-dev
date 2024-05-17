@@ -11,7 +11,10 @@ export default function CategoryLayout({
   return (
     <DeckProvider>
       <div>
-        <p>Layout --- {category} ----</p>
+        <header className="flex gap-7">
+          <Link href={"/"}>back</Link>
+          <h1 className="text-xl">{category}</h1>
+        </header>
         {children}
         {/* <Link href={`${cards[0].id}`}> Next Card </Link> */}
       </div>

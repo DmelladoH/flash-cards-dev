@@ -1,13 +1,13 @@
 "use client";
-import { usePathname } from "next/navigation";
-import { useContext, useEffect } from "react";
-import { DeckContext } from "~/context/deck-context";
+import { redirect, usePathname } from "next/navigation";
+import { useEffect } from "react";
+import { useDeck } from "~/hooks/useDeck";
 
 function Page() {
   const pathname = usePathname();
   const category = pathname.slice(1);
 
-  const { deck, setDeck } = useContext(DeckContext);
+  const { pop, setDeck, deck } = useDeck();
 
   useEffect(() => {
     const a = async () => {
@@ -20,13 +20,6 @@ function Page() {
 
     a();
   }, [category]);
-
-  return (
-    <div className="text-white">
-      <p>carts:</p>
-      {JSON.stringify(deck)}
-    </div>
-  );
 }
 
 export default Page;

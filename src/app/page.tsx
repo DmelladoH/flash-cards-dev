@@ -1,10 +1,7 @@
 import Link from "next/link";
 import JavaScriptSVG from "~/resources/javaScriptSvg";
-import { getCategories } from "~/server/queries";
 
 export default async function HomePage() {
-  const categories = await getCategories();
-
   return (
     <main className="grid items-center justify-center">
       <h1 className="text-4xl">FlashCards</h1>
