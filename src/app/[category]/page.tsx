@@ -1,25 +1,17 @@
 "use client";
-import { redirect, usePathname } from "next/navigation";
-import { useEffect } from "react";
+import { redirect } from "next/navigation";
 import { useDeck } from "~/hooks/useDeck";
 
-function Page() {
-  const pathname = usePathname();
-  const category = pathname.slice(1);
+function Page({ params }: { params: { category: string } }) {
+  const { category } = params;
 
-  const { pop, setDeck, deck } = useDeck();
+  const { currentCard, size } = useDeck({ category });
 
-  useEffect(() => {
-    const a = async () => {
-      const res = await fetch("/api/cards?cat=JavaScript");
-      const resJson = await res.json();
-      if (resJson == null) return;
+  if (currentCard == undefined || size === 0 || category == undefined) {
+    return <div>404</div>;
+  }
 
-      setDeck(resJson);
-    };
-
-    a();
-  }, [category]);
+  redirect(`${category}/${currentCard.name}`);
 }
 
 export default Page;

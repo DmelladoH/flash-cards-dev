@@ -1,7 +1,8 @@
 export interface Card {
   id: string;
+  name: string;
   question: string;
-  sortAnswer: string;
+  answer: string;
   category: string;
   tags: string[];
 }

@@ -11,7 +11,8 @@ export async function GET(req: NextRequest) {
   const cards = await getCartsByCategory(category);
   console.log({ cards });
   const randomCards = shuffle(cards);
+
   console.log({ randomCards });
 
-  return NextResponse.json({ randomCards });
+  return NextResponse.json([...randomCards]);
 }

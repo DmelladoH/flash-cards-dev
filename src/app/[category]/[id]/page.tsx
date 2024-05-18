@@ -1,11 +1,21 @@
-import { getCartById } from "~/server/queries";
+"use client";
 
-async function Page({ params: { id } }: { params: { id: string } }) {
-  // const cart = await getCartById(id);
+import { usePathname } from "next/navigation";
+import { useDeck } from "~/hooks/useDeck";
 
+function Page({ params }: { params: { category: string; id: string } }) {
+  const { category, id } = params;
+  console.log({ category, id });
+  const { currentCard } = useDeck({ category });
+  console.log(currentCard);
+
+  if (currentCard == null) return <p>error.</p>;
   return (
     <>
-      <article>{/* <h3>{cart.question}</h3> */}</article>
+      <h1>CARDDD</h1>
+      <article>
+        <h2>{currentCard.question}</h2>
+      </article>
     </>
   );
 }
