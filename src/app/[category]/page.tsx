@@ -5,13 +5,20 @@ import { useDeck } from "~/hooks/useDeck";
 function Page({ params }: { params: { category: string } }) {
   const { category } = params;
 
-  const { currentCard, size } = useDeck({ category });
-
-  if (currentCard == undefined || size === 0 || category == undefined) {
+  const { currentCard, error, isLoading } = useDeck({ category });
+  console.log({
+    isLoading,
+    error,
+  });
+  if (error != null) {
     return <div>404</div>;
   }
 
-  redirect(`${category}/${currentCard.name}`);
+  if (isLoading) {
+    return <p>cargando...</p>;
+  }
+
+  redirect(`${category}/${currentCard?.name}`);
 }
 
 export default Page;

@@ -1,6 +1,5 @@
 "use client";
 
-import { usePathname } from "next/navigation";
 import { useDeck } from "~/hooks/useDeck";
 
 function Page({ params }: { params: { category: string; id: string } }) {

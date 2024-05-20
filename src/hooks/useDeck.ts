@@ -1,6 +1,7 @@
-import { useContext, useEffect, useRef } from "react";
+import { useContext, useEffect, useRef, useState } from "react";
 import { DeckContext } from "~/context/deck-context";
 import { Card } from "~/types";
+import { getErrorMessage } from "~/util/errorHandling";
 
 interface Props {
   category: string;
@@ -9,6 +10,8 @@ interface Props {
 
 export function useDeck({ category, currentCardId }: Props) {
   const context = useContext(DeckContext);
+  const [isLoading, setIsLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
   const prevCategoryRef = useRef("");
 
   if (context == null) {
@@ -19,10 +22,19 @@ export function useDeck({ category, currentCardId }: Props) {
 
   useEffect(() => {
     const getRandomCards = async () => {
-      const res = await fetch(`/api/cards?cat=${category}`);
-      const resJson = await res.json();
-      if (resJson == null) return;
-      setDeck(resJson);
+      try {
+        setIsLoading(true);
+
+        const res = await fetch(`/api/cards?cat=${category}`);
+        const resJson = await res.json();
+
+        if (resJson == null) return;
+        setDeck(resJson);
+      } catch (e) {
+        setError(getErrorMessage(e));
+      } finally {
+        setIsLoading(false);
+      }
     };
 
     if (prevCategoryRef.current == category) return;
@@ -53,6 +65,8 @@ export function useDeck({ category, currentCardId }: Props) {
 
   return {
     deck,
+    error,
+    isLoading,
     currentCard: peek(),
     setNextCard: pop,
     nextCard: peekSecondCard(),
