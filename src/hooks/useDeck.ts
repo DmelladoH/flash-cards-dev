@@ -21,6 +21,7 @@ export function useDeck({ category, currentCardId }: Props) {
   const { deck, setDeck } = context;
 
   useEffect(() => {
+    debugger;
     const getRandomCards = async () => {
       try {
         setIsLoading(true);
