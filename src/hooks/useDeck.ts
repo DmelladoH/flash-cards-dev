@@ -27,7 +27,7 @@ export function useDeck({ category, currentCardId }: Props) {
       const resJson = await res.json();
 
       if (resJson == null) return;
-      setDeck(resJson);
+      return resJson;
     } catch (e) {
       setError(getErrorMessage(e));
     } finally {
@@ -37,8 +37,22 @@ export function useDeck({ category, currentCardId }: Props) {
 
   useEffect(() => {
     if (deck != null && deck[0]?.category === category) return;
-    getRandomCards();
-  }, [category]);
+    getRandomCards().then((res) => {
+      console.log({ res });
+      let deck = res;
+
+      if (currentCardId != null) {
+        const firstCard = res.find((arr: Card) => arr.name === currentCardId);
+        deck = [
+          ...res.filter((arr: Card) => arr.name !== currentCardId),
+          firstCard,
+        ];
+
+        console.log({ deck });
+      }
+      setDeck(deck);
+    });
+  }, [category, currentCardId]);
 
   const size = () => {
     return deck.length;

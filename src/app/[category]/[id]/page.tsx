@@ -11,8 +11,9 @@ function Page({ params }: { params: { category: string; id: string } }) {
   const { category, id } = params;
   const [showAnswer, setShowAnswer] = useState(false);
 
-  const { currentCard, nextCard, setNextCard, getRandomCards } = useDeck({
+  const { currentCard, nextCard, setNextCard } = useDeck({
     category,
+    currentCardId: id,
   });
 
   const next = () => {
@@ -22,7 +23,6 @@ function Page({ params }: { params: { category: string; id: string } }) {
   };
 
   const handleRest = () => {
-    // getRandomCards();
     router.push(`/${category}`);
   };
 
