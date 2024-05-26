@@ -15,7 +15,7 @@ export default function CategoryLayout({
           <Link href={"/"}>back</Link>
           <h1 className="text-xl">{category}</h1>
         </header>
-        {children}
+        <main className="flex items-center justify-center">{children}</main>
         {/* <Link href={`${cards[0].id}`}> Next Card </Link> */}
       </div>
     </DeckProvider>

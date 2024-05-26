@@ -7,6 +7,7 @@ function Page({ params }: { params: { category: string } }) {
 
   const { currentCard, error, isLoading } = useDeck({ category });
   console.log({
+    currentCard,
     isLoading,
     error,
   });

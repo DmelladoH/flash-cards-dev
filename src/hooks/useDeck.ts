@@ -1,4 +1,4 @@
-import { useContext, useEffect, useRef, useState } from "react";
+import { useCallback, useContext, useEffect, useState } from "react";
 import { DeckContext } from "~/context/deck-context";
 import { Card } from "~/types";
 import { getErrorMessage } from "~/util/errorHandling";
@@ -12,7 +12,6 @@ export function useDeck({ category, currentCardId }: Props) {
   const context = useContext(DeckContext);
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
-  const prevCategoryRef = useRef("");
 
   if (context == null) {
     throw new Error("Error: deck must be use within deckContext");
@@ -20,27 +19,25 @@ export function useDeck({ category, currentCardId }: Props) {
 
   const { deck, setDeck } = context;
 
+  const getRandomCards = useCallback(async () => {
+    try {
+      setIsLoading(true);
+
+      const res = await fetch(`/api/cards?cat=${category}`);
+      const resJson = await res.json();
+
+      if (resJson == null) return;
+      setDeck(resJson);
+    } catch (e) {
+      setError(getErrorMessage(e));
+    } finally {
+      setIsLoading(false);
+    }
+  }, []);
+
   useEffect(() => {
-    debugger;
-    const getRandomCards = async () => {
-      try {
-        setIsLoading(true);
-
-        const res = await fetch(`/api/cards?cat=${category}`);
-        const resJson = await res.json();
-
-        if (resJson == null) return;
-        setDeck(resJson);
-      } catch (e) {
-        setError(getErrorMessage(e));
-      } finally {
-        setIsLoading(false);
-      }
-    };
-
-    if (prevCategoryRef.current == category) return;
+    if (deck != null && deck[0]?.category === category) return;
     getRandomCards();
-    prevCategoryRef.current = category;
   }, [category]);
 
   const size = () => {
@@ -68,6 +65,7 @@ export function useDeck({ category, currentCardId }: Props) {
     deck,
     error,
     isLoading,
+    getRandomCards,
     currentCard: peek(),
     setNextCard: pop,
     nextCard: peekSecondCard(),
