@@ -26,6 +26,9 @@ function Page({ params }: { params: { category: string; id: string } }) {
     router.push(`/${category}`);
   };
 
+  const handleFlip = () => {
+    setShowAnswer((prev) => !prev);
+  };
   if (currentCard == null)
     return (
       <div>
@@ -43,7 +46,7 @@ function Page({ params }: { params: { category: string; id: string } }) {
                 question={currentCard.question}
                 answer={currentCard.answer}
                 showAnswer={showAnswer}
-                handleFlip={() => {}}
+                handleFlip={handleFlip}
               />
             </Draggable>
           </div>

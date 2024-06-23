@@ -4,7 +4,41 @@ import { startDrag } from "~/helpers/dragHelper";
 export function useDrag() {
   const [draggableCard, setDraggableCard] = useState<HTMLElement>();
   const [backgroundCard, setBackgroundCard] = useState<HTMLElement>();
+
+  const [isDragging, setIsDragging] = useState(false);
+  const [mouseDownPosition, setMouseDownPosition] = useState<{
+    x: number;
+    y: number;
+  }>({ x: 0, y: 0 });
+
   let isAnimating = false;
+
+  const handleMouseDown = (event: any) => {
+    setMouseDownPosition({ x: event.clientX, y: event.clientY });
+    setIsDragging(false);
+  };
+
+  const handleMouseUp = (event: any, action: any) => {
+    if (!isDragging) {
+      // Trigger the button action if it's not a drag
+      console.log("Button clicked");
+      action();
+    } else {
+      console.log("Button dragged");
+    }
+  };
+
+  const handleMouseMove = (event: any) => {
+    const distanceMoved = Math.sqrt(
+      Math.pow(event.clientX - mouseDownPosition.x, 2) +
+        Math.pow(event.clientY - mouseDownPosition.y, 2),
+    );
+
+    if (distanceMoved > 5) {
+      // Adjust this threshold as needed
+      setIsDragging(true);
+    }
+  };
 
   useEffect(() => {
     setDraggableCard(document.querySelector(".draggable") as HTMLElement);
@@ -40,5 +74,11 @@ export function useDrag() {
     );
   };
 
-  return { handleNextCard, dragEvent };
+  return {
+    handleNextCard,
+    dragEvent,
+    handleMouseDown,
+    handleMouseUp,
+    handleMouseMove,
+  };
 }
