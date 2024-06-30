@@ -39,13 +39,13 @@ export function ControlFooter({
         </button>
       </div>
 
-      {hover && (
-        <div>
+      <div className="h-8">
+        {hover && (
           <p className="text-center text-2xl font-bold uppercase opacity-75">
             {hover}
           </p>
-        </div>
-      )}
+        )}
+      </div>
     </footer>
   );
 }
