@@ -13,22 +13,20 @@ export function useDrag() {
 
   let isAnimating = false;
 
-  const handleMouseDown = (event: any) => {
+  const handleMouseDown = (event: React.MouseEvent<HTMLButtonElement>) => {
     setMouseDownPosition({ x: event.clientX, y: event.clientY });
     setIsDragging(false);
   };
 
-  const handleMouseUp = (event: any, action: any) => {
-    if (!isDragging) {
-      // Trigger the button action if it's not a drag
-      console.log("Button clicked");
-      action();
-    } else {
-      console.log("Button dragged");
-    }
+  const handleMouseUp = (
+    event: React.MouseEvent<HTMLButtonElement>,
+    action: () => void,
+  ) => {
+    if (isDragging) return;
+    action();
   };
 
-  const handleMouseMove = (event: any) => {
+  const handleMouseMove = (event: React.MouseEvent<HTMLButtonElement>) => {
     const distanceMoved = Math.sqrt(
       Math.pow(event.clientX - mouseDownPosition.x, 2) +
         Math.pow(event.clientY - mouseDownPosition.y, 2),

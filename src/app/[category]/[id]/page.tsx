@@ -53,6 +53,9 @@ function Page({ params }: { params: { category: string; id: string } }) {
           <div className="">
             <button onClick={next}>next</button>
           </div>
+          <div>
+            <button onClick={handleFlip}>Flip</button>
+          </div>
         </>
       )}
     </div>
