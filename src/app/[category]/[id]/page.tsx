@@ -17,9 +17,18 @@ function Page({ params }: { params: { category: string; id: string } }) {
   });
 
   const next = () => {
-    setNextCard();
-    if (nextCard == null) return;
-    router.push(`/${category}/${nextCard?.name}`);
+    const card = document.getElementById("flashcard");
+
+    if (!card) return;
+
+    card.style.transition = "transform 1s";
+    card.style.transform = `translateX(${2000}px) rotate(${90}deg)`;
+
+    setTimeout(() => {
+      setNextCard();
+      if (nextCard == null) return;
+      router.push(`/${category}/${nextCard?.name}`);
+    }, 500);
   };
 
   const handleRest = () => {
