@@ -38,7 +38,6 @@ export function useDeck({ category, currentCardId }: Props) {
   useEffect(() => {
     if (deck != null && deck[0]?.category === category) return;
     getRandomCards().then((res) => {
-      console.log({ res });
       let deck = res;
 
       if (currentCardId != null) {
@@ -47,8 +46,6 @@ export function useDeck({ category, currentCardId }: Props) {
           ...res.filter((arr: Card) => arr.name !== currentCardId),
           firstCard,
         ];
-
-        console.log({ deck });
       }
       setDeck(deck);
     });
