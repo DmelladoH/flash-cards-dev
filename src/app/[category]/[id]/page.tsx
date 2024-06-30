@@ -18,6 +18,12 @@ function Page({ params }: { params: { category: string; id: string } }) {
   });
 
   const next = () => {
+    setNextCard();
+    if (nextCard == null) return;
+    router.push(`/${category}/${nextCard?.name}`);
+  };
+
+  const buttonNext = () => {
     const card = document.getElementById("flashcard");
 
     if (!card) return;
@@ -26,9 +32,7 @@ function Page({ params }: { params: { category: string; id: string } }) {
     card.style.transform = `translateX(${2000}px) rotate(${90}deg)`;
 
     setTimeout(() => {
-      setNextCard();
-      if (nextCard == null) return;
-      router.push(`/${category}/${nextCard?.name}`);
+      next();
     }, 500);
   };
 
@@ -60,7 +64,7 @@ function Page({ params }: { params: { category: string; id: string } }) {
               />
             </Draggable>
           </div>
-          <ControlFooter handleFlip={flip} handleNextCard={next} />
+          <ControlFooter handleFlip={flip} handleNextCard={buttonNext} />
         </>
       )}
     </div>
