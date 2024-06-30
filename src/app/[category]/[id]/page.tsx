@@ -3,6 +3,7 @@
 import { useRouter } from "next/navigation";
 import { useState } from "react";
 import FlashCard from "~/components/card";
+import { ControlFooter } from "~/components/control-footer";
 import Draggable from "~/components/draggable";
 import { useDeck } from "~/hooks/useDeck";
 
@@ -35,7 +36,7 @@ function Page({ params }: { params: { category: string; id: string } }) {
     router.push(`/${category}`);
   };
 
-  const handleFlip = () => {
+  const flip = () => {
     setShowAnswer((prev) => !prev);
   };
   if (currentCard == null)
@@ -55,16 +56,11 @@ function Page({ params }: { params: { category: string; id: string } }) {
                 question={currentCard.question}
                 answer={currentCard.answer}
                 showAnswer={showAnswer}
-                handleFlip={handleFlip}
+                handleFlip={flip}
               />
             </Draggable>
           </div>
-          <div className="">
-            <button onClick={next}>next</button>
-          </div>
-          <div>
-            <button onClick={handleFlip}>Flip</button>
-          </div>
+          <ControlFooter handleFlip={flip} handleNextCard={next} />
         </>
       )}
     </div>

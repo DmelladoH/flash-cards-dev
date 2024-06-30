@@ -1,5 +1,5 @@
 import Link from "next/link";
-import JavaScriptSVG from "~/resources/javaScriptSvg";
+import JavaScriptSVG from "~/components/svgs/javaScriptSvg";
 
 export default async function HomePage() {
   return (
