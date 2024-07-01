@@ -54,7 +54,7 @@ function Page({ params }: { params: { category: string; id: string } }) {
     <div>
       {currentCard && (
         <>
-          <div className="relative mt-6 aspect-video h-[60vh] w-[38vh] md:h-[50vh] md:w-[60vh]">
+          <div className="relative aspect-video h-[60vh] w-[38vh] md:h-[50vh] md:w-[60vh]">
             <Draggable action={next}>
               <FlashCard
                 question={currentCard.question}

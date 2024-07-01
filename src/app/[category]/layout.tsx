@@ -10,15 +10,15 @@ export default function CategoryLayout({
 }) {
   return (
     <DeckProvider>
-      <>
-        <header className="flex gap-7">
+      <div className="grid h-screen p-0">
+        <header className="grid p-2">
           <Link href={"/"}>back</Link>
-          <h1 className="text-xl">{category}</h1>
+          <div className="flex justify-center align-middle">
+            <h1 className="text-2xl">{category}</h1>
+          </div>
         </header>
-        <main className="flex h-full items-center justify-center">
-          {children}
-        </main>
-      </>
+        <main className="flex items-center justify-center">{children}</main>
+      </div>
     </DeckProvider>
   );
 }
