@@ -45,9 +45,11 @@ function Page({ params }: { params: { category: string; id: string } }) {
   };
   if (currentCard == null)
     return (
-      <div>
-        <p>No hay mas cartas</p>
-        <button onClick={handleRest}>reset</button>
+      <div className="grid gap-2">
+        <p>There are no more cards</p>
+        <button onClick={handleRest} className="">
+          reset
+        </button>
       </div>
     );
   return (

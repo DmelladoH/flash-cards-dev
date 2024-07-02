@@ -8,11 +8,11 @@ function Page({ params }: { params: { category: string } }) {
   const { currentCard, error, isLoading } = useDeck({ category });
 
   if (error != null) {
-    return <div>404</div>;
+    return <div>404: card wasn't found </div>;
   }
 
   if (isLoading) {
-    return <p>cargando...</p>;
+    return <p>loading...</p>;
   }
 
   redirect(`${category}/${currentCard?.name}`);
