@@ -25,11 +25,13 @@ function Page({ params }: { params: { category: string; id: string } }) {
 
   const buttonNext = () => {
     const card = document.getElementById("flashcard");
-
+    const bgCard = document.getElementById("backgroundCard");
     if (!card) return;
 
     card.style.transition = "transform 1s";
     card.style.transform = `translateX(${2000}px) rotate(${90}deg)`;
+
+    bgCard && bgCard?.classList.add("detransform-bg-card");
 
     setTimeout(() => {
       next();
@@ -59,12 +61,22 @@ function Page({ params }: { params: { category: string; id: string } }) {
           <div className="relative aspect-video h-[60vh] w-[38vh] md:h-[50vh] md:w-[60vh]">
             <Draggable action={next}>
               <FlashCard
+                id="flashcard"
                 question={currentCard.question}
                 answer={currentCard.answer}
                 showAnswer={showAnswer}
                 handleFlip={flip}
               />
             </Draggable>
+            {nextCard && (
+              <div className="transform-bg-card absolute h-full w-full">
+                <FlashCard
+                  id="backgroundCard"
+                  question={nextCard.question}
+                  answer={nextCard.answer}
+                />
+              </div>
+            )}
           </div>
           <ControlFooter handleFlip={flip} handleNextCard={buttonNext} />
         </>

@@ -10,14 +10,14 @@ export function startDrag({ isAnimating, e, next }: startDragElements) {
   if (isAnimating || e == null) return;
 
   let pullDeltaX: number;
-  const card = (e.target as HTMLElement)?.closest("article");
+  const card = document.getElementById("flashcard");
 
   if (!card) return;
   if (!card.closest("div")?.classList.contains("draggable")) return;
 
   const backgroundCard = document
-    .getElementsByClassName("first")
-    .item(0) as HTMLElement;
+    .getElementById("backgroundCard")
+    ?.closest("div");
 
   const startX =
     e instanceof MouseEvent
@@ -39,7 +39,10 @@ export function startDrag({ isAnimating, e, next }: startDragElements) {
     card.style.transform = `translateX(${pullDeltaX}px) rotate(${deg}deg)`;
 
     if (backgroundCard) {
-      backgroundCard?.classList.add("detransform1");
+      backgroundCard.style.transition = "transform 0.9s";
+      deg >= 4 || deg <= -4
+        ? (backgroundCard.style.transform = `rotate(0deg)`)
+        : (backgroundCard.style.transform = `rotate(${deg}deg)`);
     }
   };
 
@@ -71,10 +74,10 @@ export function startDrag({ isAnimating, e, next }: startDragElements) {
       card.style.transition = "transform 0.5s";
       card.style.transform = "translateX(0) rotate(0deg)";
 
-      if (backgroundCard == null) return;
-
-      backgroundCard.closest("div")?.classList.remove("detransform1");
-      backgroundCard.style.transition = "transform 0.9s";
+      if (backgroundCard) {
+        backgroundCard.style.transition = "transform 0.5s";
+        backgroundCard.style.transform = `rotate(-3deg)`;
+      }
     }
 
     card.addEventListener(
