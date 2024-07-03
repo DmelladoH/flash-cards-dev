@@ -76,7 +76,7 @@ export function startDrag({ isAnimating, e, next }: startDragElements) {
 
       if (backgroundCard) {
         backgroundCard.style.transition = "transform 0.5s";
-        backgroundCard.style.transform = `rotate(-3deg)`;
+        backgroundCard.style.transform = `rotate(-4deg)`;
       }
     }
 

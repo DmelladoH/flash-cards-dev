@@ -3,10 +3,5 @@
 @tailwind utilities;
 
 .transform-bg-card {
-  transform: translateZ(calc(-30px)) translateY(calc(-20px)) rotate(calc(-4deg));
-}
-
-.detransform-bg-card {
-  transform: translateZ(calc(0px)) translateY(calc(0px)) rotate(calc(0deg));
-  transition: all 0.8s ease;
+  transform: rotate(-4deg);
 }
