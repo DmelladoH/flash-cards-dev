@@ -72,13 +72,18 @@ function Page({ params }: { params: { category: string; id: string } }) {
               />
             </Draggable>
             {nextCard && (
-              <div className="transform-bg-card absolute h-full w-full">
-                <FlashCard
-                  id="backgroundCard"
-                  question={nextCard.question}
-                  answer={nextCard.answer}
-                />
-              </div>
+              <>
+                <div className="transform-bg-card absolute h-full w-full">
+                  <FlashCard id="secondBackgroundCard" />
+                </div>
+                <div className="transform-bg-card absolute h-full w-full">
+                  <FlashCard
+                    id="backgroundCard"
+                    question={nextCard.question}
+                    answer={nextCard.answer}
+                  />
+                </div>
+              </>
             )}
           </div>
           <ControlFooter handleFlip={flip} handleNextCard={buttonNext} />

@@ -2,8 +2,8 @@ import { useDrag } from "~/hooks/useDrag";
 
 interface FlashCardProps {
   id: string;
-  question: string;
-  answer: string;
+  question?: string;
+  answer?: string;
   hasExtendedContent?: boolean;
   showAnswer?: boolean;
   handleFlip?: () => void;
@@ -34,15 +34,15 @@ function FlashCard({
         onMouseMove={handleMouseMove}
       >
         {!showAnswer ? (
-          <div>
-            <h3 className="text-xl">{question}</h3>
-          </div>
+          <div>{question && <h3 className="text-xl">{question}</h3>}</div>
         ) : (
           <div>
-            <section
-              dangerouslySetInnerHTML={{ __html: answer }}
-              className="translate-x-0 transform text-pretty"
-            ></section>
+            {answer && (
+              <section
+                dangerouslySetInnerHTML={{ __html: answer }}
+                className="translate-x-0 transform text-pretty"
+              ></section>
+            )}
           </div>
         )}
       </button>
