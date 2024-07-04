@@ -68,8 +68,12 @@ export function useDeck({ category, currentCardId }: Props) {
     return elem;
   };
 
+  const peekCard = (position: number) => {
+    return deck[deck.length - position];
+  };
+
   const peekSecondCard = (): Card | undefined => {
-    return deck[deck.length - 2];
+    return peekCard(2);
   };
 
   return {
@@ -80,6 +84,7 @@ export function useDeck({ category, currentCardId }: Props) {
     currentCard: peek(),
     setNextCard: pop,
     nextCard: peekSecondCard(),
+    peekCard,
     size: size(),
   };
 }

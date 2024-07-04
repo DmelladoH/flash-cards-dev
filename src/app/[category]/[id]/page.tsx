@@ -12,7 +12,7 @@ function Page({ params }: { params: { category: string; id: string } }) {
   const { category, id } = params;
   const [showAnswer, setShowAnswer] = useState(false);
 
-  const { currentCard, nextCard, setNextCard } = useDeck({
+  const { currentCard, nextCard, peekCard, setNextCard } = useDeck({
     category,
     currentCardId: id,
   });
@@ -61,30 +61,28 @@ function Page({ params }: { params: { category: string; id: string } }) {
     <div>
       {currentCard && (
         <>
-          <div className="relative aspect-video h-[60vh] w-[38vh] md:h-[50vh] md:w-[60vh]">
-            <Draggable action={next}>
-              <FlashCard
-                id="flashcard"
-                question={currentCard.question}
-                answer={currentCard.answer}
-                showAnswer={showAnswer}
-                handleFlip={flip}
-              />
-            </Draggable>
-            {nextCard && (
-              <>
-                <div className="transform-bg-card absolute h-full w-full">
-                  <FlashCard id="secondBackgroundCard" />
-                </div>
-                <div className="transform-bg-card absolute h-full w-full">
-                  <FlashCard
-                    id="backgroundCard"
-                    question={nextCard.question}
-                    answer={nextCard.answer}
-                  />
-                </div>
-              </>
+          <div className="relative">
+            {peekCard(3) && (
+              <div className="transform-bg-card absolute aspect-video h-[60vh] w-[38vh] md:h-[50vh] md:w-[60vh]">
+                <FlashCard id="secondBackgroundCard" />
+              </div>
             )}
+            {nextCard && (
+              <div className="transform-bg-card absolute aspect-video h-[60vh] w-[38vh] md:h-[50vh] md:w-[60vh]">
+                <FlashCard id="backgroundCard" question={nextCard.question} />
+              </div>
+            )}
+            <div className="z-50 aspect-video h-[60vh] w-[38vh] md:h-[50vh] md:w-[60vh]">
+              <Draggable action={next}>
+                <FlashCard
+                  id="flashcard"
+                  question={currentCard.question}
+                  answer={currentCard.answer}
+                  showAnswer={showAnswer}
+                  handleFlip={flip}
+                />
+              </Draggable>
+            </div>
           </div>
           <ControlFooter handleFlip={flip} handleNextCard={buttonNext} />
         </>
