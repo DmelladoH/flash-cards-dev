@@ -5,3 +5,7 @@
 .transform-bg-card {
   transform: rotate(-4deg);
 }
+
+span {
+  font-weight: 600;
+}
