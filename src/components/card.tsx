@@ -40,7 +40,7 @@ function FlashCard({
             {answer && (
               <section
                 dangerouslySetInnerHTML={{ __html: answer }}
-                className="translate-x-0 transform text-pretty"
+                className="translate-x-0 transform text-pretty text-left"
               ></section>
             )}
           </div>
