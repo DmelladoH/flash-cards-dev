@@ -13,7 +13,9 @@ export async function getCategories() {
 
 export async function getCartsByCategory(category: string): Promise<any[]> {
   try {
-    const res = await db.query.cards.findMany();
+    const res = await db.query.cards.findMany({
+      where: (model, { eq }) => eq(model.category, category),
+    });
     return res;
   } catch (e) {
     throw new Error("Error getting cards");
