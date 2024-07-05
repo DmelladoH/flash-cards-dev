@@ -63,16 +63,16 @@ function Page({ params }: { params: { category: string; id: string } }) {
         <>
           <div className="relative">
             {peekCard(3) && (
-              <div className="transform-bg-card absolute aspect-video h-[60vh] w-[38vh] md:h-[50vh] md:w-[60vh]">
+              <div className="transform-bg-card absolute aspect-video h-[62vh] w-[42vh] md:h-[50vh] md:w-[60vh]">
                 <FlashCard id="secondBackgroundCard" />
               </div>
             )}
             {nextCard && (
-              <div className="transform-bg-card absolute aspect-video h-[60vh] w-[38vh] md:h-[50vh] md:w-[60vh]">
+              <div className="transform-bg-card absolute aspect-video h-[62vh] w-[42vh] md:h-[50vh] md:w-[60vh]">
                 <FlashCard id="backgroundCard" question={nextCard.question} />
               </div>
             )}
-            <div className="z-50 aspect-video h-[60vh] w-[38vh] md:h-[50vh] md:w-[60vh]">
+            <div className="z-50 aspect-video h-[62vh] w-[42vh] md:h-[50vh] md:w-[60vh]">
               <Draggable action={next}>
                 <FlashCard
                   id="flashcard"
