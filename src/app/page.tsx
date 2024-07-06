@@ -14,6 +14,9 @@ export default async function HomePage() {
                 <JavaScriptSVG />
               </article>
             </Link>
+            <Link href="/WEB">
+              <article>WEB</article>
+            </Link>
           </li>
         </ul>
       </section>
