@@ -1,7 +1,8 @@
 "use client";
 
+import Link from "next/link";
 import { useRouter } from "next/navigation";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import FlashCard from "~/components/card";
 import { ControlFooter } from "~/components/control-footer";
 import Draggable from "~/components/draggable";
@@ -41,52 +42,51 @@ function Page({ params }: { params: { category: string; id: string } }) {
     }, 500);
   };
 
-  const handleRest = () => {
-    router.push(`/${category}`);
-  };
+  // const handleRest = () => {
+  //   router.push(`/${category}`);
+  // };
 
   const flip = () => {
     setShowAnswer((prev) => !prev);
   };
   if (currentCard == null)
     return (
-      <div className="grid gap-2">
-        <p>There are no more cards</p>
-        <button onClick={handleRest} className="">
+      <div className="mt-20 grid gap-10">
+        <p>There are no more cards.</p>
+        <Link
+          href={`/${category}`}
+          className="rounded-lg bg-slate-50 p-1 text-center uppercase text-black"
+        >
           reset
-        </button>
+        </Link>
       </div>
     );
   return (
     <div>
-      {currentCard && (
-        <>
-          <div className="relative">
-            {peekCard(3) && (
-              <div className="transform-bg-card absolute aspect-video h-[62vh] w-[42vh] md:h-[50vh] md:w-[60vh]">
-                <FlashCard id="secondBackgroundCard" />
-              </div>
-            )}
-            {nextCard && (
-              <div className="transform-bg-card absolute aspect-video h-[62vh] w-[42vh] md:h-[50vh] md:w-[60vh]">
-                <FlashCard id="backgroundCard" question={nextCard.question} />
-              </div>
-            )}
-            <div className="z-50 aspect-video h-[62vh] w-[42vh] md:h-[50vh] md:w-[60vh]">
-              <Draggable action={next}>
-                <FlashCard
-                  id="flashcard"
-                  question={currentCard.question}
-                  answer={currentCard.answer}
-                  showAnswer={showAnswer}
-                  handleFlip={flip}
-                />
-              </Draggable>
-            </div>
+      <div className="relative">
+        {peekCard(3) && (
+          <div className="transform-bg-card absolute aspect-video h-[62vh] w-[42vh] md:h-[50vh] md:w-[60vh]">
+            <FlashCard id="secondBackgroundCard" />s
           </div>
-          <ControlFooter handleFlip={flip} handleNextCard={buttonNext} />
-        </>
-      )}
+        )}
+        {nextCard && (
+          <div className="transform-bg-card absolute aspect-video h-[62vh] w-[42vh] md:h-[50vh] md:w-[60vh]">
+            <FlashCard id="backgroundCard" question={nextCard.question} />
+          </div>
+        )}
+        <div className="z-50 aspect-video h-[62vh] w-[42vh] md:h-[50vh] md:w-[60vh]">
+          <Draggable action={next}>
+            <FlashCard
+              id="flashcard"
+              question={currentCard.question}
+              answer={currentCard.answer}
+              showAnswer={showAnswer}
+              handleFlip={flip}
+            />
+          </Draggable>
+        </div>
+      </div>
+      <ControlFooter handleFlip={flip} handleNextCard={buttonNext} />
     </div>
   );
 }
