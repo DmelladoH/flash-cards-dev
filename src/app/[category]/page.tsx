@@ -15,7 +15,7 @@ function Page({ params }: { params: { category: string } }) {
     return <p>loading...</p>;
   }
 
-  redirect(`${category}/${currentCard?.name}`);
+  currentCard && redirect(`${category}/${currentCard?.name}`);
 }
 
 export default Page;

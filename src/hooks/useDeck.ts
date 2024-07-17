@@ -10,7 +10,7 @@ interface Props {
 
 export function useDeck({ category, currentCardId }: Props) {
   const context = useContext(DeckContext);
-  const [isLoading, setIsLoading] = useState(true);
+  const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
 
   if (context == null) {
@@ -21,8 +21,6 @@ export function useDeck({ category, currentCardId }: Props) {
 
   const getRandomCards = useCallback(async () => {
     try {
-      setIsLoading(true);
-
       const res = await fetch(`/api/cards?cat=${category}`);
       const resJson = await res.json();
 
@@ -30,16 +28,15 @@ export function useDeck({ category, currentCardId }: Props) {
       return resJson;
     } catch (e) {
       setError(getErrorMessage(e));
-    } finally {
-      setIsLoading(false);
     }
-  }, []);
+  }, [category]);
 
   useEffect(() => {
-    if (deck != null && deck[0]?.category === category) return;
-    getRandomCards().then((res) => {
-      let deck = res;
+    const fetchData = async () => {
+      setIsLoading(true);
 
+      const res = await getRandomCards();
+      let deck = res;
       if (currentCardId != null) {
         const firstCard = res.find((arr: Card) => arr.name === currentCardId);
         deck = [
@@ -48,8 +45,12 @@ export function useDeck({ category, currentCardId }: Props) {
         ];
       }
       setDeck(deck);
-    });
-  }, [category, currentCardId]);
+      setIsLoading(false);
+    };
+
+    if (deck != null && deck[0]?.category === category) return;
+    fetchData();
+  }, [category, currentCardId, deck]);
 
   const size = () => {
     return deck.length;
