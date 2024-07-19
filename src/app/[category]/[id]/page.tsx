@@ -1,7 +1,7 @@
 "use client";
 
 import { useRouter } from "next/navigation";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import FlashCard from "~/components/card";
 import { ControlFooter } from "~/components/control-footer";
 import Draggable from "~/components/draggable";
@@ -18,8 +18,11 @@ function Page({ params }: { params: { category: string; id: string } }) {
     currentCardId: id,
   });
 
-  const next = () => {
+  useEffect(() => {
     setNextCard();
+  }, []);
+
+  const next = () => {
     if (nextCard == null) return;
     router.push(`/${category}/${nextCard?.name}`);
   };

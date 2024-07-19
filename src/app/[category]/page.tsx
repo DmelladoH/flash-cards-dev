@@ -5,7 +5,7 @@ import { useDeck } from "~/hooks/useDeck";
 function Page({ params }: { params: { category: string } }) {
   const { category } = params;
 
-  const { currentCard, error, isLoading } = useDeck({ category });
+  const { nextCard, error, isLoading } = useDeck({ category });
 
   if (error != null) {
     return <div>404: card wasn't found </div>;
@@ -15,7 +15,7 @@ function Page({ params }: { params: { category: string } }) {
     return <p>loading...</p>;
   }
 
-  currentCard && redirect(`${category}/${currentCard?.name}`);
+  nextCard && redirect(`${category}/${nextCard?.name}`);
 }
 
 export default Page;

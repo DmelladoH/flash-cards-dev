@@ -34,23 +34,31 @@ export function useDeck({ category, currentCardId }: Props) {
   useEffect(() => {
     const fetchData = async () => {
       setIsLoading(true);
+      const blank = {};
 
       const res = await getRandomCards();
-      let deck = res;
+
+      let newDeck = [];
+
       if (currentCardId != null) {
         const firstCard = res.find((arr: Card) => arr.name === currentCardId);
-        deck = [
+
+        newDeck = [
           ...res.filter((arr: Card) => arr.name !== currentCardId),
           firstCard,
         ];
+      } else {
+        newDeck = [...res];
+        newDeck.push(blank);
       }
-      setDeck(deck);
+
+      setDeck(newDeck);
       setIsLoading(false);
     };
 
-    if (deck != null && deck[0]?.category === category) return;
+    if (deck != null && deck[1]?.category === category) return;
     fetchData();
-  }, [category, currentCardId, deck]);
+  }, [category, currentCardId]);
 
   const size = () => {
     return deck.length;
@@ -81,7 +89,6 @@ export function useDeck({ category, currentCardId }: Props) {
     deck,
     error,
     isLoading,
-    getRandomCards,
     currentCard: peek(),
     setNextCard: pop,
     nextCard: peekSecondCard(),
