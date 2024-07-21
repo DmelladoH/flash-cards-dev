@@ -2,18 +2,19 @@
 
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
-import FlashCard from "~/components/card";
 import { ControlFooter } from "~/components/control-footer";
-import Draggable from "~/components/draggable";
+import Deck from "~/components/deck";
 import { EmptyState } from "~/components/empty-state";
+import { nextCardByAction } from "~/helpers/dragHelper";
 import { useDeck } from "~/hooks/useDeck";
 
 function Page({ params }: { params: { category: string; id: string } }) {
   const router = useRouter();
   const { category, id } = params;
   const [showAnswer, setShowAnswer] = useState(false);
+  const [displayControlFooter, setDisplayControlFooter] = useState(true);
 
-  const { currentCard, nextCard, peekCard, setNextCard } = useDeck({
+  const { nextCard, setNextCard } = useDeck({
     category,
     currentCardId: id,
   });
@@ -23,60 +24,37 @@ function Page({ params }: { params: { category: string; id: string } }) {
   }, []);
 
   const next = () => {
-    if (nextCard == null) return;
-    router.push(`/${category}/${nextCard?.name}`);
-  };
-
-  const buttonNext = () => {
-    const card = document.getElementById("flashcard");
-    const bgCard = document.getElementById("backgroundCard")?.closest("div");
-    if (!card) return;
-
-    card.style.transition = "transform 1.2s";
-    card.style.transform = `translateX(${2000}px) rotate(${90}deg)`;
-
-    if (bgCard) {
-      bgCard.style.transition = "transform 1.2s";
-      bgCard.style.transform = `rotate(0deg)`;
+    if (nextCard == null) {
+      setDisplayControlFooter(false);
+      return;
     }
-
-    setTimeout(() => {
-      next();
-    }, 500);
+    router.push(`/${category}/${nextCard?.name}`);
   };
 
   const flip = () => {
     setShowAnswer((prev) => !prev);
   };
 
-  if (currentCard == null) return <EmptyState category={category} />;
-
   return (
     <div>
       <div className="relative">
-        {peekCard(3) && (
-          <div className="transform-bg-card absolute aspect-video h-[62vh] w-[42vh] md:h-[50vh] md:w-[60vh]">
-            <FlashCard id="secondBackgroundCard" />
-          </div>
-        )}
-        {nextCard && (
-          <div className="transform-bg-card absolute aspect-video h-[62vh] w-[42vh] md:h-[50vh] md:w-[60vh]">
-            <FlashCard id="backgroundCard" question={nextCard.question} />
-          </div>
-        )}
-        <div className="z-50 aspect-video h-[62vh] w-[42vh] md:h-[50vh] md:w-[60vh]">
-          <Draggable action={next}>
-            <FlashCard
-              id="flashcard"
-              question={currentCard.question}
-              answer={currentCard.answer}
-              showAnswer={showAnswer}
-              handleFlip={flip}
-            />
-          </Draggable>
+        <div className="absolute h-full w-full">
+          <EmptyState category={category} />
         </div>
+        <Deck
+          category={category}
+          currentCardId={id}
+          showAnswer={showAnswer}
+          flip={flip}
+          nextAction={next}
+        />
       </div>
-      <ControlFooter handleFlip={flip} handleNextCard={buttonNext} />
+      {displayControlFooter && (
+        <ControlFooter
+          handleFlip={flip}
+          handleNextCard={() => nextCardByAction(next)}
+        />
+      )}
     </div>
   );
 }
