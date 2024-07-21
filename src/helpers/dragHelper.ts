@@ -66,6 +66,9 @@ export function startDrag({ isAnimating, e, next }: startDragElements) {
         () => {
           isAnimating = false;
           pullDeltaX = 0;
+          const elemToRemove = card?.closest("div");
+          if (elemToRemove) elemToRemove.remove();
+
           next();
         },
         { once: true },
