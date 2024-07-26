@@ -6,7 +6,7 @@ export function EmptyState({ category }: { category: string }) {
       <p className="text-center">There are no more cards.</p>
       <Link
         href={`/${category}`}
-        className="rounded-lg bg-slate-50 p-2 text-center uppercase text-black"
+        className="rounded-lg bg-slate-50 p-2 text-center uppercase text-stone-900"
       >
         reset
       </Link>
