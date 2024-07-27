@@ -1,5 +1,5 @@
 import { useDeck } from "~/hooks/useDeck";
-import FlashCard from "./card";
+import FlashCard from "./UI/card";
 import Draggable from "./draggable";
 
 interface Props {
