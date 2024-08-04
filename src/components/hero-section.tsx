@@ -1,7 +1,7 @@
 export function HeroSection() {
   return (
-    <section>
-      <h1 className="text-4xl">FlashCards</h1>
+    <section className="p-10">
+      <h1 className="text-center text-6xl">FlashCards</h1>
     </section>
   );
 }
