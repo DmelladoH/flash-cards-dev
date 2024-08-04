@@ -3,7 +3,7 @@
 @tailwind utilities;
 
 .transform-bg-card {
-  transform: rotate(-4deg);
+  transform: rotate(-5deg);
 }
 
 span {
