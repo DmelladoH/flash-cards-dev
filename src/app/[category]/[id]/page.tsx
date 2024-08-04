@@ -37,7 +37,7 @@ function Page({ params }: { params: { category: string; id: string } }) {
 
   return (
     <div>
-      <div className="relative">
+      <div className="relative mb-10">
         <div className="absolute h-full w-full">
           <EmptyState category={category} />
         </div>
@@ -53,6 +53,7 @@ function Page({ params }: { params: { category: string; id: string } }) {
         <ControlFooter
           handleFlip={flip}
           handleNextCard={() => nextCardByAction(next)}
+          isFlipped={showAnswer}
         />
       )}
     </div>
