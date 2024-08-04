@@ -6,7 +6,7 @@ export function CategorySection() {
     <>
       <section className="absolute z-20 mx-8 h-full w-[-webkit-fill-available] rounded-t-3xl border-2 bg-white p-10 text-stone-900">
         <h2>Choose the category</h2>
-        <ul>
+        <ul className="gallery mt-8">
           <li>
             <CategoryCard
               svg={<JavaScriptSVG />}
