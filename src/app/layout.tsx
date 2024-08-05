@@ -1,6 +1,7 @@
 import "~/styles/globals.css";
 
 import { Inter } from "next/font/google";
+import "@fontsource/paytone-one";
 
 const inter = Inter({
   subsets: ["latin"],
