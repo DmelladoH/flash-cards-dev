@@ -3,9 +3,9 @@ import { HeroSection } from "~/components/hero-section";
 
 export default async function HomePage() {
   return (
-    <main className="grid h-screen grid-rows-3">
+    <main className=" flashcards-layout h-screen">
       <HeroSection />
-      <div className="relative row-span-2">
+      <div className="relative">
         <CategorySection />
       </div>
     </main>

@@ -22,7 +22,7 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body
-        className={`font-sans ${inter.variable} h-screen overflow-x-hidden bg-green-600 text-stone-200`}
+        className={`min-height-100vh font-sans ${inter.variable} overflow-x-hidden bg-green-600 text-stone-200`}
       >
         {children}
       </body>
