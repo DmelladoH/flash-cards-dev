@@ -6,3 +6,8 @@ export interface Card {
   category: string;
   tags: string[];
 }
+
+export interface Point {
+  x: number;
+  y: number;
+}
