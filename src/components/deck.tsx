@@ -29,6 +29,7 @@ function Deck({ category, currentCardId }: Props) {
   const secondCard = peekCard(2);
   const thirdCard = peekCard(3);
 
+  console.log({ currentCard });
   return (
     <>
       {thirdCard && (
