@@ -10,12 +10,12 @@ function Draggable({
 }) {
   const { isAnimating, setIsAnimating } = useDrag();
 
-  const dragEvent = (e: MouseEvent | TouchEvent, next: () => void) => {
+  const dragEvent = (e: MouseEvent | TouchEvent, action: () => void) => {
     startDrag({
       isAnimating,
       setIsAnimating,
       e,
-      next,
+      action,
     });
   };
 

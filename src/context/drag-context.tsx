@@ -1,6 +1,6 @@
 "use client";
 
-import { createContext, useState } from "react";
+import { createContext, useEffect, useState } from "react";
 import { Point } from "~/types";
 
 interface DragProps {
@@ -15,7 +15,7 @@ interface DragProps {
 
 export const DragContext = createContext<DragProps>({
   isDragging: false,
-  isAnimating: false,
+  isAnimating: true,
   mouseDownPosition: { x: 0, y: 0 },
 
   setIsDragging: () => {},
@@ -25,13 +25,16 @@ export const DragContext = createContext<DragProps>({
 
 export function DragProvider({ children }: { children: React.ReactNode }) {
   const [isDragging, setIsDragging] = useState(false);
-  const [isAnimating, setIsAnimating] = useState(false);
+  const [isAnimating, setIsAnimating] = useState(true);
 
   const [mouseDownPosition, setMouseDownPosition] = useState<Point>({
     x: 0,
     y: 0,
   });
 
+  useEffect(() => {
+    console.log({ isAnimating });
+  }, []);
   return (
     <DragContext.Provider
       value={{

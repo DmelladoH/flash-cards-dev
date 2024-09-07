@@ -1,5 +1,5 @@
 "use client";
-import { createContext, useState } from "react";
+import { createContext, useCallback, useEffect, useState } from "react";
 import { Card } from "../types";
 import { useRouter } from "next/navigation";
 import { getErrorMessage } from "~/util/errorHandling";
@@ -7,9 +7,14 @@ import { getErrorMessage } from "~/util/errorHandling";
 interface DeckProps {
   deck: Card[];
   category: string;
-  fetchData: ({ category, currentCardId }: any) => void;
+  fetchData: ({
+    category,
+    currentCardId,
+  }: {
+    category: string;
+    currentCardId?: string;
+  }) => Promise<void>;
   next: () => void;
-
   isLoading: boolean;
   setIsLoading: (val: boolean) => void;
   isAnswerShown: boolean;
@@ -20,10 +25,10 @@ interface DeckProps {
   ) => void;
 }
 
-export const DeckContext = createContext<DeckProps>({
+const defaultDeckContext: DeckProps = {
   deck: [],
   category: "",
-  fetchData: () => {},
+  fetchData: async () => {},
   next: () => {},
   isLoading: false,
   setIsLoading: () => {},
@@ -31,7 +36,9 @@ export const DeckContext = createContext<DeckProps>({
   setIsAnswerShown: () => {},
   displayControlFooter: false,
   setDisplayControlFooter: () => {},
-});
+};
+
+export const DeckContext = createContext<DeckProps>(defaultDeckContext);
 
 export function DeckProvider({ children }: { children: React.ReactNode }) {
   const router = useRouter();
@@ -47,15 +54,20 @@ export function DeckProvider({ children }: { children: React.ReactNode }) {
   //   setIsAnswerShown((prev) => !prev);
   // };
 
+  useEffect(() => {
+    console.log({ deck });
+  }, [deck]);
+
   const getRandomCards = async ({ category }: any) => {
     try {
       const res = await fetch(`/api/cards?cat=${category}`);
       const resJson = await res.json();
 
-      if (resJson == null) return;
+      if (resJson == null) return [];
       return resJson;
     } catch (e) {
       setError(getErrorMessage(e));
+      return [];
     }
   };
 
@@ -72,59 +84,49 @@ export function DeckProvider({ children }: { children: React.ReactNode }) {
       const firstCard = res.find((arr: Card) => arr.name === currentCardId);
 
       newDeck = [
-        ...res.filter((arr: Card) => arr.name !== currentCardId),
         firstCard,
+        ...res.filter((arr: Card) => arr.name !== currentCardId),
       ];
     } else {
       newDeck = [...res];
       // newDeck.push(blank);
     }
 
-    console.log({ newDeck });
     setDeck(newDeck);
     setIsLoading(false);
   };
 
   const peekCard = (position: number) => {
-    return deck[deck.length - position];
+    return deck[position];
   };
 
   const peekSecondCard = (): Card | undefined => {
-    return peekCard(deck.length - 1);
+    return peekCard(1);
   };
 
-  const next = () => {
+  const next = useCallback(() => {
+    console.log("triggering next");
+    console.log(`Current deck:`);
     console.log({ deck });
-
     const nextCard = peekSecondCard();
-    pop();
+    shift(() => {
+      if (!nextCard) {
+        // setDisplayControlFooter(false);
+        return;
+      }
+      console.log({ nextCard });
+      router.push(`/${category}/${nextCard.name}`);
+    });
+  }, [deck]);
 
-    if (nextCard == null) {
-      setDisplayControlFooter(false);
-      return;
-    }
-
-    console.log(`next: ${nextCard.name}`);
-    router.push(`/${category}/${nextCard?.name}`);
+  const shift = (callback: () => void) => {
+    setDeck((prev: any) => {
+      const newDeck = [...prev];
+      newDeck.shift();
+      return newDeck;
+    });
+    callback();
   };
-
-  const pop = (): Card | undefined => {
-    const newDeck = [...deck];
-    const elem = newDeck.pop();
-
-    console.log(`pop: ${elem?.name}`);
-    setDeck(newDeck);
-
-    return elem;
-  };
-
-  // const size = () => {
-  //   return deck.length;
-  // };
-
-  // const peek = (): Card | undefined => {
-  //   return deck[deck.length - 1];
-  // };
 
   return (
     <DeckContext.Provider

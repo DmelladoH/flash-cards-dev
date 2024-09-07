@@ -14,22 +14,17 @@ function Deck({ category, currentCardId }: Props) {
   const { deck, isAnswerShown, setIsAnswerShown, next } = useDeckContext();
 
   const peekCard = (position: number) => {
-    return deck[deck.length - position];
-  };
-
-  const peek = (): any => {
-    return deck[deck.length - 1];
+    return deck[position];
   };
 
   const flip = () => {
     setIsAnswerShown((prev) => !prev);
   };
 
-  const currentCard = peek();
-  const secondCard = peekCard(2);
-  const thirdCard = peekCard(3);
+  const currentCard = deck[0];
+  const secondCard = peekCard(1);
+  const thirdCard = peekCard(2);
 
-  console.log({ currentCard });
   return (
     <>
       {thirdCard && (

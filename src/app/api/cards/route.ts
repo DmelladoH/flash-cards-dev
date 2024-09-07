@@ -9,7 +9,7 @@ export async function GET(req: NextRequest) {
   if (category == null) return;
 
   const cards = await getCartsByCategory(category);
-  const randomCards = shuffle(cards);
+  // const randomCards = shuffle(cards);
 
-  return NextResponse.json([...randomCards]);
+  return NextResponse.json([...cards]);
 }

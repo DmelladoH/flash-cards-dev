@@ -15,7 +15,6 @@ function Page({ params }: { params: { category: string; id: string } }) {
     fetchData({ category, currentCardId: id });
   }, []);
 
-  console.log({ category, id });
   return (
     <div>
       <div className="relative mb-10">

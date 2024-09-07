@@ -1,27 +1,25 @@
 import { CARD_DECISION_THRESHOLD } from "@/constants";
+import { is } from "drizzle-orm";
+import { startTransition } from "react";
 
 interface startDragElements {
   isAnimating: boolean;
   setIsAnimating: (val: boolean) => void;
   e: MouseEvent | TouchEvent;
-  next: () => void;
+  action: () => void;
 }
 
 let foo: boolean = false;
-console.log({ foo });
 
 export function startDrag({
   isAnimating,
   setIsAnimating,
   e,
-  next,
+  action,
 }: startDragElements) {
-  console.log({ foo, e });
   if (foo || e == null) return;
-  // console.log("drag starting");
 
   foo = true;
-  console.log({ foo });
 
   let pullDeltaX: number;
   const card = document.getElementById("flashcard");
@@ -63,11 +61,7 @@ export function startDrag({
   };
 
   const onEnd = (e: any) => {
-    // console.log("stop moving");
     foo = false;
-    console.log({ foo });
-
-    // console.log({ foo, isAnimating });
 
     document.removeEventListener("mousemove", onMove);
     document.removeEventListener("touchmove", onMove);
@@ -76,7 +70,8 @@ export function startDrag({
 
     const isCardDecision = Math.abs(pullDeltaX) > CARD_DECISION_THRESHOLD;
 
-    if (isCardDecision && !foo) {
+    if (isCardDecision && isAnimating) {
+      setIsAnimating(false);
       card.style.transition = "transform 0.5s";
       card.style.transform = `translateX(${
         pullDeltaX > 0 ? 1000 : -1000
@@ -85,17 +80,25 @@ export function startDrag({
       card.addEventListener(
         "transitionend",
         () => {
-          pullDeltaX = 0;
-          const elemToRemove = card?.closest("div");
-          if (elemToRemove) elemToRemove.remove();
-          next();
-          console.log("NEXT");
+          requestAnimationFrame(() => {
+            pullDeltaX = 0;
+            const elemToRemove = card?.closest("div");
+            if (elemToRemove) elemToRemove.remove();
+            action();
+          });
         },
         { once: true },
       );
+
+      console.log("NEXT");
+      // action();
+      // startTransition(() => {
+      //   action(); // React will prioritize this state update
+      // });
     } else {
       card.style.transition = "transform 0.5s";
       card.style.transform = "translateX(0) rotate(0deg)";
+      setIsAnimating(false);
       if (backgroundCard) {
         backgroundCard.style.transition = "transform 0.5s";
         backgroundCard.style.transform = `rotate(-4deg)`;
@@ -105,14 +108,12 @@ export function startDrag({
       "transitionend",
       () => {
         foo = false;
-        console.log({ foo });
-
         pullDeltaX = 0;
       },
       { once: true },
     );
   };
-
+  setIsAnimating(true);
   document.addEventListener("mousemove", onMove);
   document.addEventListener("touchmove", onMove, { passive: true });
 

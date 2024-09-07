@@ -23,7 +23,7 @@ function Page({ params }: { params: { category: string } }) {
     return <p>loading...</p>;
   }
 
-  deck.length && redirect(`${category}/${deck[deck.length - 1]?.name}`);
+  deck.length && redirect(`${category}/${deck[0]?.name}`);
 }
 
 export default Page;
