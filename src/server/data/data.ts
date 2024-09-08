@@ -34,7 +34,7 @@ export const data: any = [
         When a web page is loaded, the browser creates a DOM representation of the HTML document. This representation is then used by scripts to interact with and manipulate the content of the page dynamically. For example, JavaScript can be used to change the text of an element, add new elements, or respond to user interactions like button clicks.
    `,
     category: "WEB",
-    name: "what-is-the-dom?",
+    name: "what-is-the-dom",
   },
   {
     question: "What is the asdasd?",
@@ -44,7 +44,7 @@ export const data: any = [
         When a web page is loaded, the browser creates a DOM representation of the HTML document. This representation is then used by scripts to interact with and manipulate the content of the page dynamically. For example, JavaScript can be used to change the text of an element, add new elements, or respond to user interactions like button clicks.
    `,
     category: "JavaScript",
-    name: "what-is-the-adasd?",
+    name: "what-is-the-adasd",
   },
   {
     question: "What is the DOM? 1",
@@ -54,6 +54,6 @@ export const data: any = [
         When a web page is loaded, the browser creates a DOM representation of the HTML document. This representation is then used by scripts to interact with and manipulate the content of the page dynamically. For example, JavaScript can be used to change the text of an element, add new elements, or respond to user interactions like button clicks.
    `,
     category: "JavaScript",
-    name: "what-is-the-dom?",
+    name: "what-is-the-dom",
   },
 ];

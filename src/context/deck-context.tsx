@@ -70,13 +70,12 @@ export function DeckProvider({ children }: { children: React.ReactNode }) {
   const fetchData = async ({ category, currentCardId }: any) => {
     setIsLoading(true);
     setCategory(category);
-    const blank = {};
-
     const res = await getRandomCards({ category });
 
     let newDeck = [];
 
     if (currentCardId != null) {
+      debugger;
       const firstCard = res.find((arr: Card) => arr.name === currentCardId);
 
       newDeck = [
@@ -85,7 +84,6 @@ export function DeckProvider({ children }: { children: React.ReactNode }) {
       ];
     } else {
       newDeck = [...res];
-      // newDeck.push(blank);
     }
 
     setDeck(newDeck);
