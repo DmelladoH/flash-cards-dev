@@ -1,5 +1,6 @@
 "use client";
 
+import { useMemo } from "react";
 import FlashCard from "./UI/card";
 import Draggable from "./draggable";
 import { useDeckContext } from "~/hooks/useDeckContext";
@@ -20,9 +21,9 @@ function Deck({ category, currentCardId }: Props) {
     setIsAnswerShown((prev) => !prev);
   };
 
-  const currentCard = deck[0];
-  const secondCard = peekCard(1);
-  const thirdCard = peekCard(2);
+  const currentCard = useMemo(() => deck[0], []);
+  const secondCard = useMemo(() => peekCard(1), []);
+  const thirdCard = useMemo(() => peekCard(2), []);
 
   return (
     <>

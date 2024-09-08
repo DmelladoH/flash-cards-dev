@@ -75,7 +75,6 @@ export function DeckProvider({ children }: { children: React.ReactNode }) {
     let newDeck = [];
 
     if (currentCardId != null) {
-      debugger;
       const firstCard = res.find((arr: Card) => arr.name === currentCardId);
 
       newDeck = [
@@ -100,23 +99,22 @@ export function DeckProvider({ children }: { children: React.ReactNode }) {
 
   const next = useCallback(() => {
     const nextCard = peekSecondCard();
-    shift(() => {
-      if (!nextCard) {
-        // setDisplayControlFooter(false);
-        return;
-      }
-      setIsAnswerShown(false);
-      router.push(`/${category}/${nextCard.name}`);
-    });
+
+    if (!nextCard) {
+      return;
+    }
+
+    router.push(`/${category}/${nextCard.name}`);
+    setIsAnswerShown(false);
+    shift();
   }, [deck]);
 
-  const shift = (callback: () => void) => {
+  const shift = () => {
     setDeck((prev: any) => {
       const newDeck = [...prev];
       newDeck.shift();
       return newDeck;
     });
-    callback();
   };
 
   return (
