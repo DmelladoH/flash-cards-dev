@@ -54,7 +54,6 @@ function Draggable({
   };
 
   const onMouseUp = (e: React.MouseEvent<HTMLDivElement>) => {
-    console.log("up");
     const card = document.getElementById("flashcard");
     const backgroundCard = document
       .getElementById("backgroundCard")
@@ -62,41 +61,13 @@ function Draggable({
 
     if (!card) return;
 
-    const isCardDecision = Math.abs(pullDeltaX) > CARD_DECISION_THRESHOLD;
+    const isCardDecision = Math.abs(pullDeltaX) >= CARD_DECISION_THRESHOLD;
 
     if (isCardDecision) {
-      nextCardByAction(action);
-
-      // const screenWidth = window.innerWidth;
-
-      // console.log("decision");
-      // console.log({ cardInnerText: card.innerText });
-
-      // console.log({ pullDeltaX });
-      // card.style.transition = "transform 0.8s ease-out";
-      // card.style.transform = `translateX(${
-      //   pullDeltaX > 0 ? screenWidth : -screenWidth
-      // }px) rotate(${pullDeltaX > 0 ? 90 : -90}deg)`;
-
-      // const onTransitionEnd = () => {
-      //   const elemToRemove = card?.closest("div");
-      //   if (elemToRemove) elemToRemove.remove();
-
-      //   setPullDeltaX(0);
-      //   setIsMoving(false);
-      //   setStartX(0);
-      //   action();
-      // };
-
-      // card.addEventListener(
-      //   "transitionend",
-      //   (event) => {
-      //     if (event.propertyName === "transform") {
-      //       onTransitionEnd();
-      //     }
-      //   },
-      //   { once: true },
-      // );
+      const screenWidth = window.innerWidth;
+      const position = pullDeltaX > 0 ? screenWidth : -screenWidth;
+      const rotate = pullDeltaX > 0 ? 90 : -90;
+      nextCardByAction(action, position, rotate);
     } else {
       card.style.transition = "transform 0.5s";
       card.style.transform = "translateX(0) rotate(0deg)";

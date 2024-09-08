@@ -28,7 +28,6 @@ function FlashCard({
     event: React.MouseEvent<HTMLButtonElement>,
     action: () => void,
   ) => {
-    console.log("up", isDragging);
     if (isDragging) {
       setIsDragging(false);
       return;
