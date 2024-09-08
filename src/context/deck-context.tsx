@@ -107,6 +107,7 @@ export function DeckProvider({ children }: { children: React.ReactNode }) {
         // setDisplayControlFooter(false);
         return;
       }
+      setIsAnswerShown(false);
       router.push(`/${category}/${nextCard.name}`);
     });
   }, [deck]);
