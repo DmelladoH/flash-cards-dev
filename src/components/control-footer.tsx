@@ -5,6 +5,7 @@ import RoundedButton from "./UI/rounded-button";
 import { CloseEyeSvg } from "./svgs/closeEyeSvg";
 import { OpenEyeSvg } from "./svgs/openEyeSvg";
 import { useDeckContext } from "~/hooks/useDeckContext";
+import { nextCardByAction } from "~/helpers/dragHelper";
 
 export function ControlFooter() {
   const [hover, setHover] = useState<string>("");
@@ -28,7 +29,7 @@ export function ControlFooter() {
               {isAnswerShown ? <CloseEyeSvg /> : <OpenEyeSvg />}
             </RoundedButton>
             <RoundedButton
-              onClick={next}
+              onClick={(e) => nextCardByAction(next)}
               onMouseEnter={() => setHover("next")}
               onMouseLeave={() => setHover("")}
             >

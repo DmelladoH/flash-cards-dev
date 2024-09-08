@@ -1,6 +1,5 @@
 "use client";
 
-import { useDeck } from "~/hooks/useDeck";
 import FlashCard from "./UI/card";
 import Draggable from "./draggable";
 import { useDeckContext } from "~/hooks/useDeckContext";

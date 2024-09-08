@@ -54,10 +54,6 @@ export function DeckProvider({ children }: { children: React.ReactNode }) {
   //   setIsAnswerShown((prev) => !prev);
   // };
 
-  useEffect(() => {
-    console.log({ deck });
-  }, [deck]);
-
   const getRandomCards = async ({ category }: any) => {
     try {
       const res = await fetch(`/api/cards?cat=${category}`);
@@ -105,16 +101,12 @@ export function DeckProvider({ children }: { children: React.ReactNode }) {
   };
 
   const next = useCallback(() => {
-    console.log("triggering next");
-    console.log(`Current deck:`);
-    console.log({ deck });
     const nextCard = peekSecondCard();
     shift(() => {
       if (!nextCard) {
         // setDisplayControlFooter(false);
         return;
       }
-      console.log({ nextCard });
       router.push(`/${category}/${nextCard.name}`);
     });
   }, [deck]);
