@@ -10,11 +10,14 @@ import { nextCardByAction } from "~/helpers/dragHelper";
 export function ControlFooter() {
   const [hover, setHover] = useState<string>("");
 
-  const { isAnswerShown, next, setIsAnswerShown, isLoading } = useDeckContext();
+  const { deck, isAnswerShown, next, setIsAnswerShown, isLoading } =
+    useDeckContext();
 
   const flip = () => {
     setIsAnswerShown((prev) => !prev);
   };
+
+  if (!deck.length) return null;
 
   return (
     <>
