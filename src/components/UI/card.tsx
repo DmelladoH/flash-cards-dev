@@ -1,6 +1,5 @@
 "use client";
-import { useState } from "react";
-import { useDrag } from "~/hooks/useDrag";
+import { useEffect, useState } from "react";
 
 interface FlashCardProps {
   id: string;
@@ -18,32 +17,31 @@ function FlashCard({
   showAnswer = false,
   handleFlip,
 }: FlashCardProps) {
-  const { setMouseDownPosition, setIsDragging, isDragging, mouseDownPosition } =
-    useDrag();
   const [isButtonClicked, setIsButtonClicked] = useState(false);
+  const [isDragging, setIsDragging] = useState<boolean>(false);
 
   const handleMouseDown = (event: React.MouseEvent<HTMLButtonElement>) => {
-    setMouseDownPosition({ x: event.clientX, y: event.clientY });
-    setIsDragging(false);
+    // setMouseDownPosition({ x: event.clientX, y: event.clientY });
   };
 
   const handleMouseUp = (
     event: React.MouseEvent<HTMLButtonElement>,
     action: () => void,
   ) => {
-    if (isDragging) return;
+    console.log("up", isDragging);
+    if (isDragging) {
+      setIsDragging(false);
+      return;
+    }
     action();
   };
 
   const handleMouseMove = (event: React.MouseEvent<HTMLButtonElement>) => {
     const distanceMoved = Math.sqrt(
-      Math.pow(event.clientX - mouseDownPosition.x, 2) +
-        Math.pow(event.clientY - mouseDownPosition.y, 2),
+      Math.pow(event.clientX - event.pageX, 2) +
+        Math.pow(event.clientY - event.pageY, 2),
     );
-
-    if (distanceMoved > 5) {
-      setIsDragging(true);
-    }
+    setIsDragging(true);
   };
 
   const onClick = () => {

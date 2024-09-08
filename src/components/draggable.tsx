@@ -13,7 +13,7 @@ function Draggable({
   const [pullDeltaX, setPullDeltaX] = useState<number>(0);
   const [startX, setStartX] = useState<number>(0);
 
-  const onMouseDown = (e: any) => {
+  const onMouseDown = (e: React.MouseEvent<HTMLDivElement>) => {
     const card = document.getElementById("flashcard");
 
     if (!card || !card.closest("div")?.classList.contains("draggable")) {
@@ -24,7 +24,7 @@ function Draggable({
     setIsMoving(true);
   };
 
-  const onMouseMoving = (e: any) => {
+  const onMouseMoving = (e: React.MouseEvent<HTMLDivElement>) => {
     if (!isMoving) return;
 
     const card = document.getElementById("flashcard");
@@ -53,7 +53,7 @@ function Draggable({
     }
   };
 
-  const onMouseUp = (e: any) => {
+  const onMouseUp = (e: React.MouseEvent<HTMLDivElement>) => {
     console.log("up");
     const card = document.getElementById("flashcard");
     const backgroundCard = document
