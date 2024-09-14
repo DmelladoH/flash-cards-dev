@@ -101,6 +101,7 @@ export function DeckProvider({ children }: { children: React.ReactNode }) {
     const nextCard = peekSecondCard();
 
     if (!nextCard) {
+      setDeck([]);
       return;
     }
 
