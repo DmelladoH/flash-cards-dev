@@ -1,4 +1,5 @@
-import { useDrag } from "~/hooks/useDrag";
+"use client";
+import { useEffect, useState } from "react";
 
 interface FlashCardProps {
   id: string;
@@ -16,10 +17,44 @@ function FlashCard({
   showAnswer = false,
   handleFlip,
 }: FlashCardProps) {
-  const { handleMouseDown, handleMouseUp, handleMouseMove } = useDrag();
+  const [isButtonClicked, setIsButtonClicked] = useState(false);
+  const [isDragging, setIsDragging] = useState<boolean>(false);
+
+  const handleMouseDown = (event: React.MouseEvent<HTMLButtonElement>) => {
+    // setMouseDownPosition({ x: event.clientX, y: event.clientY });
+  };
+
+  const handleMouseUp = (
+    event: React.MouseEvent<HTMLButtonElement>,
+    action: () => void,
+  ) => {
+    if (isDragging) {
+      setIsDragging(false);
+      return;
+    }
+    action();
+  };
+
+  const handleMouseMove = (event: React.MouseEvent<HTMLButtonElement>) => {
+    const distanceMoved = Math.sqrt(
+      Math.pow(event.clientX - event.pageX, 2) +
+        Math.pow(event.clientY - event.pageY, 2),
+    );
+    setIsDragging(true);
+  };
 
   const onClick = () => {
     handleFlip && handleFlip();
+  };
+
+  const onMouseDown = (e: React.MouseEvent<HTMLButtonElement>) => {
+    setIsButtonClicked(true);
+    handleMouseDown(e);
+  };
+
+  const onMouseUp = (e: React.MouseEvent<HTMLButtonElement>) => {
+    setIsButtonClicked(false);
+    handleMouseUp(e, onClick);
   };
 
   return (
@@ -29,9 +64,12 @@ function FlashCard({
     >
       <button
         className={`card h-full w-full transition-all duration-500 group-focus:[transform:rotateY(180deg)] ${showAnswer} ? transform:rotateY(180deg) : ''`}
-        onMouseDown={handleMouseDown}
-        onMouseUp={(e) => handleMouseUp(e, onClick)}
-        onMouseMove={handleMouseMove}
+        onMouseDown={onMouseDown}
+        onMouseUp={onMouseUp}
+        onMouseMove={(e: React.MouseEvent<HTMLButtonElement>) => {
+          if (!isButtonClicked) return;
+          handleMouseMove(e);
+        }}
       >
         {!showAnswer ? (
           <div>{question && <h3 className="text-xl">{question}</h3>}</div>

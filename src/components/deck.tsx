@@ -1,46 +1,55 @@
-import { useDeck } from "~/hooks/useDeck";
+"use client";
+
+import { useMemo } from "react";
 import FlashCard from "./UI/card";
 import Draggable from "./draggable";
+import { useDeckContext } from "~/hooks/useDeckContext";
 
 interface Props {
   category: string;
   currentCardId: string;
-  flip: () => void;
-  showAnswer: boolean;
-  nextAction: () => void;
 }
 
-function Deck({
-  category,
-  currentCardId,
-  showAnswer,
-  flip,
-  nextAction,
-}: Props) {
-  const { currentCard, nextCard, peekCard } = useDeck({
-    category,
-    currentCardId,
-  });
+function Deck({ category, currentCardId }: Props) {
+  const { deck, isAnswerShown, setIsAnswerShown, next } = useDeckContext();
+
+  const peekCard = (position: number) => {
+    return deck[position];
+  };
+
+  const flip = () => {
+    setIsAnswerShown((prev) => !prev);
+  };
+
+  const currentCard = useMemo(() => deck[0], []);
+  const secondCard = useMemo(() => peekCard(1), []);
+  const thirdCard = useMemo(() => peekCard(2), []);
+
   return (
     <>
-      {peekCard(3) && (
+      {thirdCard && (
         <div className="transform-bg-card absolute aspect-video h-[62vh] w-[42vh] md:h-[50vh] md:w-[60vh]">
-          <FlashCard id="secondBackgroundCard" />
+          <FlashCard key={thirdCard.id} id="secondBackgroundCard" />
         </div>
       )}
-      {nextCard && (
+      {secondCard && (
         <div className="transform-bg-card absolute aspect-video h-[62vh] w-[42vh] md:h-[50vh] md:w-[60vh]">
-          <FlashCard id="backgroundCard" question={nextCard.question} />
+          <FlashCard
+            key={secondCard.id}
+            id="backgroundCard"
+            question={secondCard.question}
+          />
         </div>
       )}
       {currentCard && (
         <div className="z-50 aspect-video h-[62vh] w-[42vh] md:h-[50vh] md:w-[60vh]">
-          <Draggable action={nextAction}>
+          <Draggable action={next}>
             <FlashCard
+              key={currentCard.id}
               id="flashcard"
               question={currentCard.question}
               answer={currentCard.answer}
-              showAnswer={showAnswer}
+              showAnswer={isAnswerShown}
               handleFlip={flip}
             />
           </Draggable>

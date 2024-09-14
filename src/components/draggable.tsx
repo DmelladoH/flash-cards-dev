@@ -1,4 +1,6 @@
-import { useDrag } from "~/hooks/useDrag";
+import { CARD_DECISION_THRESHOLD } from "@/constants";
+import { useState } from "react";
+import { nextCardByAction } from "~/helpers/dragHelper";
 
 function Draggable({
   children,
@@ -7,15 +9,90 @@ function Draggable({
   children: React.ReactNode;
   action: () => void;
 }) {
-  const { dragEvent } = useDrag();
+  const [isMoving, setIsMoving] = useState(false);
+  const [pullDeltaX, setPullDeltaX] = useState<number>(0);
+  const [startX, setStartX] = useState<number>(0);
 
-  document.addEventListener("mousedown", (e) => dragEvent(e, action));
-  document.addEventListener("touchstart", (e) => dragEvent(e, action), {
-    passive: true,
-  });
+  const onMouseDown = (e: React.MouseEvent<HTMLDivElement>) => {
+    const card = document.getElementById("flashcard");
+
+    if (!card || !card.closest("div")?.classList.contains("draggable")) {
+      return;
+    }
+
+    setStartX(e.pageX);
+    setIsMoving(true);
+  };
+
+  const onMouseMoving = (e: React.MouseEvent<HTMLDivElement>) => {
+    if (!isMoving) return;
+
+    const card = document.getElementById("flashcard");
+    const backgroundCard = document
+      .getElementById("backgroundCard")
+      ?.closest("div");
+
+    const currentPosition = e.pageX;
+    if (currentPosition == null || startX == null) return;
+
+    const actualDeltaX = currentPosition - startX;
+    setPullDeltaX(actualDeltaX);
+
+    if (actualDeltaX === 0) return;
+
+    const deg = actualDeltaX / 10;
+    if (!card) return;
+
+    card.style.transform = `translateX(${actualDeltaX}px) rotate(${deg}deg)`;
+
+    if (backgroundCard) {
+      backgroundCard.style.transition = "transform 0.3s";
+      deg >= 4 || deg <= -4
+        ? (backgroundCard.style.transform = `rotate(0deg)`)
+        : (backgroundCard.style.transform = `rotate(${deg}deg)`);
+    }
+  };
+
+  const onMouseUp = (e: React.MouseEvent<HTMLDivElement>) => {
+    const card = document.getElementById("flashcard");
+    const backgroundCard = document
+      .getElementById("backgroundCard")
+      ?.closest("div");
+
+    if (!card) return;
+
+    const isCardDecision = Math.abs(pullDeltaX) >= CARD_DECISION_THRESHOLD;
+
+    if (isCardDecision) {
+      const screenWidth = window.innerWidth;
+      const position = pullDeltaX > 0 ? screenWidth : -screenWidth;
+      const rotate = pullDeltaX > 0 ? 90 : -90;
+      nextCardByAction(action, position, rotate);
+    } else {
+      card.style.transition = "transform 0.5s";
+      card.style.transform = "translateX(0) rotate(0deg)";
+
+      if (backgroundCard) {
+        backgroundCard.style.transition = "transform 0.5s";
+        backgroundCard.style.transform = `rotate(-4deg)`;
+      }
+      setIsMoving(false);
+    }
+
+    card.addEventListener(
+      "transitionend",
+      () => {
+        setPullDeltaX(0);
+      },
+      { once: true },
+    );
+  };
 
   return (
     <div
+      onMouseDown={onMouseDown}
+      onMouseMove={onMouseMoving}
+      onMouseUp={onMouseUp}
       className="draggable absolute z-20 h-full w-full"
       style={{ transformStyle: "preserve-3d" }}
     >

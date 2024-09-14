@@ -1,21 +1,22 @@
 "use client";
 import { redirect } from "next/navigation";
-import { useDeck } from "~/hooks/useDeck";
+import { useEffect } from "react";
+import { useDeckContext } from "~/hooks/useDeckContext";
 
 function Page({ params }: { params: { category: string } }) {
   const { category } = params;
 
-  const { nextCard, error, isLoading } = useDeck({ category });
+  const { deck, isLoading, fetchData } = useDeckContext();
 
-  if (error != null) {
-    return <div>404: card wasn't found </div>;
-  }
+  useEffect(() => {
+    fetchData({ category });
+  }, []);
 
   if (isLoading) {
     return <p>loading...</p>;
   }
 
-  nextCard && redirect(`${category}/${nextCard?.name}`);
+  deck.length && redirect(`${category}/${deck[0]?.name}`);
 }
 
 export default Page;

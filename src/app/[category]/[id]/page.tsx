@@ -1,39 +1,19 @@
 "use client";
-
-import { useRouter } from "next/navigation";
-import { useEffect, useState } from "react";
-import { ControlFooter } from "~/components/control-footer";
+import { useEffect } from "react";
 import Deck from "~/components/deck";
 import { EmptyState } from "~/components/empty-state";
-import { nextCardByAction } from "~/helpers/dragHelper";
-import { useDeck } from "~/hooks/useDeck";
+import { useDeckContext } from "~/hooks/useDeckContext";
 
 function Page({ params }: { params: { category: string; id: string } }) {
-  const router = useRouter();
   const { category, id } = params;
-  const [showAnswer, setShowAnswer] = useState(false);
-  const [displayControlFooter, setDisplayControlFooter] = useState(true);
 
-  const { nextCard, setNextCard } = useDeck({
-    category,
-    currentCardId: id,
-  });
+  const { deck, fetchData } = useDeckContext();
 
   useEffect(() => {
-    setNextCard();
+    if (deck.length) return;
+
+    fetchData({ category, currentCardId: id });
   }, []);
-
-  const next = () => {
-    if (nextCard == null) {
-      setDisplayControlFooter(false);
-      return;
-    }
-    router.push(`/${category}/${nextCard?.name}`);
-  };
-
-  const flip = () => {
-    setShowAnswer((prev) => !prev);
-  };
 
   return (
     <div>
@@ -41,21 +21,8 @@ function Page({ params }: { params: { category: string; id: string } }) {
         <div className="absolute h-full w-full">
           <EmptyState category={category} />
         </div>
-        <Deck
-          category={category}
-          currentCardId={id}
-          showAnswer={showAnswer}
-          flip={flip}
-          nextAction={next}
-        />
+        <Deck category={category} currentCardId={id} />
       </div>
-      {displayControlFooter && (
-        <ControlFooter
-          handleFlip={flip}
-          handleNextCard={() => nextCardByAction(next)}
-          isFlipped={showAnswer}
-        />
-      )}
     </div>
   );
 }

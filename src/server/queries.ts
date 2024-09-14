@@ -1,4 +1,6 @@
 // import "server-only";
+import { Card } from "~/types";
+import { data } from "./data/data";
 import { db } from "./db";
 
 export async function getCategories() {
@@ -13,10 +15,11 @@ export async function getCategories() {
 
 export async function getCartsByCategory(category: string): Promise<any[]> {
   try {
-    const res = await db.query.cards.findMany({
-      where: (model, { eq }) => eq(model.category, category),
-    });
-    return res;
+    // const res = await db.query.cards.findMany({
+    //   where: (model, { eq }) => eq(model.category, category),
+    // });
+    const mock = data.filter((item: Card) => item.category === category);
+    return mock;
   } catch (e) {
     throw new Error("Error getting cards");
   }
