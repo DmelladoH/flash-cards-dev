@@ -69,6 +69,7 @@ export function DeckProvider({ children }: { children: React.ReactNode }) {
 
   const fetchData = async ({ category, currentCardId }: any) => {
     setIsLoading(true);
+    setIsAnswerShown(false);
     setCategory(category);
     const res = await getRandomCards({ category });
 
