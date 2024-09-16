@@ -2,8 +2,8 @@
 import { useState } from "react";
 import { NextSvg } from "./svgs/nextSvg";
 import RoundedButton from "./UI/rounded-button";
-import { CloseEyeSvg } from "./svgs/closeEyeSvg";
-import { OpenEyeSvg } from "./svgs/openEyeSvg";
+import CloseEyeSvg from "./svgs/closeEyeSvg";
+import OpenEyeSvg from "./svgs/openEyeSvg";
 import { useDeckContext } from "~/hooks/useDeckContext";
 import { nextCardByAction } from "~/helpers/dragHelper";
 
@@ -22,7 +22,7 @@ export function ControlFooter() {
   return (
     <>
       {!isLoading ? (
-        <footer className="grid gap-10 ">
+        <footer className="grid gap-10 pb-10">
           <div className="mt-10 flex justify-center gap-16 text-white">
             <RoundedButton
               onClick={flip}
