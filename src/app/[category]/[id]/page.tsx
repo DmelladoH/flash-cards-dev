@@ -16,13 +16,11 @@ function Page({ params }: { params: { category: string; id: string } }) {
   }, []);
 
   return (
-    <div>
-      <div className="relative mb-10">
-        <div className="absolute h-full w-full">
-          <EmptyState category={category} />
-        </div>
-        <Deck category={category} currentCardId={id} />
+    <div className="relative">
+      <div className="absolute h-full w-full">
+        <EmptyState category={category} />
       </div>
+      <Deck />
     </div>
   );
 }

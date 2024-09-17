@@ -1,5 +1,5 @@
 "use client";
-import { createContext, useCallback, useEffect, useState } from "react";
+import { createContext, useCallback, useState } from "react";
 import { Card } from "../types";
 import { useRouter } from "next/navigation";
 import { getErrorMessage } from "~/util/errorHandling";
@@ -50,10 +50,6 @@ export function DeckProvider({ children }: { children: React.ReactNode }) {
   const [displayControlFooter, setDisplayControlFooter] = useState(true);
   const [error, setError] = useState<string | null>(null);
 
-  // const flip = () => {
-  //   setIsAnswerShown((prev) => !prev);
-  // };
-
   const getRandomCards = async ({ category }: any) => {
     try {
       const res = await fetch(`/api/cards?cat=${category}`);
@@ -69,6 +65,7 @@ export function DeckProvider({ children }: { children: React.ReactNode }) {
 
   const fetchData = async ({ category, currentCardId }: any) => {
     setIsLoading(true);
+    setIsAnswerShown(false);
     setCategory(category);
     const res = await getRandomCards({ category });
 
