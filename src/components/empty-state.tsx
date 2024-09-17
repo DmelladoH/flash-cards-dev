@@ -2,7 +2,7 @@ import Link from "next/link";
 
 export function EmptyState({ category }: { category: string }) {
   return (
-    <div className="mt-20 grid justify-center gap-10 align-middle">
+    <div className="mt-20 grid justify-center gap-10 align-middle ">
       <p className="text-center">There are no more cards.</p>
       <Link
         href={`/${category}`}

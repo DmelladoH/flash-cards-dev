@@ -39,7 +39,7 @@ export function ControlFooter() {
               <NextSvg />
             </RoundedButton>
           </div>
-          <div className="h-8">
+          <div className="hidden h-8 md:block">
             {hover && (
               <p className="text-center text-2xl font-bold uppercase opacity-75">
                 {hover}

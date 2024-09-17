@@ -13,7 +13,7 @@ export default function CategoryLayout({
     <DeckProvider>
       <div className="flashcards-layout min-height-100vh">
         <Header category={category} />
-        <main className="flex items-start justify-center">{children}</main>
+        <main>{children}</main>
         <ControlFooter />
       </div>
     </DeckProvider>
