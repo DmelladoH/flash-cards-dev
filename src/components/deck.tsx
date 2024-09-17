@@ -5,7 +5,7 @@ import FlashCard from "./UI/card";
 import { useDeckContext } from "~/hooks/useDeckContext";
 
 function Deck() {
-  const { deck, isAnswerShown, setIsAnswerShown, next } = useDeckContext();
+  const { deck, isAnswerShown, setIsAnswerShown, isLoading } = useDeckContext();
 
   const peekCard = (position: number) => {
     return deck[position];
@@ -15,11 +15,10 @@ function Deck() {
     setIsAnswerShown((prev) => !prev);
   };
 
-  const currentCard = useMemo(() => deck[0], []);
-  const secondCard = useMemo(() => peekCard(1), []);
-  const thirdCard = useMemo(() => peekCard(2), []);
+  const currentCard = useMemo(() => deck[0], [isLoading]);
+  const secondCard = useMemo(() => peekCard(1), [isLoading]);
+  const thirdCard = useMemo(() => peekCard(2), [isLoading]);
 
-  console.log({ currentCard, secondCard, thirdCard });
   return (
     <div className="mt-20 grid justify-items-center">
       {thirdCard && (
