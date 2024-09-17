@@ -20,7 +20,7 @@ function Deck() {
   const thirdCard = useMemo(() => peekCard(2), [isLoading]);
 
   return (
-    <div className="mt-20 grid justify-items-center">
+    <div className="grid justify-items-center md:mt-20">
       {thirdCard && (
         <div className="transform-bg-card absolute aspect-video h-[62vh] w-[42vh] md:h-[50vh] md:w-[60vh]">
           <FlashCard key={thirdCard.id} id="secondBackgroundCard" />

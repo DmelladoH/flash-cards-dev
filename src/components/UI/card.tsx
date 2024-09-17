@@ -60,7 +60,7 @@ function FlashCard({
   return (
     <article
       id={id}
-      className="absolute	grid h-full w-full cursor-grab items-center justify-center rounded-xl border-2 bg-white object-center p-10 text-stone-900"
+      className="absolute grid	h-full w-full cursor-grab items-center justify-center overflow-scroll rounded-xl border-2 bg-white object-center p-10 text-stone-900"
     >
       <button
         className={`card h-full w-full transition-all duration-500 group-focus:[transform:rotateY(180deg)] ${showAnswer} ? transform:rotateY(180deg) : ''`}
@@ -76,10 +76,10 @@ function FlashCard({
         ) : (
           <div>
             {answer && (
-              <section
+              <div
                 dangerouslySetInnerHTML={{ __html: answer }}
                 className="translate-x-0 transform text-pretty text-left"
-              ></section>
+              ></div>
             )}
           </div>
         )}

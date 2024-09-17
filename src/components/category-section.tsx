@@ -18,7 +18,7 @@ export function CategorySection() {
           </li>
         </ul>
       </section>
-      <div className="transform-bg-card absolute left-0 right-0 top-0 -z-10 mx-1 h-[500px] rounded-t-3xl rounded-br-[21.5rem] border-2 bg-white p-10 md:mx-16"></div>{" "}
+      <div className="transform-bg-card absolute left-0 right-0 top-0 -z-10 mx-1 h-[300px] rounded-t-3xl rounded-br-[21.5rem] border-2 bg-white p-10 md:mx-16"></div>{" "}
     </>
   );
 }
