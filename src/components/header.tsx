@@ -11,7 +11,7 @@ export default function Header({ category }: Props) {
         <BackSvg />
       </Link>
       <div className="">
-        <h1 className="text-center text-4xl">{category}</h1>
+        <h1 className="text-center text-3xl md:text-4xl">{category}</h1>
       </div>
       <div className=""></div>
     </header>
