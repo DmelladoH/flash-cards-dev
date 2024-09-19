@@ -4,8 +4,7 @@ function OpenEyeSvg() {
       xmlns="http://www.w3.org/2000/svg"
       fill="none"
       viewBox="0 0 42 42"
-      width={42}
-      height={42}
+      className="h-8 w-8 md:h-10 md:w-10"
     >
       <path
         stroke="#0D75EC"
