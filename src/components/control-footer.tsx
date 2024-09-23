@@ -32,7 +32,7 @@ export function ControlFooter() {
               {isAnswerShown ? <CloseEyeSvg /> : <OpenEyeSvg />}
             </RoundedButton>
             <RoundedButton
-              onClick={(e) => nextCardByAction(next, window.innerWidth, 90)}
+              onClick={(e) => nextCardByAction(next, window.innerWidth, 70)}
               onMouseEnter={() => setHover("next")}
               onMouseLeave={() => setHover("")}
             >
