@@ -1,11 +1,11 @@
 "use client";
 import { createContext, useCallback, useState } from "react";
-import { Card } from "../types";
+import { CardWithId } from "../types";
 import { useRouter } from "next/navigation";
 import { getErrorMessage } from "~/util/errorHandling";
 
 interface DeckProps {
-  deck: Card[];
+  deck: CardWithId[];
   category: string;
   fetchData: ({
     category,
@@ -43,7 +43,7 @@ export const DeckContext = createContext<DeckProps>(defaultDeckContext);
 export function DeckProvider({ children }: { children: React.ReactNode }) {
   const router = useRouter();
 
-  const [deck, setDeck] = useState<Card[]>([]);
+  const [deck, setDeck] = useState<CardWithId[]>([]);
   const [category, setCategory] = useState("");
   const [isLoading, setIsLoading] = useState(false);
   const [isAnswerShown, setIsAnswerShown] = useState(false);
@@ -72,11 +72,13 @@ export function DeckProvider({ children }: { children: React.ReactNode }) {
     let newDeck = [];
 
     if (currentCardId != null) {
-      const firstCard = res.find((arr: Card) => arr.name === currentCardId);
+      const firstCard = res.find(
+        (arr: CardWithId) => arr.name === currentCardId,
+      );
 
       newDeck = [
         firstCard,
-        ...res.filter((arr: Card) => arr.name !== currentCardId),
+        ...res.filter((arr: CardWithId) => arr.name !== currentCardId),
       ];
     } else {
       newDeck = [...res];
@@ -90,7 +92,7 @@ export function DeckProvider({ children }: { children: React.ReactNode }) {
     return deck[position];
   };
 
-  const peekSecondCard = (): Card | undefined => {
+  const peekSecondCard = (): CardWithId | undefined => {
     return peekCard(1);
   };
 

@@ -9,7 +9,7 @@ export function CategorySection() {
         <h2 className="text-center text-lg font-medium md:text-xl">
           Choose the category
         </h2>
-        <ul className="gallery mt-8">
+        <ul className="gallery mt-11">
           <li>
             <CategoryCard
               svg={<JavaScriptSVG />}

@@ -35,18 +35,3 @@ export const cards = createTable(
     nameIndex: index("name_idx").on(example.name),
   }),
 );
-
-// export const categories = createTable(
-//   "categories",
-//   {
-//     id: serial("id").primaryKey(),
-//     name: varchar("name", { length: 256 }),
-//     createdAt: timestamp("created_at")
-//       .default(sql`CURRENT_TIMESTAMP`)
-//       .notNull(),
-//     updatedAt: timestamp("updatedAt"),
-//   },
-//   (example) => ({
-//     nameIndex: index("name_idx").on(example.name),
-//   }),
-// );
