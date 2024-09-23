@@ -2,17 +2,13 @@
 @tailwind components;
 @tailwind utilities;
 
-.transform-bg-card {
-  transform: rotate(-5deg);
-}
-
 span {
   font-weight: 600;
 }
 
 .gallery {
   display: grid;
-  gap: 1rem;
+  gap: 2rem;
   grid-auto-rows: 100px;
   grid-template-columns: repeat(auto-fill, minmax(100px, 1fr));
 }
