@@ -1,12 +1,12 @@
 import { defineConfig } from "drizzle-kit";
 
-import { env } from "~/env";
-
 export default defineConfig({
   schema: "./src/server/db/schema.ts",
-  dialect: "postgresql",
+  dialect: "sqlite",
+  driver: "turso",
+  out: "./src/server/db/migrations",
   dbCredentials: {
-    url: env.DATABASE_URL,
+    url: process.env.TURSO_URL!,
+    authToken: process.env.TURSO_AUTH!,
   },
-  tablesFilter: ["flash-cards-dev_*"],
 });

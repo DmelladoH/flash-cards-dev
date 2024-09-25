@@ -2,6 +2,7 @@
 import { Card } from "~/types";
 import { data } from "./mockData/data";
 import { db } from "./db";
+import { cards } from "./db/schema";
 
 export async function getCategories() {
   const categories = ["js", "ts"];
@@ -44,5 +45,21 @@ export async function getCartById(id: string): Promise<
     return res;
   } catch (e) {
     throw new Error("Error getting the card");
+  }
+}
+
+export async function addCards(cardList: Card[]) {
+  try {
+    await db.insert(cards).values([...cardList]);
+  } catch (e) {
+    throw new Error("Error adding the card");
+  }
+}
+
+export async function removeAllCards() {
+  try {
+    await db.delete(cards);
+  } catch (e) {
+    throw new Error("Error removing the card");
   }
 }
