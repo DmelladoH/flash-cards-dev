@@ -69,17 +69,21 @@ export function DeckProvider({ children }: { children: React.ReactNode }) {
     setCategory(category);
     const res = await getRandomCards({ category });
 
-    let newDeck = [];
+    let newDeck: CardWithId[] = [];
 
     if (currentCardId != null) {
       const firstCard = res.find(
         (arr: CardWithId) => arr.name === currentCardId,
       );
 
-      newDeck = [
-        firstCard,
-        ...res.filter((arr: CardWithId) => arr.name !== currentCardId),
-      ];
+      if (!firstCard) {
+        newDeck = [];
+      } else {
+        newDeck = [
+          firstCard,
+          ...res.filter((arr: CardWithId) => arr.name !== currentCardId),
+        ];
+      }
     } else {
       newDeck = [...res];
     }
