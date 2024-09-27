@@ -11,9 +11,8 @@ on:
       - dev
 
 jobs:
-  test:
+  build:
     runs-on: ubuntu-latest
-
     steps:
       - name: Checkout repository
         uses: actions/checkout@v2
@@ -26,6 +25,19 @@ jobs:
 
       - name: Build
         run: npm run build
+
+  unit-test:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v2
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v3
+
+      - name: Install dependencies
+        run: npm install
 
       - name: Run Jest tests
         run: npm test
