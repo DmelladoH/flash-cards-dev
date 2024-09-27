@@ -12,7 +12,8 @@
     "db:local": "turso dev --db-file local-db.db",
     "dev": "next dev --turbo",
     "lint": "next lint",
-    "start": "next start"
+    "start": "next start",
+    "test": "vitest"
   },
   "dependencies": {
     "@fontsource/paytone-one": "^5.1.0",
@@ -26,22 +27,27 @@
     "zod": "^3.23.8"
   },
   "devDependencies": {
+    "@testing-library/dom": "^10.4.0",
+    "@testing-library/react": "^16.0.1",
     "@types/eslint": "^8.56.12",
     "@types/node": "^20.16.6",
     "@types/react": "^18.3.8",
     "@types/react-dom": "^18.3.0",
     "@typescript-eslint/eslint-plugin": "^7.18.0",
     "@typescript-eslint/parser": "^7.18.0",
+    "@vitejs/plugin-react": "^4.3.1",
     "drizzle-kit": "0.21.0",
     "eslint": "^8.57.1",
     "eslint-config-next": "^14.2.13",
     "eslint-plugin-drizzle": "^0.2.3",
+    "jsdom": "^25.0.1",
     "postcss": "^8.4.47",
     "prettier": "^3.3.3",
     "prettier-plugin-tailwindcss": "^0.5.14",
     "tailwindcss": "^3.4.13",
     "tsx": "^4.19.1",
-    "typescript": "^5.6.2"
+    "typescript": "^5.6.2",
+    "vitest": "^2.1.1"
   },
   "ct3aMetadata": {
     "initVersion": "7.32.0"
