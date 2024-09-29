@@ -56,4 +56,4 @@ jobs:
       - name: Build Project
         run: pnpm run build
         env:
-          TURSO_DB_URL: ${{ secrets.TURSO_DB_URL }} # Ensure the secret is passed here
+          TURSO_URL: ${{ secrets.TURSO_URL }} # Ensure the secret is passed here
