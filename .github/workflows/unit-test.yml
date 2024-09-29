@@ -16,9 +16,12 @@ jobs:
         uses: actions/setup-node@v3
         with:
           node-version: 18
-          cache: "npm"
-      - run: npm ci
-      - run: npm test
+
+      - name: Install pnpm
+        run: npm install -g pnpm
+      - run: pnpm install --frozen-lockfile # Use pnpm install to ensure lockfile is used
+      - run: pnpm test
+
   build:
     runs-on: ubuntu-latest
     steps:
@@ -27,68 +30,8 @@ jobs:
         uses: actions/setup-node@v3
         with:
           node-version: 18
-          cache: "npm"
-      - run: npm ci
-      - run: npm run build
-# name: Run unit tests
 
-# on:
-#   push:
-#     branches:
-#       - main
-#       - dev
-#   pull_request:
-#     branches:
-#       - main
-#       - dev
-
-# jobs:
-#   build:
-#     runs-on: ubuntu-latest
-
-#     steps:
-#       - name: Checkout repository
-#         uses: actions/checkout@v2
-
-#       - name: Set up Node.js
-#         uses: actions/setup-node@v3
-#         with:
-#           node-version: "16"
-
-#       - name: Install dependencies
-#         run: npm install
-
-#       - name: Set variables
-#         env:
-#           TURSO_DB_URL: ${{ secrets.TURSO_DB_URL }}
-#           TURSO_AUTH: ${{ secrets.TURSO_AUTH }}
-
-#       - name: Build
-#         run: npm run build
-#         env:
-#           TURSO_DB_URL: ${{ secrets.TURSO_DB_URL }}
-#           TURSO_AUTH: ${{ secrets.TURSO_AUTH }}
-
-#   unit-test:
-#     runs-on: ubuntu-latest
-
-#     steps:
-#       - name: Checkout repository
-#         uses: actions/checkout@v2
-
-#       - name: Set up Node.js
-#         uses: actions/setup-node@v3
-
-#       - name: Install dependencies
-#         run: npm install
-
-#       - name: Set variables
-#         env:
-#           TURSO_DB_URL: ${{ secrets.TURSO_DB_URL }}
-#           TURSO_AUTH: ${{ secrets.TURSO_AUTH }}
-
-#       - name: Run Jest tests
-#         run: npm test
-#         env:
-#           TURSO_DB_URL: ${{ secrets.TURSO_DB_URL }}
-#           TURSO_AUTH: ${{ secrets.TURSO_AUTH }}
+      - name: Install pnpm
+        run: npm install -g pnpm
+      - run: pnpm install --frozen-lockfile
+      - run: pnpm run build
