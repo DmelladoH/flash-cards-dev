@@ -30,8 +30,6 @@ jobs:
 
   build:
     runs-on: ubuntu-latest
-    env:
-      TURSO_URL: ${{ secrets.TURSO_URL }} # Ensure the secret is passed here
 
     steps:
       - uses: actions/checkout@v3

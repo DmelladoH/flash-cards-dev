@@ -14,6 +14,10 @@ const config = {
   eslint: {
     ignoreDuringBuilds: true,
   },
+  env: {
+    TURSO_URL: process.env.TURSO_URL,
+    TURSO_AUTH: process.env.TURSO_AUTH,
+  },
 };
 
 export default config;
