@@ -55,12 +55,15 @@ jobs:
           restore-keys: |
             ${{ runner.os }}-nextjs-cache-
       - run: pnpm install --frozen-lockfile
+      - run: echo $TURSO_URL # Check that the variable is set correctly
+        env:
+          TURSO_URL: ${{ secrets.TURSO_URL }}
+          TURSO_AUTH: ${{ secrets.TURSO_AUTH }}
+
       - name: Build Project
         run: |
           echo "Building Next.js project"
           pnpm run build  # Run build command here
         env:
-          TURSO_URL: ${{ secrets.TURSO_URL }} # Set the environment variable here
-      - run: echo $TURSO_URL # Check that the variable is set correctly
-        env:
-          TURSO_URL: ${{ secrets.TURSO_URL }} # Ensure the secret is passed
+          TURSO_URL: ${{ secrets.TURSO_URL }}
+          TURSO_AUTH: ${{ secrets.TURSO_AUTH }}
