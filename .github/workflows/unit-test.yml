@@ -1,4 +1,4 @@
-name: Run Unit Tests
+name: Run Unit Tests and Build
 
 on:
   push:
@@ -16,10 +16,16 @@ jobs:
         uses: actions/setup-node@v3
         with:
           node-version: 18
-
       - name: Install pnpm
         run: npm install -g pnpm
-      - run: pnpm install --frozen-lockfile # Use pnpm install to ensure lockfile is used
+      - name: Cache pnpm store
+        uses: actions/cache@v3
+        with:
+          path: ~/.pnpm-store
+          key: ${{ runner.os }}-pnpm-store-${{ hashFiles('pnpm-lock.yaml') }}
+          restore-keys: |
+            ${{ runner.os }}-pnpm-store-
+      - run: pnpm install --frozen-lockfile
       - run: pnpm test
 
   build:
@@ -30,10 +36,24 @@ jobs:
         uses: actions/setup-node@v3
         with:
           node-version: 18
-
       - name: Install pnpm
         run: npm install -g pnpm
+      - name: Cache pnpm store
+        uses: actions/cache@v3
+        with:
+          path: ~/.pnpm-store
+          key: ${{ runner.os }}-pnpm-store-${{ hashFiles('pnpm-lock.yaml') }}
+          restore-keys: |
+            ${{ runner.os }}-pnpm-store-
+      - name: Cache Next.js build cache
+        uses: actions/cache@v3
+        with:
+          path: .next/cache
+          key: ${{ runner.os }}-nextjs-cache-${{ hashFiles('package.json', 'pnpm-lock.yaml') }}
+          restore-keys: |
+            ${{ runner.os }}-nextjs-cache-
       - run: pnpm install --frozen-lockfile
-      - run: pnpm run build
+      - name: Build Project
+        run: pnpm run build
         env:
-          TURSO_DB_URL: ${{ secrets.TURSO_DB_URL }} # Use the secret here
+          TURSO_DB_URL: ${{ secrets.TURSO_DB_URL }} # Ensure the secret is passed here
