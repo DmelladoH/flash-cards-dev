@@ -44,6 +44,8 @@ jobs:
 
       - name: display
         run: echo $TURSO_URL
+        env:
+          TURSO_URL: ${{ secrets.TURSO_URL }} # Ensure the secret is passed here
 
       - name: Cache pnpm store
         uses: actions/cache@v3
