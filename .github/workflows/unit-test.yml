@@ -30,6 +30,9 @@ jobs:
 
   build:
     runs-on: ubuntu-latest
+    env:
+      TURSO_URL: ${{ secrets.TURSO_URL }} # Ensure the secret is passed here
+
     steps:
       - uses: actions/checkout@v3
       - name: Setup Node
@@ -38,6 +41,10 @@ jobs:
           node-version: 18
       - name: Install pnpm
         run: npm install -g pnpm
+
+      - name: display
+        run: echo $TURSO_URL
+
       - name: Cache pnpm store
         uses: actions/cache@v3
         with:
@@ -55,5 +62,3 @@ jobs:
       - run: pnpm install --frozen-lockfile
       - name: Build Project
         run: pnpm run build
-        env:
-          TURSO_URL: ${{ secrets.TURSO_URL }} # Ensure the secret is passed here
