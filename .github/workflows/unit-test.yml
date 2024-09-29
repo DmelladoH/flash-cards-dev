@@ -56,6 +56,11 @@ jobs:
             ${{ runner.os }}-nextjs-cache-
       - run: pnpm install --frozen-lockfile
       - name: Build Project
-        run: pnpm run build
+        run: |
+          echo "Building Next.js project"
+          TURSO_URL=${{ secrets.TURSO_URL }} pnpm run build  # Pass the variable here explicitly
         env:
-          TURSO_URL: ${{ secrets.TURSO_URL }} # Ensure the secret is passed here
+          TURSO_URL: ${{ secrets.TURSO_URL }} # Set the environment variable
+      - run: echo $TURSO_URL # Check that the variable is set correctly
+        env:
+          TURSO_URL: ${{ secrets.TURSO_URL }} # Ensure the secret is pass
