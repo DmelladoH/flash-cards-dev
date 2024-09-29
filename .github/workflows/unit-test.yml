@@ -34,7 +34,6 @@ jobs:
       - name: Install pnpm
         run: npm install -g pnpm
       - run: pnpm install --frozen-lockfile
-      - name: Set environment variables
+      - run: pnpm run build
         env:
           TURSO_DB_URL: ${{ secrets.TURSO_DB_URL }} # Use the secret here
-      - run: pnpm run build
