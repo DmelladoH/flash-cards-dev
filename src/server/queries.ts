@@ -3,21 +3,19 @@ import { Card } from "~/types";
 import { data } from "./mockData/data";
 import { db } from "./db";
 import { cards } from "./db/schema";
+import { sql } from "drizzle-orm";
 
-export async function getCategories() {
-  const categories = ["js", "ts"];
-
-  return new Promise((resolve) => {
-    setTimeout(() => {
-      resolve(categories);
-    }, 100);
-  });
-}
-
-export async function getCartsByCategory(category: string): Promise<any[]> {
+export async function getCartsByCategory({
+  category,
+  limit,
+  excluded,
+}: any): Promise<any[]> {
   try {
     const res = await db.query.cards.findMany({
-      where: (model, { eq }) => eq(model.category, category),
+      where: (model, { eq, notInArray }) =>
+        eq(model.category, category) && notInArray(model.id, excluded),
+      limit: limit,
+      orderBy: sql`RANDOM()`,
     });
     // const mock = data.filter((item: Card) => item.category === category);
     return res;
