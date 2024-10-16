@@ -17,15 +17,10 @@ function Page({ params }: { params: { category: string; id: string } }) {
     setIsLoadingCards(false);
   }, []);
 
-  debugger;
-
   if (isLoading || isLoadingCards) {
     return <Loader />;
   }
 
-  if (deck.length === 0) {
-    return <></>;
-  }
   return (
     <div className="relative">
       <div className="absolute h-full w-full">
