@@ -8,7 +8,7 @@ export function EmptyState({ category }: { category: string }) {
         href={`/${category}`}
         className="rounded-lg bg-slate-50 p-2 text-center uppercase text-stone-900"
       >
-        reset
+        Get more
       </Link>
       <Link
         href={"/"}

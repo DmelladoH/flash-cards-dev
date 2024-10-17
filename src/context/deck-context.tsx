@@ -7,6 +7,7 @@ import { getErrorMessage } from "~/util/errorHandling";
 interface DeckProps {
   deck: CardWithId[];
   category: string;
+  excluded: string[];
   fetchData: ({
     category,
     currentCardId,
@@ -28,6 +29,7 @@ interface DeckProps {
 const defaultDeckContext: DeckProps = {
   deck: [],
   category: "",
+  excluded: [],
   fetchData: async () => {},
   next: () => {},
   isLoading: false,
@@ -48,11 +50,24 @@ export function DeckProvider({ children }: { children: React.ReactNode }) {
   const [isLoading, setIsLoading] = useState(false);
   const [isAnswerShown, setIsAnswerShown] = useState(false);
   const [displayControlFooter, setDisplayControlFooter] = useState(true);
+  const [excluded, setExcluded] = useState<string[]>([]);
   const [error, setError] = useState<string | null>(null);
 
+  //TODO refactor
   const getRandomCards = async ({ category }: any) => {
+    const options = {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        excluded: excluded,
+        limit: 5,
+      }),
+    };
+
     try {
-      const res = await fetch(`/api/cards?cat=${category}`);
+      const res = await fetch(`/api/cards?cat=${category}`, options);
       const resJson = await res.json();
 
       if (resJson == null) return [];
@@ -63,11 +78,11 @@ export function DeckProvider({ children }: { children: React.ReactNode }) {
     }
   };
 
-  const fetchData = async ({ category, currentCardId }: any) => {
+  const fetchData = async ({ category, currentCardId, limit, offset }: any) => {
     setIsLoading(true);
     setIsAnswerShown(false);
     setCategory(category);
-    const res = await getRandomCards({ category });
+    const res = await getRandomCards({ category, limit, offset });
 
     let newDeck: CardWithId[] = [];
 
@@ -88,7 +103,13 @@ export function DeckProvider({ children }: { children: React.ReactNode }) {
       newDeck = [...res];
     }
 
+    const firstId = newDeck[0]?.id;
+    if (newDeck.length > 0 && firstId != null) {
+      setExcluded((prev) => [...prev, firstId]);
+    }
+
     setDeck(newDeck);
+
     setIsLoading(false);
   };
 
@@ -107,6 +128,8 @@ export function DeckProvider({ children }: { children: React.ReactNode }) {
       setDeck([]);
       return;
     }
+
+    setExcluded((prev) => [...prev, nextCard.id]);
 
     router.push(`/${category}/${nextCard.name}`);
     setIsAnswerShown(false);
@@ -128,7 +151,7 @@ export function DeckProvider({ children }: { children: React.ReactNode }) {
         category,
         fetchData,
         next,
-
+        excluded,
         isLoading,
         setIsLoading,
         isAnswerShown,

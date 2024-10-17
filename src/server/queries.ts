@@ -11,17 +11,24 @@ export async function getCartsByCategory({
   excluded,
 }: any): Promise<any[]> {
   try {
-    const res = await db.query.cards.findMany({
-      where: (model, { eq, notInArray }) =>
-        eq(model.category, category) && notInArray(model.id, excluded),
-      limit: limit,
-      orderBy: sql`RANDOM()`,
-    });
+    if (excluded.length === 0) {
+      return await db.query.cards.findMany({
+        where: (model, { eq }) => eq(model.category, category),
+        limit: limit,
+        orderBy: sql`RANDOM()`,
+      });
+    } else {
+      return await db.query.cards.findMany({
+        where: (model, { eq, notInArray }) =>
+          eq(model.category, category) && notInArray(model.id, excluded),
+        limit: limit,
+        orderBy: sql`RANDOM()`,
+      });
+    }
     // const mock = data.filter((item: Card) => item.category === category);
-    return res;
     // return mock;
-  } catch (e) {
-    throw new Error("Error getting cards");
+  } catch (e: any) {
+    throw new Error("Error getting cards: ", e);
   }
 }
 
