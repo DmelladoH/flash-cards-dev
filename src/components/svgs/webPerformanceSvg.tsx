@@ -1,7 +1,7 @@
 export function WebPerformanceSVG() {
   return (
     <svg width="75" height="75" fill="none" xmlns="http://www.w3.org/2000/svg">
-      <g clip-path="url(#a)">
+      <g clipPath="url(#a)">
         <path
           d="M37.5 0C16.79 0 0 16.789 0 37.5 0 58.21 16.79 75 37.5 75S75 58.21 75 37.5C75 16.788 58.21 0 37.5 0Z"
           fill="#EDEDED"
