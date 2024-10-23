@@ -1,11 +1,12 @@
 "use client";
 import Link from "next/link";
 import { redirect } from "next/navigation";
-import { useEffect } from "react";
+import { useEffect, use } from "react";
 import { Loader } from "~/components/svgs/loader";
 import { useDeckContext } from "~/hooks/useDeckContext";
 
-function Page({ params }: { params: { category: string } }) {
+function Page(props: { params: Promise<{ category: string }> }) {
+  const params = use(props.params);
   const { category } = params;
 
   const { deck, isLoading, fetchData } = useDeckContext();

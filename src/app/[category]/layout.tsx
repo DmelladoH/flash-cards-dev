@@ -2,13 +2,22 @@ import { ControlFooter } from "~/components/control-footer";
 import Header from "~/components/header";
 import { DeckProvider } from "~/context/deck-context";
 
-export default function CategoryLayout({
-  children,
-  params: { category },
-}: {
-  children: React.ReactNode;
-  params: { category: string };
-}) {
+export default async function CategoryLayout(
+  props: {
+    children: React.ReactNode;
+    params: Promise<{ category: string }>;
+  }
+) {
+  const params = await props.params;
+
+  const {
+    category
+  } = params;
+
+  const {
+    children
+  } = props;
+
   return (
     <DeckProvider>
       <div className="flashcards-layout min-height-100vh">

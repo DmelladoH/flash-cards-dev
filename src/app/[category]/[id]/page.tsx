@@ -1,11 +1,12 @@
 "use client";
-import { useEffect, useState } from "react";
+import { useEffect, useState, use } from "react";
 import Deck from "~/components/deck";
 import { EmptyState } from "~/components/empty-state";
 import { Loader } from "~/components/svgs/loader";
 import { useDeckContext } from "~/hooks/useDeckContext";
 
-function Page({ params }: { params: { category: string; id: string } }) {
+function Page(props: { params: Promise<{ category: string; id: string }> }) {
+  const params = use(props.params);
   const { category, id } = params;
   const [isLoadingCards, setIsLoadingCards] = useState(false);
   const { deck, fetchData, isLoading } = useDeckContext();
