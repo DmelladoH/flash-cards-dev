@@ -53,14 +53,21 @@ export async function getCartById(id: string): Promise<
   }
 }
 
-export async function addCards(cardList: Card[]) {
+export async function addCardList(cardList: Card[]) {
   try {
     await db.insert(cards).values([...cardList]);
+  } catch (e) {
+    throw new Error("Error adding the card list");
+  }
+}
+
+export async function addCard(card: Card) {
+  try {
+    await db.insert(cards).values(card);
   } catch (e) {
     throw new Error("Error adding the card");
   }
 }
-
 export async function removeAllCards() {
   try {
     await db.delete(cards);
