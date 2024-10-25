@@ -15,7 +15,7 @@ export function CategorySection() {
 
   return (
     <>
-      <section className="absolute  z-20 h-full w-[-webkit-fill-available] overflow-scroll rounded-t-3xl border-2 bg-white p-12 text-stone-900 md:mx-24">
+      <section className="scroll  absolute z-20 h-full w-[-webkit-fill-available] overflow-scroll rounded-t-3xl border-2 bg-white p-12 text-stone-900 md:mx-24">
         <h2 className="text-center text-lg font-medium md:text-xl">
           Choose the category
         </h2>
