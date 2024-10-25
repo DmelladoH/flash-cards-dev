@@ -9,22 +9,35 @@ export async function getCartsByCategory({
   category,
   limit,
   excluded,
-}: any): Promise<any[]> {
+}: {
+  category: string;
+  limit: number;
+  excluded: number[];
+}): Promise<any[]> {
+  const conditions: any[] = [];
+
+  const whereCategory = sql`${cards.category} = ${category}`;
+  const whereNotInExcluded = sql`${cards.id} NOT IN (${sql.join(
+    excluded.map((id) => sql`${id}`),
+    sql`, `,
+  )})`;
+
+  conditions.push(whereCategory);
+  if (excluded.length > 0) {
+    conditions.push(whereNotInExcluded);
+  }
+
+  const whereClause = sql`${sql.join(conditions, sql` AND `)}`;
+
   try {
-    if (excluded.length === 0) {
-      return await db.query.cards.findMany({
-        where: (model, { eq }) => eq(model.category, category),
-        limit: limit,
-        orderBy: sql`RANDOM()`,
-      });
-    } else {
-      return await db.query.cards.findMany({
-        where: (model, { eq, notInArray }) =>
-          eq(model.category, category) && notInArray(model.id, excluded),
-        limit: limit,
-        orderBy: sql`RANDOM()`,
-      });
-    }
+    console.log({ category });
+    return db
+      .select()
+      .from(cards)
+      .where(whereClause)
+      .limit(limit)
+      .orderBy(sql`RANDOM()`);
+
     // const mock = data.filter((item: Card) => item.category === category);
     // return mock;
   } catch (e: any) {
