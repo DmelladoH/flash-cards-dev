@@ -5,6 +5,8 @@ import { createCard } from "~/server/actions/createCard";
 import { useActionState } from "react";
 import SubmitButton from "~/components/UI/buttons/submitButton";
 import { toast } from "sonner";
+import { categories } from "~/lib/categories";
+import { Select } from "~/components/UI/select";
 
 const initialState = {
   message: "",
@@ -12,6 +14,10 @@ const initialState = {
 
 export default function Form() {
   const [state, formAction] = useActionState(createCard, initialState);
+  const categoriesNames = categories.map(({ id, name }) => ({
+    id,
+    name,
+  }));
 
   if (state.message !== "") {
     toast(state.message);
@@ -19,12 +25,7 @@ export default function Form() {
 
   return (
     <form action={formAction} className="grid w-[600] gap-4 p-5">
-      <Input
-        name="category"
-        label="category"
-        placeholder="JavaScript, performance..."
-      />
-
+      <Select name="category" label="category" options={categoriesNames} />
       <Input name="question" label="Question" placeholder="What is the DOM?" />
 
       <TextArea

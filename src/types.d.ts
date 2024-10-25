@@ -12,6 +12,7 @@ export interface CardWithId extends Card {
 }
 
 export interface Category {
+  id: string;
   svg: React.ComponentType;
   name: string;
   href: string;

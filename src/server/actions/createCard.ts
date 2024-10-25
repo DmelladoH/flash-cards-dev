@@ -31,8 +31,7 @@ export async function createCard(
   };
 
   try {
-    // await addCard(card);
-    console.log({ card });
+    await addCard(card);
     revalidatePath("/create");
     return { message: `card added` };
   } catch (e) {
