@@ -11,7 +11,7 @@ export default function TextArea({ label, name, placeholder }: TextAreaProps) {
       <textarea
         name={name}
         placeholder={placeholder}
-        className="min-h-60 rounded-lg px-4 py-2 text-sm"
+        className="min-h-60 rounded-lg px-4 py-2 text-sm text-black"
       />
     </label>
   );

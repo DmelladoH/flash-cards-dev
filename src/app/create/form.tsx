@@ -4,6 +4,7 @@ import TextArea from "~/components/UI/textArea";
 import { createCard } from "~/server/actions/createCard";
 import { useActionState } from "react";
 import SubmitButton from "~/components/UI/buttons/submitButton";
+import { toast } from "sonner";
 
 const initialState = {
   message: "",
@@ -11,6 +12,10 @@ const initialState = {
 
 export default function Form() {
   const [state, formAction] = useActionState(createCard, initialState);
+
+  if (state.message !== "") {
+    toast(state.message);
+  }
 
   return (
     <form action={formAction} className="grid w-[600] gap-4 p-5">
