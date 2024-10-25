@@ -7,9 +7,9 @@ interface Props {
 }
 export default function CategoryCard({ svg, name, href }: Props) {
   return (
-    <Link href={href} className="featured max-w-[100px]">
-      <article className="grid justify-items-center gap-2 transition duration-300 ease-in-out hover:scale-110">
-        {svg}
+    <Link href={href} className="featured p-2">
+      <article className="grid transform justify-items-center gap-2 transition duration-300 ease-in-out hover:scale-105">
+        <div className="h-20 w-20 md:h-24 md:w-24">{svg}</div>
         <span className="text text-center">{name}</span>
       </article>
     </Link>

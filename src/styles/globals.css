@@ -6,25 +6,34 @@ span {
   font-weight: 600;
 }
 
-.gallery {
-  display: grid;
-  gap: 2rem;
-  grid-auto-rows: 100px;
-  grid-template-columns: repeat(auto-fill, minmax(100px, 1fr));
-}
+@layer components {
+  .gallery {
+    display: grid;
+    gap: 2rem;
+    grid-auto-rows: 200px;
+    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+  }
 
-.featured {
-  grid-column: span 2;
-}
+  .gallerySmall {
+    display: grid;
+    gap: 2rem;
+    grid-auto-rows: 100px;
+    grid-template-columns: repeat(auto-fill, minmax(100px, 1fr));
+  }
 
-.flashcards-layout {
-  display: grid;
-  grid-template-rows: auto 1fr;
-}
+  .featured {
+    grid-column: span 2;
+  }
 
-.min-height-100vh {
-  min-height: 100vh;
-  min-height: 100dvh;
+  .flashcards-layout {
+    display: grid;
+    grid-template-rows: auto 1fr;
+  }
+
+  .min-height-100vh {
+    min-height: 100vh;
+    min-height: 100dvh;
+  }
 }
 
 @layer base {

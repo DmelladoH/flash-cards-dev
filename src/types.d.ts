@@ -10,7 +10,9 @@ export interface Card {
 export interface CardWithId extends Card {
   id: string;
 }
-export interface Point {
-  x: number;
-  y: number;
+
+export interface Category {
+  svg: React.ComponentType;
+  name: string;
+  href: string;
 }
