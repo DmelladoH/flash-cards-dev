@@ -10,7 +10,7 @@ const inter = Inter({
 });
 
 export const metadata = {
-  title: "Flash Cards Dev",
+  title: "CardsFlash",
   description: "Flash cards for devs",
   icons: [{ rel: "icon", url: "/favicon.ico" }],
 };
