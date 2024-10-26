@@ -1,13 +1,6 @@
 import * as React from "react";
-const LogoSvg = ({
-  width = 211,
-  height = 89,
-  secondColor = "#a14d4c",
-  ...props
-}) => (
+const LogoSvg = ({ secondColor = "#a14d4c", ...props }) => (
   <svg
-    width={width}
-    height={height}
     viewBox="0 0 211 89"
     fill="none"
     xmlns="http://www.w3.org/2000/svg"
