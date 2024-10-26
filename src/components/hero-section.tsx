@@ -2,9 +2,9 @@ import LogoSvg from "./svgs/logo";
 
 export function HeroSection() {
   return (
-    <section className="md:py-20">
-      <div className="flex h-56 items-center justify-center">
-        <LogoSvg className="h-[200px] md:h-[300px]" />
+    <section className="md:py-10">
+      <div className="flex items-center justify-center">
+        <LogoSvg className="sm:h-[150px] sm:w-[400px] md:h-[300px] md:w-[600px]" />
       </div>
     </section>
   );
