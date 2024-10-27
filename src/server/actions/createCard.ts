@@ -14,14 +14,17 @@ export async function createCard(
   const question = formData.get("question")?.toString();
   const answer = formData.get("answer")?.toString();
 
-  const name = question?.replace(" ", "-");
-
-  if (!name || name?.trim() == "") return { message: `Fail to create Card` };
   if (!category || category.trim() == "")
     return { message: `Fail to create Card` };
   if (!question || question.trim() == "")
     return { message: `Fail to create Card` };
   if (!answer || answer.trim() == "") return { message: `Fail to create Card` };
+
+  const name = question
+    .toLocaleLowerCase()
+    .replace(/[^a-z0-9 ]/g, "")
+    .replace(/ /g, "-");
+  if (!name || name?.trim() == "") return { message: `Fail to create Card` };
 
   const card: Card = {
     name: name,
