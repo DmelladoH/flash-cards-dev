@@ -2,7 +2,7 @@
 import { useEffect, useState, use } from "react";
 import Deck from "~/components/deck";
 import { EmptyState } from "~/components/empty-state";
-import { Loader } from "~/components/svgs/loader";
+import Loader from "~/components/UI/loader";
 import { useDeckContext } from "~/hooks/useDeckContext";
 
 function Page(props: { params: Promise<{ category: string; id: string }> }) {

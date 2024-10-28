@@ -2,7 +2,7 @@
 import Link from "next/link";
 import { redirect } from "next/navigation";
 import { useEffect, use } from "react";
-import { Loader } from "~/components/svgs/loader";
+import Loader from "~/components/UI/loader";
 import { useDeckContext } from "~/hooks/useDeckContext";
 
 function Page(props: { params: Promise<{ category: string }> }) {
