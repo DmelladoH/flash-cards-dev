@@ -1,9 +1,38 @@
 // import "server-only";
 import { Card } from "~/types";
-import { data } from "./mockData/data";
 import { db } from "./db";
 import { cards } from "./db/schema";
 import { sql } from "drizzle-orm";
+
+export async function getCartsWithIdAndCategory({
+  category,
+  id,
+  limit,
+  excluded,
+}: {
+  category: string;
+  id: string;
+  limit: number;
+  excluded: number[];
+}): Promise<any[]> {
+  let realLimit = limit;
+
+  const card = await getCartById(id);
+
+  if (card) {
+    realLimit -= 1;
+  }
+
+  const cardsByCategory = await getCartsByCategory({
+    category,
+    limit: realLimit,
+    excluded,
+  });
+
+  const result = card ? [card, ...cardsByCategory] : cardsByCategory;
+
+  return result;
+}
 
 export async function getCartsByCategory({
   category,
@@ -37,9 +66,6 @@ export async function getCartsByCategory({
       .where(whereClause)
       .limit(limit)
       .orderBy(sql`RANDOM()`);
-
-    // const mock = data.filter((item: Card) => item.category === category);
-    // return mock;
   } catch (e: any) {
     throw new Error("Error getting cards: ", e);
   }

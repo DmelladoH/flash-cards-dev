@@ -78,28 +78,48 @@ export function DeckProvider({ children }: { children: React.ReactNode }) {
     }
   };
 
+  const getCardById = async ({
+    id,
+    category,
+  }: {
+    id: string;
+    category: string;
+  }) => {
+    const options = {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        excluded: excluded,
+        limit: 5,
+      }),
+    };
+
+    try {
+      const res = await fetch(`/api/card?cat=${category}&id=${id}`, options);
+      const resJson = await res.json();
+
+      if (resJson == null) return [];
+      return resJson;
+    } catch (e) {
+      setError(getErrorMessage(e));
+      return [];
+    }
+  };
+
   const fetchData = async ({ category, currentCardId, limit, offset }: any) => {
     setIsLoading(true);
     setIsAnswerShown(false);
     setCategory(category);
-    const res = await getRandomCards({ category, limit, offset });
 
     let newDeck: CardWithId[] = [];
-
     if (currentCardId != null) {
-      const firstCard = res.find(
-        (arr: CardWithId) => arr.name === currentCardId,
-      );
+      const cards = await getCardById({ id: currentCardId, category });
 
-      if (!firstCard) {
-        newDeck = [];
-      } else {
-        newDeck = [
-          firstCard,
-          ...res.filter((arr: CardWithId) => arr.name !== currentCardId),
-        ];
-      }
+      newDeck = [...cards];
     } else {
+      const res = await getRandomCards({ category, limit, offset });
       newDeck = [...res];
     }
 
