@@ -1,3 +1,4 @@
+import CssSVG from "~/components/svgs/categories/css";
 import HtmlSVG from "~/components/svgs/categories/html";
 import ReactSvg from "~/components/svgs/categories/react";
 import { WebPerformanceSVG } from "~/components/svgs/categories/webPerformanceSvg";
@@ -19,4 +20,5 @@ export const categories: Category[] = [
   },
   { id: "React", svg: ReactSvg, name: "React", href: "/React" },
   { id: "Html", svg: HtmlSVG, name: "HTML", href: "/Html" },
+  { id: "Css", svg: CssSVG, name: "CSS", href: "/Css" },
 ];
