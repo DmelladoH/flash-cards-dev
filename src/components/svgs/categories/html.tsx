@@ -1,6 +1,7 @@
 import * as React from "react";
 const HtmlSVG = () => (
   <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 76 76">
+    <title>Html</title>
     <path
       fill="#E44D26"
       d="M14.25 66.5 9.5 7.125h57L61.75 66.5 38 73.625 14.25 66.5Z"

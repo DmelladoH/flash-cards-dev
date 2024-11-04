@@ -1,6 +1,7 @@
 export function WebPerformanceSVG() {
   return (
     <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 75 75">
+      <title>Web performance</title>
       <g clipPath="url(#a)">
         <path
           fill="#EDEDED"

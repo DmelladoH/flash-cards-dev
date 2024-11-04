@@ -1,6 +1,7 @@
 import * as React from "react";
 const CssSVG = () => (
   <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 180 183">
+    <title>Css</title>
     <g filter="url(#a)">
       <path
         fill="#1172B8"

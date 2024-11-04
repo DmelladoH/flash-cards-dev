@@ -1,6 +1,7 @@
 function JavaScriptSVG() {
   return (
     <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 78 78">
+      <title>JavaScript</title>
       <g clipPath="url(#a)">
         <path fill="#F7DF1E" d="M0 0h78v78H0V0Z" />
         <path
