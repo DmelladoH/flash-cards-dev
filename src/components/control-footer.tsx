@@ -26,6 +26,7 @@ export function ControlFooter() {
           <div className="mt-10 flex justify-center gap-16 text-white">
             <RoundedButton
               onClick={flip}
+              aria-label="flip card"
               onMouseEnter={() => setHover("flip")}
               onMouseLeave={() => setHover("")}
             >
@@ -33,6 +34,7 @@ export function ControlFooter() {
             </RoundedButton>
             <RoundedButton
               onClick={(e) => nextCardByAction(next, window.innerWidth, 70)}
+              aria-label="next card"
               onMouseEnter={() => setHover("next")}
               onMouseLeave={() => setHover("")}
             >
