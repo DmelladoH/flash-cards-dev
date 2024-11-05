@@ -64,6 +64,7 @@ function FlashCard({
     >
       <button
         className={`card h-full w-full transition-all duration-500 group-focus:[transform:rotateY(180deg)] ${showAnswer} ? transform:rotateY(180deg) : ''`}
+        aria-label="flip card"
         onMouseDown={onMouseDown}
         onMouseUp={onMouseUp}
         onMouseMove={(e: React.MouseEvent<HTMLButtonElement>) => {
