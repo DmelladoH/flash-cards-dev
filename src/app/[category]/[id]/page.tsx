@@ -23,10 +23,7 @@ function Page(props: { params: Promise<{ category: string; id: string }> }) {
   }
 
   return (
-    <div className="relative">
-      <div className="absolute h-full w-full">
-        <EmptyState category={category} />
-      </div>
+    <div className="relative h-full">
       <Deck />
     </div>
   );
