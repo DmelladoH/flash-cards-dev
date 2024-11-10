@@ -17,7 +17,9 @@ export default async function CategoryLayout(props: {
       <div className="flashcards-layout min-height-100vh">
         <Header category={category} />
         <main>
-          <div className="mx-auto h-full max-w-[50rem] px-3">{children}</div>
+          <div className="mx-auto h-full max-w-[50rem] px-3 md:pt-20">
+            {children}
+          </div>
         </main>
         <ControlFooter />
       </div>

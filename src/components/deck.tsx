@@ -26,7 +26,7 @@ function Deck() {
   }
 
   return (
-    <div className="relative grid h-full justify-items-center md:mt-20">
+    <div className="relative grid h-full justify-items-center">
       {thirdCard && (
         <div className="absolute aspect-video h-full w-[42vh] -rotate-3 md:h-[50vh] md:w-[60vh] md:-rotate-6">
           <FlashCard key={thirdCard.id} id="secondBackgroundCard" />

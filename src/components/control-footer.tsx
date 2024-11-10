@@ -1,7 +1,7 @@
 "use client";
 import { useState } from "react";
 import { NextSvg } from "./svgs/nextSvg";
-import RoundedButton from "./UI/rounded-button";
+import RoundedButton from "./UI/buttons/rounded-button";
 import CloseEyeSvg from "./svgs/closeEyeSvg";
 import OpenEyeSvg from "./svgs/openEyeSvg";
 import { useDeckContext } from "~/hooks/useDeckContext";
