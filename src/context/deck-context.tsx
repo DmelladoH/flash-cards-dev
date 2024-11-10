@@ -8,6 +8,7 @@ interface DeckProps {
   deck: CardWithId[];
   category: string;
   excluded: string[];
+  setExcluded: (val: string[]) => void;
   fetchData: ({
     category,
     currentCardId,
@@ -30,6 +31,7 @@ const defaultDeckContext: DeckProps = {
   deck: [],
   category: "",
   excluded: [],
+  setExcluded: () => {},
   fetchData: async () => {},
   next: () => {},
   isLoading: false,
@@ -172,6 +174,7 @@ export function DeckProvider({ children }: { children: React.ReactNode }) {
         fetchData,
         next,
         excluded,
+        setExcluded,
         isLoading,
         setIsLoading,
         isAnswerShown,
