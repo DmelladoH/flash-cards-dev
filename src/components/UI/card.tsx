@@ -73,7 +73,7 @@ function FlashCard({
         }}
       >
         {!showAnswer ? (
-          <div>{question && <h3 className="text-xl">{question}</h3>}</div>
+          <div>{question && <h2 className="text-xl">{question}</h2>}</div>
         ) : (
           <div>
             {answer && (

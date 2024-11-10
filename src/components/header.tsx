@@ -7,11 +7,15 @@ interface Props {
 export default function Header({ category }: Props) {
   return (
     <header className="flex justify-between px-12 py-7 align-middle">
-      <Link href={"/"} className="flex items-center">
+      <Link
+        href={"/"}
+        className="flex items-center"
+        aria-label="go back to categories"
+      >
         <BackSvg />
       </Link>
       <div className="">
-        <h1 className="text-center font-paytone text-3xl md:text-4xl">
+        <h1 className="text-center font-paytone text-3xl text-white md:text-4xl">
           {category}
         </h1>
       </div>
