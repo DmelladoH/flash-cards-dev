@@ -51,6 +51,16 @@ span {
     min-height: 100vh;
     min-height: 100dvh;
   }
+
+  .responsiveFooter {
+    padding-bottom: 2.5rem;
+  }
+
+  @media screen and (max-height: 653px) {
+    .responsiveFooter {
+      padding-bottom: 0;
+    }
+  }
 }
 
 @layer base {
