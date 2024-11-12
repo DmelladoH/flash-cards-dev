@@ -12,14 +12,23 @@ function Page(props: { params: Promise<{ category: string }> }) {
   const { category } = params;
   const categoriesIds = categories.flatMap((cat) => cat.id);
 
-  const { deck, isLoading, fetchData, setExcluded } = useDeckContext();
+  const { deck, isLoading, getCards, setExcluded } = useDeckContext();
 
   const resetCategory = () => {
     setExcluded([]);
   };
 
   useEffect(() => {
-    fetchData({ category });
+    console.log("holi");
+    const getData = async () => {
+      try {
+        await getCards({ category });
+      } catch (error) {
+        console.error({ error });
+      }
+    };
+
+    getData().catch((error: unknown) => console.error({ error })); // Catch any rejected promises
   }, []);
 
   if (isLoading) {

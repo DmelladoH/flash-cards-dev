@@ -1,6 +1,7 @@
+/* eslint-disable @typescript-eslint/no-empty-function */
 "use client";
 import { createContext, useCallback, useState } from "react";
-import { CardWithId } from "../types";
+import type { CardWithId } from "../types";
 import { useRouter } from "next/navigation";
 import { getErrorMessage } from "~/util/errorHandling";
 

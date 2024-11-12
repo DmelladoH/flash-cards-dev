@@ -1,4 +1,4 @@
-import { NextRequest, NextResponse } from "next/server";
+import { type NextRequest, NextResponse } from "next/server";
 import { getCartsWithIdAndCategory } from "~/server/queries";
 
 export async function POST(req: NextRequest) {

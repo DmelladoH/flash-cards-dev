@@ -17,7 +17,7 @@ export async function getCartsWithIdAndCategory({
 }): Promise<CardWithId[]> {
   let realLimit = limit;
 
-  const card = await getCartById(id);
+  const card = await getCardById(id);
 
   if (card) {
     realLimit -= 1;
@@ -80,7 +80,7 @@ export async function getCartsByCategory({
   }
 }
 
-export async function getCartById(id: string): Promise<
+export async function getCardById(id: string): Promise<
   | {
       id: number;
       name: string;
