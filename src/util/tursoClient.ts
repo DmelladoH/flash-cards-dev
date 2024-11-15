@@ -1,4 +1,4 @@
-import { Client, createClient } from "@libsql/client/http";
+import { type Client, createClient } from "@libsql/client/http";
 
 export function tursoClient(): Client {
   const url = process.env.TURSO_URL?.trim();
@@ -14,7 +14,7 @@ export function tursoClient(): Client {
   }
 
   return createClient({
-    url: process.env.TURSO_URL as string,
-    authToken: process.env.TURSO_AUTH as string,
+    url: process.env.TURSO_URL!,
+    authToken: process.env.TURSO_AUTH!,
   });
 }

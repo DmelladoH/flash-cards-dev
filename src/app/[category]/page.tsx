@@ -4,6 +4,7 @@ import { useEffect, use, useState } from "react";
 import CallToAction from "~/components/UI/buttons/cta";
 import SecondaryAction from "~/components/UI/buttons/secondaryAction";
 import Loader from "~/components/UI/loader";
+import { errorHandle } from "~/helpers/errorHandle";
 import { useDeckContext } from "~/hooks/useDeckContext";
 import { categories } from "~/lib/categories";
 
@@ -25,11 +26,11 @@ function Page(props: { params: Promise<{ category: string }> }) {
       try {
         await getCards({ category });
       } catch (error) {
-        console.error({ error });
+        errorHandle(error);
       }
     };
 
-    getData().catch((error: unknown) => console.error({ error }));
+    getData().catch((error) => errorHandle(error));
   }, [reload]);
 
   if (isLoading) {

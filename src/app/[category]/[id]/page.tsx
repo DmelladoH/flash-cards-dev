@@ -2,13 +2,14 @@
 import { useEffect, useState, use } from "react";
 import Deck from "~/components/deck";
 import Loader from "~/components/UI/loader";
+import { errorHandle } from "~/helpers/errorHandle";
 import { useDeckContext } from "~/hooks/useDeckContext";
 
 function Page(props: { params: Promise<{ category: string; id: string }> }) {
   const params = use(props.params);
   const { category, id } = params;
   const [isLoadingCards, setIsLoadingCards] = useState(false);
-  const { deck, getCards, isLoading, setExcluded } = useDeckContext();
+  const { deck, getCards, isLoading } = useDeckContext();
 
   useEffect(() => {
     const getData = async () => {
@@ -17,12 +18,12 @@ function Page(props: { params: Promise<{ category: string; id: string }> }) {
         setIsLoadingCards(true);
         await getCards({ category, currentCardId: id });
         setIsLoadingCards(false);
-      } catch (error: unknown) {
-        console.error(error);
+      } catch (error) {
+        errorHandle(error);
       }
     };
 
-    getData().catch((error: unknown) => console.error({ error }));
+    getData().catch((error) => errorHandle(error));
   }, []);
 
   if (isLoading || isLoadingCards) {

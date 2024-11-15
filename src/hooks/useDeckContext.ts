@@ -1,5 +1,3 @@
-import { useContext } from "react";
-import { DeckContext } from "~/context/deck-context";
 import { useDeckStore } from "~/store/deckStore";
 
 export function useDeckContext() {
