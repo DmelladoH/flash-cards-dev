@@ -59,8 +59,8 @@ export const useDeckStore = create<DeckState>()(
       set({ isAnswerShown: false });
       set({ category });
 
+      debugger;
       const { excluded } = get();
-
       try {
         const newDeck = currentCardId
           ? await getCardsById({ excluded, category, id: currentCardId })

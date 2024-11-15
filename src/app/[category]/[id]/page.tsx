@@ -22,8 +22,8 @@ function Page(props: { params: Promise<{ category: string; id: string }> }) {
       }
     };
 
-    getData().catch((error: unknown) => console.error({ error })); // Catch any rejected promises
-  }, [deck, category, getCards, id]);
+    getData().catch((error: unknown) => console.error({ error }));
+  }, []);
 
   if (isLoading || isLoadingCards) {
     return <Loader />;

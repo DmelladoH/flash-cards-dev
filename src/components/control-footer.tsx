@@ -16,10 +16,11 @@ export function ControlFooter() {
     useDeckContext();
 
   const handleNext = () => {
-    const nextCard = deck[1];
-    if (!nextCard) return;
     next();
-    router.push(`/${category}/${nextCard.name}`);
+    const nextCard = deck[1];
+    if (nextCard) {
+      router.push(`/${category}/${nextCard.name}`);
+    }
   };
   const flip = () => {
     setIsAnswerShown((prev) => !prev);

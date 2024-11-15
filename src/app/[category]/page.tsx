@@ -19,7 +19,6 @@ function Page(props: { params: Promise<{ category: string }> }) {
   };
 
   useEffect(() => {
-    console.log("holi");
     const getData = async () => {
       try {
         await getCards({ category });
@@ -28,7 +27,7 @@ function Page(props: { params: Promise<{ category: string }> }) {
       }
     };
 
-    getData().catch((error: unknown) => console.error({ error })); // Catch any rejected promises
+    getData().catch((error: unknown) => console.error({ error }));
   }, []);
 
   if (isLoading) {
@@ -38,7 +37,7 @@ function Page(props: { params: Promise<{ category: string }> }) {
   if (deck.length === 0 && !categoriesIds.includes(category)) {
     return (
       <div className="flex h-full flex-col items-center justify-center gap-10">
-        <span className="text-xl">This category doesn't exist</span>
+        <span className="text-xl">This category doesn&apos;t exist</span>
         <div className="max-w-98">
           <CallToAction actionType="link" href={"/"}>
             <span className="text-xl">Pick another category</span>
