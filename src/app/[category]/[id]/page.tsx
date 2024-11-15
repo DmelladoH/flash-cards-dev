@@ -8,7 +8,7 @@ function Page(props: { params: Promise<{ category: string; id: string }> }) {
   const params = use(props.params);
   const { category, id } = params;
   const [isLoadingCards, setIsLoadingCards] = useState(false);
-  const { deck, getCards, isLoading } = useDeckContext();
+  const { deck, getCards, isLoading, setExcluded } = useDeckContext();
 
   useEffect(() => {
     const getData = async () => {
@@ -17,7 +17,7 @@ function Page(props: { params: Promise<{ category: string; id: string }> }) {
         setIsLoadingCards(true);
         await getCards({ category, currentCardId: id });
         setIsLoadingCards(false);
-      } catch (error) {
+      } catch (error: unknown) {
         console.error(error);
       }
     };

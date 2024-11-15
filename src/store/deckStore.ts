@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/no-empty-function */
 import { create } from "zustand";
-import { devtools } from "zustand/middleware"; // Import devtools
+import { devtools, persist } from "zustand/middleware"; // Import devtools
 import { getCardsById, getRandomCards } from "~/lib/cardsService";
 import { type CardWithId } from "~/types";
 
@@ -43,69 +43,83 @@ const initialState: DeckState = {
 
 // Create the zustand store with devtools middleware
 export const useDeckStore = create<DeckState>()(
-  devtools((set, get) => ({
-    ...initialState, // Spread initial state
+  devtools(
+    persist(
+      (set, get) => ({
+        ...initialState, // Spread initial state
 
-    // Define the actions (getCards, setExcluded, etc.)
-    getCards: async ({
-      category,
-      currentCardId,
-    }: {
-      category: string;
-      currentCardId?: string;
-    }) => {
-      console.log({ category });
-      set({ isLoading: true });
-      set({ isAnswerShown: false });
-      set({ category });
+        // Define the actions (getCards, setExcluded, etc.)
+        getCards: async ({
+          category,
+          currentCardId,
+        }: {
+          category: string;
+          currentCardId?: string;
+        }) => {
+          set({ isLoading: true });
+          set({ isAnswerShown: false });
+          set({ category });
 
-      debugger;
-      const { excluded } = get();
-      try {
-        const newDeck = currentCardId
-          ? await getCardsById({ excluded, category, id: currentCardId })
-          : await getRandomCards({ excluded, category });
+          const { excluded } = get();
+          try {
+            const newDeck = currentCardId
+              ? await getCardsById({ excluded, category, id: currentCardId })
+              : await getRandomCards({ excluded, category });
 
-        const firstId = newDeck[0]?.id;
-        if (newDeck.length > 0 && firstId) {
-          set((state) => ({ excluded: [...state.excluded, firstId] }));
-        }
+            const firstId = newDeck[0]?.id;
+            if (newDeck.length > 0 && firstId) {
+              set((state) => ({ excluded: [...state.excluded, firstId] }));
+            }
 
-        set({ deck: newDeck });
-        set({ isLoading: false });
-      } catch (error: unknown) {
-        if (error instanceof Error) {
-          set({ error });
-        } else {
-          set({ error: new Error("Unknown error occurred") });
-        }
-      }
-    },
+            set({ deck: newDeck });
+            set({ isLoading: false });
+          } catch (error: unknown) {
+            if (error instanceof Error) {
+              set({ error });
+            } else {
+              set({ error: new Error("Unknown error occurred") });
+            }
+          }
+        },
 
-    setExcluded: (val: number[]) => set({ excluded: val }),
+        setExcluded: (val: number[]) => set({ excluded: val }),
 
-    setIsAnswerShown: (val: boolean | ((prev: boolean) => boolean)) =>
-      set((state) => ({
-        isAnswerShown:
-          typeof val === "function" ? val(state.isAnswerShown) : val,
-      })),
+        setIsAnswerShown: (val: boolean | ((prev: boolean) => boolean)) =>
+          set((state) => ({
+            isAnswerShown:
+              typeof val === "function" ? val(state.isAnswerShown) : val,
+          })),
 
-    setDisplayControlFooter: (val: boolean | ((prev: boolean) => boolean)) =>
-      set((state) => ({
-        displayControlFooter:
-          typeof val === "function" ? val(state.displayControlFooter) : val,
-      })),
+        setDisplayControlFooter: (
+          val: boolean | ((prev: boolean) => boolean),
+        ) =>
+          set((state) => ({
+            displayControlFooter:
+              typeof val === "function" ? val(state.displayControlFooter) : val,
+          })),
 
-    next: () => {
-      const { deck } = get();
+        next: () => {
+          const { deck } = get();
 
-      if (deck.length > 1) {
-        const nextCard = deck[1];
-        if (nextCard) {
-          set((state) => ({ excluded: [...state.excluded, nextCard.id] }));
-        }
-      }
-      set((state) => ({ deck: state.deck.slice(1), isAnswerShown: false }));
-    },
-  })),
+          if (deck.length > 1) {
+            const nextCard = deck[1];
+            if (nextCard) {
+              set((state) => ({ excluded: [...state.excluded, nextCard.id] }));
+            }
+          }
+          set((state) => ({ deck: state.deck.slice(1), isAnswerShown: false }));
+        },
+      }),
+      {
+        name: "deck-storage",
+        partialize: (state: DeckState) => ({
+          deck: state.deck,
+          category: state.category,
+          excluded: state.excluded,
+          isAnswerShown: state.isAnswerShown,
+          displayControlFooter: state.displayControlFooter,
+        }),
+      },
+    ),
+  ),
 );

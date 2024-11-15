@@ -1,6 +1,6 @@
 "use client";
 import { redirect } from "next/navigation";
-import { useEffect, use } from "react";
+import { useEffect, use, useState } from "react";
 import CallToAction from "~/components/UI/buttons/cta";
 import SecondaryAction from "~/components/UI/buttons/secondaryAction";
 import Loader from "~/components/UI/loader";
@@ -9,6 +9,8 @@ import { categories } from "~/lib/categories";
 
 function Page(props: { params: Promise<{ category: string }> }) {
   const params = use(props.params);
+  const [reload, setReload] = useState(false);
+
   const { category } = params;
   const categoriesIds = categories.flatMap((cat) => cat.id);
 
@@ -28,7 +30,7 @@ function Page(props: { params: Promise<{ category: string }> }) {
     };
 
     getData().catch((error: unknown) => console.error({ error }));
-  }, []);
+  }, [reload]);
 
   if (isLoading) {
     return <Loader />;
@@ -55,11 +57,13 @@ function Page(props: { params: Promise<{ category: string }> }) {
         </span>
         <div className="max-w-98 grid gap-5">
           <CallToAction
-            actionType="link"
-            href={`/${category}`}
-            onClick={resetCategory}
+            actionType="button"
+            onClick={() => {
+              resetCategory();
+              setReload(true);
+            }}
           >
-            <span className="text-xl">Reset cards</span>
+            <span className="text-xl">Pick another category</span>
           </CallToAction>
           <SecondaryAction actionType="link" href={"/"}>
             <span className="text-xl">Choose another category</span>
