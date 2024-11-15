@@ -18,7 +18,7 @@ export function CategorySection() {
           </ul>
         </div>
       </section>
-      <div className="absolute left-0 right-0 top-0 -z-10 h-[300px] -rotate-6 rounded-t-3xl rounded-br-[21.5rem] border-2 bg-white p-10 md:mx-24"></div>
+      <div className="absolute left-0 right-0 top-0 -z-10 h-[300px] -rotate-6 rounded-t-3xl rounded-br-[21.5rem] border-2 bg-[#eae9e9] p-10 md:mx-24"></div>
     </>
   );
 }

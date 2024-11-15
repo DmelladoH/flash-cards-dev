@@ -31,7 +31,7 @@ export function ControlFooter() {
   return (
     <>
       {!isLoading ? (
-        <footer className="grid gap-10 pb-10">
+        <footer className="responsiveFooter grid gap-10">
           <div className="mt-10 flex justify-center gap-16 text-white">
             <RoundedButton
               onClick={flip}
