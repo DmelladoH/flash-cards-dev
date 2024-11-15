@@ -1,6 +1,5 @@
 import { ControlFooter } from "~/components/control-footer";
 import Header from "~/components/header";
-import { DeckProvider } from "~/context/deck-context";
 
 export default async function CategoryLayout(props: {
   children: React.ReactNode;
@@ -13,16 +12,14 @@ export default async function CategoryLayout(props: {
   const { children } = props;
 
   return (
-    <DeckProvider>
-      <div className="flashcards-layout min-height-100vh">
-        <Header category={category} />
-        <main>
-          <div className="mx-auto h-full max-w-[50rem] px-3 md:pt-20">
-            {children}
-          </div>
-        </main>
-        <ControlFooter />
-      </div>
-    </DeckProvider>
+    <div className="flashcards-layout min-height-100vh">
+      <Header category={category} />
+      <main>
+        <div className="mx-auto h-full max-w-[50rem] px-3 md:pt-20">
+          {children}
+        </div>
+      </main>
+      <ControlFooter />
+    </div>
   );
 }
