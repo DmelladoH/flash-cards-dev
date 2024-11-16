@@ -16,22 +16,17 @@ function Page(props: { params: Promise<{ category: string }> }) {
   const { category } = params;
   const categoriesIds = categories.flatMap((cat) => cat.id);
 
-  const { deck, isLoading, getCards, setExcluded } = useDeckContext();
-
-  const resetCategory = () => {
-    setExcluded([]);
-  };
+  const { deck, isLoading, getCards } = useDeckContext();
 
   useEffect(() => {
     const getData = async () => {
       try {
-        setIsFetching(true); // Start fetching
-
+        setIsFetching(true);
         await getCards({ category });
       } catch (error) {
         errorHandle(error);
       } finally {
-        setIsFetching(false); // End fetching
+        setIsFetching(false);
       }
     };
 
@@ -43,43 +38,61 @@ function Page(props: { params: Promise<{ category: string }> }) {
   }
 
   if (deck.length === 0 && !categoriesIds.includes(category)) {
-    return (
-      <div className="flex h-full flex-col items-center justify-center gap-10">
-        <span className="text-xl">This category doesn&apos;t exist</span>
-        <div className="max-w-98">
-          <CallToAction actionType="link" href={"/"}>
-            <span className="text-xl">Pick another category</span>
-          </CallToAction>
-        </div>
-      </div>
-    );
+    return <NonExistingCategoryEmptyState />;
   }
 
   if (deck.length === 0 && categoriesIds.includes(category)) {
-    return (
-      <div className="flex h-full flex-col items-center justify-center gap-10">
-        <span className="text-xl">
-          Sorry, there are not new cards for this category left
-        </span>
-        <div className="max-w-98 grid gap-5">
-          <CallToAction
-            actionType="button"
-            onClick={() => {
-              resetCategory();
-              setReload(true);
-            }}
-          >
-            <span className="text-xl">Reload cards</span>
-          </CallToAction>
-          <SecondaryAction actionType="link" href={"/"}>
-            <span className="text-xl">Choose another category</span>
-          </SecondaryAction>
-        </div>
-      </div>
-    );
+    return <NoMoreCardsEmptyState setReload={setReload} />;
   }
 
   deck.length && redirect(`${category}/${deck[0]?.name}`);
 }
 
 export default Page;
+
+function NonExistingCategoryEmptyState() {
+  return (
+    <div className="flex h-full flex-col items-center justify-center gap-10">
+      <span className="text-xl">This category doesn&apos;t exist</span>
+      <div className="max-w-98">
+        <CallToAction actionType="link" href={"/"}>
+          <span className="text-xl">Pick another category</span>
+        </CallToAction>
+      </div>
+    </div>
+  );
+}
+
+function NoMoreCardsEmptyState({
+  setReload,
+}: {
+  setReload: (val: boolean) => void;
+}) {
+  const { setExcluded } = useDeckContext();
+
+  const resetCategory = () => {
+    setExcluded([]);
+  };
+
+  return (
+    <div className="flex h-full flex-col items-center justify-center gap-10">
+      <span className="text-xl">
+        Sorry, there are not new cards for this category left
+      </span>
+      <div className="max-w-98 grid gap-5">
+        <CallToAction
+          actionType="button"
+          onClick={() => {
+            resetCategory();
+            setReload(true);
+          }}
+        >
+          <span className="text-xl">Reload cards</span>
+        </CallToAction>
+        <SecondaryAction actionType="link" href={"/"}>
+          <span className="text-xl">Choose another category</span>
+        </SecondaryAction>
+      </div>
+    </div>
+  );
+}
