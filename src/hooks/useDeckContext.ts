@@ -1,8 +1,7 @@
-import { useContext } from "react";
-import { DeckContext } from "~/context/deck-context";
+import { useDeckStore } from "~/store/deckStore";
 
 export function useDeckContext() {
-  const context = useContext(DeckContext);
+  const context = useDeckStore();
 
   if (context == null) {
     throw new Error("Error: deck must be use within deckContext");

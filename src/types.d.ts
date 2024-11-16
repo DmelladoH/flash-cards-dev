@@ -8,7 +8,7 @@ export interface Card {
 }
 
 export interface CardWithId extends Card {
-  id: string;
+  id: number;
 }
 
 export interface Category {
