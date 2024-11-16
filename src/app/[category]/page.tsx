@@ -11,6 +11,7 @@ import { categories } from "~/lib/categories";
 function Page(props: { params: Promise<{ category: string }> }) {
   const params = use(props.params);
   const [reload, setReload] = useState(false);
+  const [isFetching, setIsFetching] = useState(true);
 
   const { category } = params;
   const categoriesIds = categories.flatMap((cat) => cat.id);
@@ -24,16 +25,20 @@ function Page(props: { params: Promise<{ category: string }> }) {
   useEffect(() => {
     const getData = async () => {
       try {
+        setIsFetching(true); // Start fetching
+
         await getCards({ category });
       } catch (error) {
         errorHandle(error);
+      } finally {
+        setIsFetching(false); // End fetching
       }
     };
 
     getData().catch((error) => errorHandle(error));
   }, [reload]);
 
-  if (isLoading) {
+  if (isLoading || isFetching) {
     return <Loader />;
   }
 
@@ -64,7 +69,7 @@ function Page(props: { params: Promise<{ category: string }> }) {
               setReload(true);
             }}
           >
-            <span className="text-xl">Pick another category</span>
+            <span className="text-xl">Reload cards</span>
           </CallToAction>
           <SecondaryAction actionType="link" href={"/"}>
             <span className="text-xl">Choose another category</span>
