@@ -5,6 +5,7 @@ import "@fontsource/paytone-one";
 import { Toaster } from "~/components/UI/sonner";
 import { SpeedInsights } from "@vercel/speed-insights/next";
 import { Analytics } from "@vercel/analytics/react";
+import { type Metadata } from "next";
 
 const inter = Inter({
   subsets: ["latin"],
@@ -26,12 +27,18 @@ const keywords = [
   "web performance",
 ];
 
-export const metadata = {
+export const metadata: Metadata = {
   title: "CardsFlash - Flashcards for Developers",
   description:
     "CardsFlash is a flashcard app designed to help developers and tech enthusiasts learn and retain programming knowledge efficiently. Improve your coding skills with customizable flashcards covering various programming languages, frameworks, and concepts.",
   keywords: keywords.join(", "),
   icons: [{ rel: "icon", url: "/favicon.ico" }],
+  authors: [{ name: "Daniel Mellado" }],
+  generator: "next.js",
+  creator: "Daniel Mellado",
+  publisher: "Daniel Mellado",
+  referrer: "origin-when-cross-origin",
+  metadataBase: new URL("https://www.cardsflash.dev/"),
   openGraph: {
     type: "website",
     locale: "en_US",
